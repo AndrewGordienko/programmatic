@@ -15,6 +15,7 @@ import {
   discoveryCost,
   mean,
   median,
+  rejectionAudit,
   summarize,
 } from "./metrics";
 import { makeTasks } from "./tasks";
@@ -39,6 +40,7 @@ type Benchmark = {
     macros: string[];
     discoveryMs: number;
     elapsedMs: number;
+    audit?: ReturnType<typeof rejectionAudit>;
   }[];
 };
 type Surrogate = {
@@ -258,16 +260,24 @@ function Amortization({ r, baseline }: { r: Result; baseline: Arm }) {
     </>
   );
 }
-function Candidate({ p }: { p: Proposal }) {
+function Candidate({ p, completed }: { p: Proposal; completed: boolean }) {
+  const reason =
+    completed && p.reason === "Full development race completed."
+      ? (p.development ?? 0) <= 0
+        ? "Not accepted: full development utility did not improve after the definition-size penalty."
+        : "Not advanced: another edit had a higher full-development score."
+      : p.reason;
   return (
     <div className="ll-candidate-detail">
       <div className="ll-inline">
         <strong>{p.label}</strong>
         <span className={`ll-tag ${p.accepted ? "good" : ""}`}>
-          {p.accepted ? "Accepted" : p.stage}
+          {p.accepted
+            ? "Accepted"
+            : `${completed ? "Not accepted · " : ""}${p.stage}`}
         </span>
       </div>
-      <p>{p.reason}</p>
+      <p>{reason}</p>
       <dl>
         <div>
           <dt>Corpus nodes saved, net</dt>
@@ -434,6 +444,8 @@ export default function LibraryLab({
         saving: a.meanEffort - b.meanEffort,
       };
     });
+  const auditTotal = (key: keyof ReturnType<typeof rejectionAudit>) =>
+    rows.reduce((sum, row) => sum + (row.audit?.[key] ?? 0), 0);
   const wins = robust.filter((x) => x.delta > 0).length,
     ties = robust.filter((x) => x.delta === 0).length;
   const isolated = r ? comparison(r, "fixed-prior") : null;
@@ -823,7 +835,10 @@ export default function LibraryLab({
                 </div>
                 <div>
                   {r.proposals[candidate] ? (
-                    <Candidate p={r.proposals[candidate]} />
+                    <Candidate
+                      p={r.proposals[candidate]}
+                      completed={r.completed}
+                    />
                   ) : (
                     <p>No candidate has been proposed yet.</p>
                   )}
@@ -860,6 +875,23 @@ export default function LibraryLab({
                   mean change
                 </span>
               </div>
+              {rows.some((row) => row.audit) && (
+                <div className="ll-audit">
+                  <strong>Where promising edits failed</strong>
+                  <p>
+                    {auditTotal("developmentPositive")} of {auditTotal("full")}{" "}
+                    fully evaluated edits improved development utility.{" "}
+                    {auditTotal("confirmed")} reached fresh confirmation;{" "}
+                    {auditTotal("confirmationPositive")} retained a positive
+                    mean gain. {auditTotal("clearedUncertainty")} cleared the
+                    uncertainty gate.
+                  </p>
+                  <small>
+                    Across {auditTotal("proposed")} proposed edits. Positive
+                    estimates alone were insufficient for acceptance.
+                  </small>
+                </div>
+              )}
               <div className="ll-table-wrap ll-scroll-table">
                 <table>
                   <thead>

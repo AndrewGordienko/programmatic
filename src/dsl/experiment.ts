@@ -440,8 +440,9 @@ export function* ablations(r: Result): Generator<Result, Result> {
       label: "Top-used macro removed",
       ms: r.macros.filter((m) => m.name !== top),
       applicable: !!top,
-      reason:
-        "Post-test intervention. Frozen prior is masked and renormalized; no retraining.",
+      reason: top
+        ? "Post-test intervention. Frozen prior is masked and renormalized; no retraining."
+        : "No learned macro is available to remove.",
     },
     {
       label: "Same-arity definitions shuffled",

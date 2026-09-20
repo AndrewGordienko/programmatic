@@ -565,6 +565,28 @@
 .ll-scroll-table {
   max-height: 300px;
 }
+.ll-audit {
+  margin: 18px 0;
+  padding: 18px 20px;
+  border: 1px solid #e4eaf0;
+  border-radius: 7px;
+  background: #f8fafc;
+}
+.ll-audit strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.ll-audit p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #64758a;
+  margin: 8px 0;
+}
+.ll-audit small {
+  font-size: 10px;
+  color: var(--ll-muted);
+  line-height: 1.7;
+}
 .ll-scroll-table th {
   position: sticky;
   top: 0;

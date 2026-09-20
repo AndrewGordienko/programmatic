@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { experiment } from "../src/dsl/experiment";
-import { comparison, summarize } from "../src/dsl/metrics";
+import { comparison, rejectionAudit, summarize } from "../src/dsl/metrics";
 import { ARMS, DEFAULT, type Result } from "../src/dsl/types";
 
 // Protocol frozen before these runs. All seeds retained, including regressions.
@@ -81,12 +81,23 @@ for (const seed of seeds) {
     result = next.value;
     writeFileSync(path, JSON.stringify(result));
   }
+  if (
+    result.version !== "library-search-v1" ||
+    !result.completed ||
+    !Object.entries({ ...DEFAULT, seed }).every(
+      ([key, value]) => result.config[key as keyof typeof DEFAULT] === value,
+    )
+  )
+    throw new Error(
+      `Seed ${seed} artifact does not match the current completed protocol. Preserve it and run into a new artifact directory.`,
+    );
   if (seed === 42)
     writeFileSync("public/library-reference.json", JSON.stringify(result));
   const row = {
     seed,
     config: result.config,
     comparison: comparison(result),
+    audit: rejectionAudit(result),
     arms: ARMS.map((arm) => summarize(result.trials, arm)),
     macros: result.macros.map((m) => m.definition),
     discoveryMs: result.discoveryMs,

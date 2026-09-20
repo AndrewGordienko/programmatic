@@ -41,6 +41,18 @@ export function discoveryCost(r: Result) {
     r.budget.confirmation
   );
 }
+export function rejectionAudit(r: Result) {
+  return {
+    proposed: r.proposals.length,
+    full: r.proposals.filter((p) => p.development !== undefined).length,
+    developmentPositive: r.proposals.filter((p) => (p.development ?? 0) > 0)
+      .length,
+    confirmed: r.proposals.filter((p) => p.gain !== undefined).length,
+    confirmationPositive: r.proposals.filter((p) => (p.gain ?? 0) > 0).length,
+    clearedUncertainty: r.proposals.filter((p) => (p.lowerBound ?? 0) > 0)
+      .length,
+  };
+}
 export function comparison(
   r: Result,
   a: Arm = "fixed-uniform",
