@@ -13,23 +13,23 @@ export default function Methodology({ close }: { close: () => void }) {
   const stages = [
     {
       icon: Braces,
-      title: "01 / Propose a program",
-      body: "Build a typed, bounded graph over 19-direction scans of goal alignment, clearance, slope, roughness and traction. Vector operations combine observations; angle and scalar outputs command steering and acceleration. The truck receives no route or road centreline.",
+      title: "01 / Build a corpus",
+      body: "Solve 500 scalar tasks from input/output examples using a base arithmetic language. Only successfully synthesized programs enter the corpus; hidden target programs never supply syntax to search or abstraction mining.",
     },
     {
       icon: FlaskConical,
-      title: "02 / Let it act",
-      body: "Execute each candidate on nine uneven terrains. Arrivals, progress and efficiency earn reward; collisions, stability failures, grounding and timeouts reduce it. Training and the 3D view use the same terrain-contact and vehicle dynamics.",
+      title: "02 / Propose language edits",
+      body: "Extract repeated parameterized computations, measure actual corpus compression, and propose additions, joint additions or deletions. Train a task-conditioned neural operator prior for each language using successful and synthetic programs.",
     },
     {
       icon: GitBranch,
-      title: "03 / Search and improve",
-      body: "Mutate connected expressions, recombine compatible graphs, and preserve parents that perform well on different terrain cases. A masked neural prior learns operator and operand choices from summaries of partial typed graphs. Mined DSL compositions are tested with fresh searches on separate development terrains.",
+      title: "03 / Race candidate languages",
+      body: "Use short synthesis races to shortlist edits, then larger multi-seed development races and a fresh confirmation split. The objective rewards solving tasks with fewer evaluations, penalizes definition size, and requires a positive uncertainty bound before accepting an edit.",
     },
     {
       icon: ScanLine,
-      title: "04 / Test somewhere new",
-      body: "Freeze the program and evaluate it on 36 unseen terrain layouts. The reference benchmark compares four search configurations across three seeds and also disables clearance sensing to measure its effect. DSL discovery costs are reported separately from the common main-search budget.",
+      title: "04 / Freeze and falsify",
+      body: "Freeze the DSL and both priors. Evaluate four paired search configurations on 200 unseen tasks, including nested and longer structures absent from training. Report capped search effort, failures, 20 meta-seeds, discovery cost, observed total cost and projected amortization.",
     },
   ];
   return (
@@ -48,10 +48,9 @@ export default function Methodology({ close }: { close: () => void }) {
             Languages shape the search.
           </h3>
           <p>
-            The off-road experiment searches for vehicle-control programs and
-            tests whether reusable compositions improve the search language.
-            Road, grid and scalar experiments remain available as simpler
-            baselines.
+            The main experiment asks whether learning a library and search prior
+            reduces synthesis cost on future tasks. The truck, road and grid
+            experiments remain control baselines with engineered languages.
           </p>
         </div>
         <div className="method-stages">
@@ -72,14 +71,13 @@ export default function Methodology({ close }: { close: () => void }) {
           <div>
             <strong>A research interpretation, with measured limits</strong>
             <p>
-              Terrain sensing, the initial type system and direction-selection
-              primitive are engineered. The learned prior sees graph summaries;
-              it is not a full semantic program-search model. DSL discovery
-              mines compositions of existing operations and can reject every
-              proposal. The vehicle uses approximate terrain contact, not
-              calibrated suspension or soil dynamics. This does not establish
-              camera perception, formal verification, real-world transfer or
-              reproduction of Argos’s undisclosed algorithm.
+              The scalar algebra, task distribution and neural architecture are
+              engineered. The prior predicts operator frequencies, not arbitrary
+              semantic programs. Macros can all be rejected. A projected cost
+              crossover is not observed savings or an equal-total-compute
+              advantage. No result here establishes new type invention,
+              high-dimensional perception, control transfer or reproduction of
+              Argos’s undisclosed algorithm.
             </p>
           </div>
         </div>

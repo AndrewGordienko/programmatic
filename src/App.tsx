@@ -40,6 +40,7 @@ import Transfer from "./components/Transfer";
 import LanguageLab from "./components/LanguageLab";
 import DrivingLab from "./driving/DrivingLab";
 import OffroadLab from "./offroad/OffroadLab";
+import LibraryLab from "./dsl/LibraryLab";
 import { exportPython, programLines, validateProgram } from "./engine/program";
 import {
   DEFAULT_CONFIG,
@@ -52,7 +53,13 @@ import {
 
 type Status = "reference" | "running" | "paused" | "complete" | "loaded";
 type Tab =
-  "offroad" | "driving" | "language" | "experiment" | "library" | "transfer";
+  | "research"
+  | "offroad"
+  | "driving"
+  | "language"
+  | "experiment"
+  | "library"
+  | "transfer";
 
 function Logo() {
   return (
@@ -112,7 +119,7 @@ export default function App() {
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [status, setStatus] = useState<Status>("reference");
   const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
-  const [tab, setTab] = useState<Tab>("offroad");
+  const [tab, setTab] = useState<Tab>("research");
   const [family, setFamily] = useState<Family>("warehouse");
   const [sceneSeed, setSceneSeed] = useState(1_500_077_777);
   const [showConfig, setShowConfig] = useState(false),
@@ -292,7 +299,7 @@ export default function App() {
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            setTab("offroad");
+            setTab("research");
           }}
           aria-label="Argos Lab home"
         >
@@ -304,7 +311,7 @@ export default function App() {
         <nav className="main-nav" aria-label="Main navigation">
           <button
             className={!showMethod ? "nav-link active" : "nav-link"}
-            onClick={() => setTab("offroad")}
+            onClick={() => setTab("research")}
           >
             Playground
           </button>
@@ -334,29 +341,41 @@ export default function App() {
         </div>
       </header>
       <main>
-        <section className="hero">
-          <div className="hero-copy">
-            <div className="eyebrow">
-              <span className="eyebrow-line" />
-              THE PROGRAMMATIC AI PLAYGROUND
+        {tab !== "research" && (
+          <section className="hero">
+            <div className="hero-copy">
+              <div className="eyebrow">
+                <span className="eyebrow-line" />
+                THE PROGRAMMATIC AI PLAYGROUND
+              </div>
+              <h1>
+                Intelligence, written in code<span>.</span>
+              </h1>
+              <p>Evolve programs. Discover the language they’re built from.</p>
             </div>
-            <h1>
-              Intelligence, written in code<span>.</span>
-            </h1>
-            <p>Evolve programs. Discover the language they’re built from.</p>
-          </div>
-          <div className="hero-art" aria-hidden="true">
-            <div className="orbit orbit-one" />
-            <div className="orbit orbit-two" />
-            <div className="orbit orbit-three" />
-            <span className="orbit-node one" />
-            <span className="orbit-node two" />
-            <span className="orbit-node three" />
-            <Braces size={27} strokeWidth={1.3} />
-          </div>
-        </section>
+            <div className="hero-art" aria-hidden="true">
+              <div className="orbit orbit-one" />
+              <div className="orbit orbit-two" />
+              <div className="orbit orbit-three" />
+              <span className="orbit-node one" />
+              <span className="orbit-node two" />
+              <span className="orbit-node three" />
+              <Braces size={27} strokeWidth={1.3} />
+            </div>
+          </section>
+        )}
         <div className="workspace-bar">
           <div className="workspace-tabs" role="tablist" aria-label="Workspace">
+            <button
+              role="tab"
+              aria-selected={tab === "research"}
+              className={
+                tab === "research" ? "workspace-tab active" : "workspace-tab"
+              }
+              onClick={() => setTab("research")}
+            >
+              <BrainCircuit size={16} /> Language research
+            </button>
             <button
               role="tab"
               aria-selected={tab === "offroad"}
@@ -366,7 +385,7 @@ export default function App() {
               onClick={() => setTab("offroad")}
             >
               <Mountain size={16} />
-              Off-road autonomy
+              Control baseline
             </button>
             <button
               role="tab"
@@ -388,7 +407,7 @@ export default function App() {
               onClick={() => setTab("language")}
             >
               <Braces size={16} />
-              DSL discovery
+              Macro baseline
             </button>
             <button
               role="tab"
@@ -430,6 +449,9 @@ export default function App() {
             <span>/</span> RESEARCH LAB
           </div>
         </div>
+        <div hidden={tab !== "research"}>
+          <LibraryLab notify={notify} />
+        </div>
         <div hidden={tab !== "offroad"}>
           <OffroadLab active={tab === "offroad"} notify={notify} />
         </div>
@@ -439,7 +461,8 @@ export default function App() {
         <div hidden={tab !== "language"}>
           <LanguageLab notify={notify} />
         </div>
-        {tab !== "language" &&
+        {tab !== "research" &&
+        tab !== "language" &&
         tab !== "driving" &&
         tab !== "offroad" &&
         (!snapshot || !candidate) ? (

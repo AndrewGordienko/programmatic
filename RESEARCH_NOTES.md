@@ -55,3 +55,7 @@ These are small synthetic benchmarks. The aggregate 31/45 versus 26/45 is not a 
 4. Replace the designed scalar family with one of their actual task distributions and allowed primitive sets. That is the critical missing input before claiming relevance to their bottleneck.
 
 The useful question for Hassan is whether his DSL search primarily concerns reusable abstractions over known primitives, new primitive semantics, language typing/control structure, or joint evolution of all of these. This implementation addresses only the first.
+
+# Current focus: useful library learning
+
+The default dashboard now measures future synthesis effort with a frozen scalar library and prior. See [LIBRARY_RESEARCH.md](LIBRARY_RESEARCH.md) for the 800-task protocol, 20-seed negative result, and limited outer value-model probe. None of the 20 runs accepted a library edit; prior-only gains do not demonstrate DSL learning. The notes below document earlier baselines.
