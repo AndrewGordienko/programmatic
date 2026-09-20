@@ -1,0 +1,73 @@
+{
+  "description": "Five predeclared language-search seeds, nine paired final trials per seed. Synthetic scalar tasks only; no statistical-significance claim.",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    42
+  ],
+  "rows": [
+    {
+      "seed": 0,
+      "fixedSolves": 4,
+      "evolvedSolves": 4,
+      "trials": 9,
+      "macros": [],
+      "discoveryEvaluations": 59256,
+      "comparisonEvaluations": 12042
+    },
+    {
+      "seed": 1,
+      "fixedSolves": 7,
+      "evolvedSolves": 6,
+      "trials": 9,
+      "macros": [
+        "fn_1(a) = max(0, min(a, 1))",
+        "fn_2(a) = max(a, 0)"
+      ],
+      "discoveryEvaluations": 55242,
+      "comparisonEvaluations": 12042
+    },
+    {
+      "seed": 2,
+      "fixedSolves": 5,
+      "evolvedSolves": 7,
+      "trials": 9,
+      "macros": [
+        "fn_1(a) = max((-a), a)",
+        "fn_2(a) = max(a, 0)"
+      ],
+      "discoveryEvaluations": 59256,
+      "comparisonEvaluations": 12042
+    },
+    {
+      "seed": 3,
+      "fixedSolves": 5,
+      "evolvedSolves": 7,
+      "trials": 9,
+      "macros": [
+        "fn_1(a) = max((-a), a)",
+        "fn_2(a) = max(a, 0)"
+      ],
+      "discoveryEvaluations": 59256,
+      "comparisonEvaluations": 12042
+    },
+    {
+      "seed": 42,
+      "fixedSolves": 5,
+      "evolvedSolves": 7,
+      "trials": 9,
+      "macros": [
+        "fn_1(a) = max(a, 0)"
+      ],
+      "discoveryEvaluations": 59256,
+      "comparisonEvaluations": 12042
+    }
+  ],
+  "totals": {
+    "fixed": 26,
+    "evolved": 31,
+    "pairedTrials": 45
+  }
+}
