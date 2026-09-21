@@ -1,0 +1,10 @@
+[
+  {
+    "time": "2026-09-21T20:59:36.957344+00:00",
+    "event": "Launching independent predeclared seed 349 concurrently with the sequential runner, which is still on 307. Both preserve separate artifacts and immutable engine/model hashes. Process CPU is measured per run; wall timings are observational."
+  },
+  {
+    "time": "2026-09-21T21:07:29.977527+00:00",
+    "event": "Training a separate visited-state production policy using two CPU threads. The eight-run learner retains its original frozen policy; this new model cannot affect its outcomes. Process CPU and work counters remain separately recorded."
+  }
+]
