@@ -10,8 +10,10 @@ import {
   type TerrainKind,
 } from "../offroad/types";
 import { makeTerrain } from "../offroad/terrain";
+import { diagnoseStart, type StartDiagnosis } from "./feasibility";
 
 export const VERSION = "unseen-terrain-v1";
+export const START_CHECK = "immobile-start-v1";
 export const SEED_MIN = 2_100_000_000,
   SEED_RANGE = 40_000_000;
 export type FrozenPayload = {
@@ -43,11 +45,14 @@ export type Manifest = {
   challenges: ChallengeSpec[];
   ablationOf?: string;
   mode: "learned" | "remove-macros";
+  startCheck?: typeof START_CHECK;
 };
 export type RaceState = {
   evaluations: number;
   budget: number;
-  status: "searching" | "solved" | "exhausted";
+  status: "searching" | "solved" | "exhausted" | "infeasible";
+  diagnosis?: StartDiagnosis;
+  startCheckMs?: number;
   best: Candidate | null;
   solution: Candidate | null;
   computeMs: number;
@@ -105,6 +110,7 @@ export function validateManifest(m: Manifest, artifact: FrozenArtifact) {
     m.budget < 1 ||
     m.budget > 50_000 ||
     !["learned", "remove-macros"].includes(m.mode) ||
+    (m.startCheck !== undefined && m.startCheck !== START_CHECK) ||
     Date.parse(m.createdAt) < Date.parse(artifact.payload.frozenAt) ||
     !Number.isFinite(Date.parse(m.createdAt))
   )
@@ -163,20 +169,30 @@ export class ChallengeSearch {
   readonly terrain;
   private started = performance.now();
   private finishedMs: number | null = null;
+  readonly diagnosis: StartDiagnosis | null;
+  readonly startCheckMs: number;
   constructor(
     readonly artifact: FrozenArtifact,
     readonly spec: ChallengeSpec,
     readonly budget: number,
     macros: Macro[],
+    startCheck = true,
   ) {
     this.terrain = makeTerrain(spec.seed, spec.kind);
+    const checkStart = performance.now();
+    this.diagnosis = startCheck ? diagnoseStart(this.terrain) : null;
+    this.startCheckMs = performance.now() - checkStart;
     this.search = new OffroadSearch(
       { ...artifact.payload.config, seed: spec.searchSeed, evolveDSL: false },
       { terrains: [this.terrain], macros, frozenPrior: artifact.payload.prior },
     );
   }
   advance(): RaceState {
-    if (this.search.rollouts < this.budget && !this.search.solution) {
+    if (
+      !this.diagnosis &&
+      this.search.rollouts < this.budget &&
+      !this.search.solution
+    ) {
       this.search.step({
         evaluations: this.budget - this.search.rollouts,
         stopOnSuccess: true,
@@ -192,16 +208,20 @@ export class ChallengeSearch {
     return {
       evaluations: this.search.rollouts,
       budget: this.budget,
-      status: this.search.solution
-        ? "solved"
-        : this.search.rollouts >= this.budget
-          ? "exhausted"
-          : "searching",
+      status: this.diagnosis
+        ? "infeasible"
+        : this.search.solution
+          ? "solved"
+          : this.search.rollouts >= this.budget
+            ? "exhausted"
+            : "searching",
       best: this.search.population[0] ?? null,
       solution: this.search.solution,
       computeMs: this.search.elapsedMs,
       elapsedMs: this.finishedMs ?? performance.now() - this.started,
       generation: this.search.generation,
+      ...(this.diagnosis ? { diagnosis: this.diagnosis } : {}),
+      startCheckMs: this.startCheckMs,
     };
   }
 }

@@ -18,7 +18,8 @@
     "benchmark": "tsx scripts/benchmark.ts",
     "format": "prettier --write src scripts README.md vite.config.ts",
     "offroad:freeze": "tsx scripts/freeze-offroad.ts",
-    "inner:calibration": "tsx scripts/inner-calibration.ts"
+    "inner:calibration": "tsx scripts/inner-calibration.ts",
+    "challenge:diagnose": "tsx scripts/challenge-diagnose.ts"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",

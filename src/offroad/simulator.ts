@@ -23,6 +23,10 @@ import {
 export const DT = 0.2,
   MAX_STEER = 0.58;
 export const SIMULATOR_VERSION = "offroad-support-v2";
+export const maximumDriveAcceleration = (grip: number) =>
+  Math.min(3.3, grip * 9.81);
+export const uphillGravityAcceleration = (pitch: number) =>
+  9.81 * Math.sin(pitch);
 // Generic model dimensions, not calibrated specifications of a real vehicle.
 export const SUPPORT = {
   halfTrack: 1,
@@ -162,12 +166,12 @@ export function step(s: Truck, c: Controls, t: Terrain, dt = DT): Truck {
     );
     const force =
       controls.acceleration >= 0
-        ? controls.acceleration * Math.min(3.3, n.grip * 9.81)
+        ? controls.acceleration * maximumDriveAcceleration(n.grip)
         : controls.acceleration * 7;
     n.speed = clamp(
       n.speed +
         (force -
-          9.81 * Math.sin(n.pitch) -
+          uphillGravityAcceleration(n.pitch) -
           0.12 * n.speed -
           0.018 * n.speed * n.speed) *
           h,

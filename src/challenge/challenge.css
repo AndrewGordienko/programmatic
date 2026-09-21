@@ -607,3 +607,15 @@
     height: 330px;
   }
 }
+
+.challenge-status.infeasible {
+  color: #95633e;
+  background: #fbf1e8;
+  border-color: #e8d4c3;
+}
+.challenge-start-diagnosis small {
+  display: block;
+  color: #8b7e6c;
+  font-size: 10px;
+  line-height: 1.7;
+}

@@ -1,3 +1,5 @@
+import { diagnoseStart } from "./feasibility";
+import { makeTerrain } from "../offroad/terrain";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
@@ -12,7 +14,7 @@ import {
   type FrozenArtifact,
   type Manifest,
 } from "./protocol";
-import { simulate } from "../offroad/simulator";
+import { simulate, initialState, step } from "../offroad/simulator";
 import { validate } from "../offroad/program";
 import { Random } from "../engine/random";
 const artifact: FrozenArtifact = JSON.parse(
@@ -96,4 +98,56 @@ test("a discovered solution is the evaluated program and reproduces in deploymen
     assert.equal(simulate(s.solution.program, race.terrain).success, true);
     assert.equal(s.solution.success, 1);
   } else assert.equal(s.evaluations, 500);
+});
+
+test("reported ridge start is immobile under arbitrary bounded commands and costs no new synthesis", () => {
+  const badSpec = {
+    seed: 2124797507,
+    kind: "ridge" as const,
+    searchSeed: 881497,
+  };
+  const race = new ChallengeSearch(artifact, badSpec, 50_000, []);
+  const diagnosis = diagnoseStart(race.terrain)!;
+  assert.equal(diagnosis.code, "immobile-start");
+  assert.ok(diagnosis.opposingGravity > diagnosis.maximumDrive);
+  assert.ok(Math.abs(diagnosis.pitchDegrees - 20.812098686273213) < 1e-10);
+  const before = initialState(race.terrain),
+    rng = new Random(72);
+  let state = before;
+  while (state.status === "driving")
+    state = step(
+      state,
+      { steering: rng.next() * 2 - 1, acceleration: rng.next() * 2 - 1 },
+      race.terrain,
+    );
+  assert.equal(state.distance, 0);
+  assert.equal(state.speed, 0);
+  assert.equal(state.status, "timeout");
+  assert.equal(state.x, before.x);
+  assert.equal(state.z, before.z);
+  assert.equal(race.advance().status, "infeasible");
+  assert.equal(race.state().evaluations, 0);
+  assert.equal(race.state().solution, null);
+  // Historical manifests without the check still reproduce the old search.
+  const old = new ChallengeSearch(artifact, badSpec, 3, [], false);
+  assert.equal(old.advance().status, "exhausted");
+  assert.equal(old.state().evaluations, 3);
+});
+
+test("immobility check does not mistake ordinary hills or downhill starts for impossibility", () => {
+  const t = makeTerrain(5, "ridge");
+  t.rocks = [];
+  t.start = { x: 0, z: 0, heading: 0 };
+  t.grips.fill(0.88);
+  for (const grade of [0, 0.2, -0.7]) {
+    t.heights = t.heights.map(
+      (_, i) => (Math.floor(i / t.resolution) - 50) * grade,
+    );
+    assert.equal(diagnoseStart(t), null);
+  }
+  t.heights = t.heights.map(
+    (_, i) => (Math.floor(i / t.resolution) - 50) * 0.1,
+  );
+  t.grips.fill(0.01);
+  assert.equal(diagnoseStart(t)?.code, "immobile-start");
 });

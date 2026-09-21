@@ -17,6 +17,7 @@ import {
   validateArtifact,
   validateManifest,
   VERSION,
+  START_CHECK,
   type FrozenArtifact,
   type Manifest,
   type RaceState,
@@ -101,6 +102,7 @@ function Lane({
   macrosRemoved: boolean;
 }) {
   const program = state?.solution?.program ?? null;
+  const immobile = state?.status === "infeasible";
   const values = useMemo(() => {
     if (!program || !frame?.scans) return [];
     const all: Value[] = [...frame.scans.vectors, ...frame.scans.scalars];
@@ -124,8 +126,9 @@ function Lane({
     });
   }, [program, frame]);
   const deployed = program && frame && frame.time > 0;
-  const status =
-    state?.status === "solved"
+  const status = immobile
+    ? "Infeasible start · search not run"
+    : state?.status === "solved"
       ? deployed
         ? frame.status === "arrived"
           ? "Destination reached"
@@ -152,11 +155,13 @@ function Lane({
           </h2>
         </div>
         <span className={`challenge-status ${state?.status ?? ""}`}>
-          {state?.status === "solved"
-            ? "SOLUTION FOUND"
-            : state?.status === "exhausted"
-              ? "NO SOLUTION"
-              : "SYNTHESIZING"}
+          {immobile
+            ? "INFEASIBLE START"
+            : state?.status === "solved"
+              ? "SOLUTION FOUND"
+              : state?.status === "exhausted"
+                ? "NO SOLUTION"
+                : "SYNTHESIZING"}
         </span>
       </header>
       <div className="challenge-counters">
@@ -204,17 +209,25 @@ function Lane({
         {!program && (
           <div className="challenge-wait">
             <span
-              className={state?.status === "exhausted" ? "" : "challenge-pulse"}
+              className={
+                immobile || state?.status === "exhausted"
+                  ? ""
+                  : "challenge-pulse"
+              }
             />
             <strong>
-              {state?.status === "exhausted"
-                ? "No controller found within budget"
-                : "Truck awaiting a program"}
+              {immobile
+                ? "Truck cannot leave this start"
+                : state?.status === "exhausted"
+                  ? "No controller found within budget"
+                  : "Truck awaiting a program"}
             </strong>
             <small>
-              {state?.status === "exhausted"
-                ? "Best failed candidate is not deployed."
-                : "Every candidate executes in this terrain simulation."}
+              {immobile
+                ? "Terrain retained as an unsuccessful outcome. No replacement seed is sampled."
+                : state?.status === "exhausted"
+                  ? "Best failed candidate is not deployed."
+                  : "Every candidate executes in this terrain simulation."}
             </small>
           </div>
         )}
@@ -234,7 +247,11 @@ function Lane({
       <div className="challenge-program">
         <div className="challenge-program-title">
           <span>
-            {program ? "ACTUAL SYNTHESIZED PROGRAM" : "PROGRAM PENDING"}
+            {immobile
+              ? "WHY NO PROGRAM CAN WORK HERE"
+              : program
+                ? "ACTUAL SYNTHESIZED PROGRAM"
+                : "PROGRAM PENDING"}
           </span>
           <small>
             {program
@@ -242,7 +259,22 @@ function Lane({
               : "No controller is supplied to search"}
           </small>
         </div>
-        {program ? (
+        {immobile && state.diagnosis ? (
+          <div className="challenge-start-diagnosis">
+            <p>{state.diagnosis.explanation}</p>
+            <p>
+              <b>{state.diagnosis.pitchDegrees.toFixed(1)}° uphill</b> · maximum
+              drive <b>{state.diagnosis.maximumDrive.toFixed(2)} m/s²</b> ·
+              opposing gravity{" "}
+              <b>{state.diagnosis.opposingGravity.toFixed(2)} m/s²</b>
+            </p>
+            <small>
+              This diagnoses a task/model mismatch, not a language-learning
+              failure. Other terrains can still be unsolvable even if this check
+              passes.
+            </small>
+          </div>
+        ) : program ? (
           <pre>
             {programLines(program).map((line, i) => (
               <code
@@ -405,6 +437,11 @@ export default function ChallengeLab({ active }: { active: boolean }) {
       );
       const manifest: Manifest = {
         version: VERSION,
+        ...(ablation
+          ? previous!.manifest.startCheck
+            ? { startCheck: previous!.manifest.startCheck }
+            : {}
+          : { startCheck: START_CHECK }),
         createdAt: new Date().toISOString(),
         artifactHash: artifact.hash,
         budget: ablation ? previous!.manifest.budget : budget,
@@ -469,7 +506,7 @@ export default function ChallengeLab({ active }: { active: boolean }) {
       (arm) =>
         row[arm] &&
         row[arm]!.status !== "searching" &&
-        (row[arm]!.status === "exhausted" ||
+        (row[arm]!.status !== "solved" ||
           (row.deployment[arm] && row.deployment[arm] !== "driving")),
     );
     if (!finished) return;
@@ -516,6 +553,10 @@ export default function ChallengeLab({ active }: { active: boolean }) {
         r.fixed.status !== "searching" &&
         r.learned.status !== "searching",
     );
+  const infeasibleCount = completed.filter(
+    (r) =>
+      r.fixed?.status === "infeasible" && r.learned?.status === "infeasible",
+  ).length;
   const countSolved = (arm: Arm) =>
     completed.filter((r) => r[arm]?.status === "solved").length;
   return (
@@ -766,11 +807,12 @@ export default function ChallengeLab({ active }: { active: boolean }) {
       <div className="challenge-evidence">
         <div>
           <span>LOCAL SEALED EVIDENCE</span>
-          <h3>{completed.length} completed paired searches</h3>
+          <h3>{completed.length} completed paired outcomes</h3>
           <p>
-            {sessions.length} attempts retained, including interruptions and
-            ablations. Only completed, non-ablation pairs with this artifact
-            enter the counts.
+            {infeasibleCount} immobile starts detected. {sessions.length}{" "}
+            attempts retained, including interruptions and ablations. Only
+            completed, non-ablation pairs with this artifact enter the counts.
+            Infeasible starts remain in the denominator.
           </p>
         </div>
         <div>
@@ -799,6 +841,15 @@ export default function ChallengeLab({ active }: { active: boolean }) {
       </div>
       <details className="challenge-protocol">
         <summary>What this race measures</summary>
+        <p>
+          New manifests record an immobile-start check. It proves only one
+          failure mode in this forward-only model: when maximum drive is weaker
+          than uphill gravity at rest, the truck cannot move or change heading
+          under any controller. Such seeds remain in the ledger as unsuccessful
+          outcomes with zero synthesis evaluations; they are never replaced. The
+          check costs are exported separately. Historical runs retain their
+          original protocol and evaluation counts.
+        </p>
         <p>
           The terrain seeds are sampled with browser cryptographic randomness
           from a reserved range after the artifact checksum is verified. The

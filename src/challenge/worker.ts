@@ -1,6 +1,7 @@
 import {
   ChallengeSearch,
   validateManifest,
+  START_CHECK,
   type FrozenArtifact,
   type Manifest,
 } from "./protocol";
@@ -30,6 +31,7 @@ self.onmessage = async (
       arm === "learned" && manifest.mode === "learned"
         ? artifact.payload.macros
         : [],
+      manifest.startCheck === START_CHECK,
     );
     let last = 0;
     while (true) {
