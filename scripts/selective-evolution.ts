@@ -134,7 +134,7 @@ for (const source of ["replication-v1", "language-value-prospective-v1"]) {
   for (const seed of p.config.seeds) {
     const run = JSON.parse(
       gunzipSync(
-        readFileSync(`output/joint/${source}/seed-${seed}-${selector}.json.gz`),
+        readFileSync(`output/joint/${source}/seed-${seed}.json.gz`),
       ).toString(),
     );
     for (const sig of run.trainingSignatures) excluded.add(sig);
