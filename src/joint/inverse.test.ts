@@ -36,6 +36,44 @@ import { parametricSearch } from "./parametric-search";
 import { languageValueFeatures } from "./language-value";
 import { fragmentFeatures, predictFragmentValue } from "./fragment-value";
 
+test("experimental composition heuristics preserve execution caps and keep checks out of search", () => {
+  const macros = JSON.parse(
+    readFileSync("output/joint/inverse-language-pilot-v4.json", "utf8"),
+  ).candidate.macros;
+  const examples = inputs(19307, 75, 5).map((input) => ({
+    input,
+    output: Math.abs(input[0]) + Math.max(0, input[1]),
+  }));
+  const options = [
+    { sparseWidth: 2, sparseSteps: 256 },
+    { residualBuild: 32 },
+    { unaryFirst: 0.4 },
+    { affineLattice: 32, forwardFraction: 0.7 },
+  ];
+  for (const option of options) {
+    const task = { examples, checks: examples };
+    const a = inverseSearch(task, macros, undefined, 73, 128, {
+      ...option,
+      affineFits: 64,
+      macroForward: 12,
+      maxNodes: 96,
+    });
+    const b = inverseSearch(
+      { ...task, checks: examples.map((e) => ({ ...e, output: 123456 })) },
+      macros,
+      undefined,
+      73,
+      128,
+      { ...option, affineFits: 64, macroForward: 12, maxNodes: 96 },
+    );
+    assert.deepEqual(a.tree, b.tree);
+    assert.equal(a.evaluations, b.evaluations);
+    assert.equal(a.expansions, b.expansions);
+    assert.ok(a.evaluations <= 128 && a.expansions <= 1024);
+    assert.ok(valid(a.tree, macros));
+  }
+});
+
 test("fragment guide matches independent PyTorch inference and preserves later observation geometry", () => {
   const folder = "output/joint/fragment-value-v1/";
   const model = JSON.parse(readFileSync(folder + "model.json", "utf8"));
