@@ -25,12 +25,12 @@ For a solved task, normalized solve-curve AUC is `1 - evaluations / budget`; for
 
 ## Measured result on the original distribution
 
-| Arm | Solved / 720 | Solve-curve AUC | Failure-censored evaluations | Partial expansions |
-| --- | ---: | ---: | ---: | ---: |
-| Base + uniform | 28 | 2.25% | 720,693 | 2,367,264 |
-| Base + joint policy | 38 | 2.94% | 715,592 | 2,490,408 |
-| Candidate + uniform | 25 | 1.90% | 723,305 | 2,437,195 |
-| Candidate + joint policy | 46 | 3.59% | 710,839 | 2,539,008 |
+| Arm                      | Solved / 720 | Solve-curve AUC | Failure-censored evaluations | Partial expansions |
+| ------------------------ | -----------: | --------------: | ---------------------------: | -----------------: |
+| Base + uniform           |           28 |           2.25% |                      720,693 |          2,367,264 |
+| Base + joint policy      |           38 |           2.94% |                      715,592 |          2,490,408 |
+| Candidate + uniform      |           25 |           1.90% |                      723,305 |          2,437,195 |
+| Candidate + joint policy |           46 |           3.59% |                      710,839 |          2,539,008 |
 
 These are 240 task instances × three optimizer replicates, not 720 independent functions; task draws can also overlap across meta-seeds. The candidate/joint arm solves 5/144 nested trials and 0/144 longer-expression trials. Base/joint solves 4/144 and 2/144 respectively. There is no demonstrated deeper-structure advantage.
 
@@ -64,3 +64,31 @@ The joint library/search loop is motivated by [DreamCoder](https://arxiv.org/abs
 ## Reproduce
 
 `npm run joint:calibration` uses training tasks only. `npm run joint:pilot` runs the original-support experiment; `npm run joint:filtered` runs the historically filtered variant. Completed benchmark files are never silently overwritten: version the output path/protocol for new runs. `npm run joint:report` validates frozen hashes and rebuilds the combined UI artifact from raw trials. `npm test` checks conditional features, token-renaming invariance, both search caps, final-example isolation, frozen weights, library semantics, prospective ranking and race accounting.
+
+## Subsequent inner-search experiments (not a new final benchmark)
+
+The next iteration isolates the inner synthesizer. Generator seed 31092026 supplies 100 bootstrap tasks, 60 training-only calibration tasks, 40 previously unused development tasks, and 40 further confirmation/final tasks that remain unopened. Three optimizer seeds repeat each calibration task at a 1,024-program cap.
+
+| Training-only calibration                                   | Solves / 180 | Outcome                                |
+| ----------------------------------------------------------- | -----------: | -------------------------------------- |
+| Legacy genetic search                                       |           17 | Reference                              |
+| Initial joint search                                        |           14 | Still weaker                           |
+| Interval-pruned search                                      |           11 | Regression after charging bound checks |
+| Conditional evolution + case-wise parent selection, uniform |           22 | Better corpus search                   |
+| Same search, original small joint policy                    |           21 | Small policy still unhelpful           |
+| Same search, extensively trained 64-unit policy             |           45 | Promising calibration improvement      |
+| Same policy controlling terminal/operator choice too        |           41 | Fewer solves, lower wall time          |
+
+The new policy is trained from 23 solved bootstrap programs plus 5,000 executed random/corpus-mutated programs. No oracle concept ASTs enter training. This yields 63,571 construction decisions; PyTorch training makes 3,440,640 decision updates, selecting weights on held-out **dream programs**, not final tasks. Dream validation next-production accuracy rises from about 6.5% to 31.2%. Models of widths 12 and 32 are also retained as calibration candidates. Exported weights are used by the same TypeScript interpreter; an independent PyTorch probability fixture checks inference parity. The original v1 search settings remain available by default.
+
+On the **40 previously unused development tasks × three seeds**, the larger policy gets **33/120 solves**, versus **16/120 uniform** and **17/120 legacy**. It uses 96,418 program evaluations versus 111,567 uniform, but takes 6.26 seconds versus 2.30 seconds uniform and 0.63 seconds legacy on this machine. Therefore this is not a wall-clock efficiency win or a final Gate 3 result. Task conditioning is cached without changing probabilities; inference and search overhead still matter. There has been no new expensive outer-language run or final test using this policy.
+
+The interval experiment has a separate bound-check counter and charges checks to the partial-work cap. It is preserved, not enabled by default. Case-wise parent selection retains distinct error behavior among up to 64 candidates instead of keeping only the best mean-error variants.
+
+### Proposal recall and alias audit
+
+`scripts/proposal-recall.ts` keeps ground-truth abs/positive-part/clamp functions **only in a diagnostic**. Neither proposal generation nor selection imports those labels. It finds that useful concepts sometimes exist before selection: original seed 0 proposes all three; seed 7 proposes positive-part and clamp equivalents; seed 42 proposes magnitude but loses a mined positive-part candidate during random language generation. Several definitions are unnecessarily bloated.
+
+The opt-in normalized proposal mode adds algebraic constant folding, identity/cancellation and min/max absorption/bound simplification; it rejects base-production aliases using 272 semantic probes. It preserves mined singletons and some mined pairs before filling the population with mutations. After normalization, seed 0 proposes compact equivalents of all three concepts and seed 42 preserves magnitude and positive-part. Seed 7 still proposes none. Thus both proposal coverage and selection need improvement; normalization alone has not solved discovery. Probe-based equivalence checks remain empirical.
+
+Artifacts: `output/joint/semantic-calibration.json`, `evolution-calibration.json`, `proposal-recall*.json`, and `output/joint/neural/`. Reproduction scripts are named after those experiments; neural training uses the locally installed PyTorch 2.10.0 on CPU and exports ordinary JSON weights. These additional training costs have not been amortized. The next target is stronger executable/inverse guidance at holes, with fresh validation and explicit work accounting.

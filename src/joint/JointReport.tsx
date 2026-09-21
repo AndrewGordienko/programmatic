@@ -40,7 +40,7 @@ export default function JointReport() {
     [error, setError] = useState(""),
     [filtered, setFiltered] = useState(false);
   useEffect(() => {
-    document.title = 'Programmatic AI — Joint language pilot';
+    document.title = "Programmatic AI — Joint language pilot";
     fetch("/joint-report.json")
       .then((r) => {
         if (!r.ok) throw new Error("Pilot report has not been generated yet.");

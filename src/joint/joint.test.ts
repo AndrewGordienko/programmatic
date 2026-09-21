@@ -7,6 +7,11 @@ import { context, encoder, fitJoint, hole, productions } from "./policy";
 import { abstraction, genome, propose } from "./genome";
 import { search } from "./search";
 import { experiment, PILOT } from "./experiment";
+import { aliasesBase, feasible, interval } from "./semantics";
+import { Random } from "../engine/random";
+import { canonical } from "./canonical";
+import { readFileSync } from "node:fs";
+import { taskContext, type JointPolicy } from "./policy";
 const arg = (value: number): Expr => ({ op: "arg", value, args: [] });
 const task = (f: (x: number, y: number) => number): Task => ({
   id: "test",
@@ -178,4 +183,133 @@ test("outer learner ranks before racing, uses fresh stage tasks and freezes befo
     result.cost.raceExpansions,
     races.reduce((s, r) => s + r.expansions, 0),
   );
+});
+
+test("interval pruning retains arbitrary sampled completions, including correlated macro arguments", () => {
+  const rng = new Random(8721);
+  const random = (depth: number, holes: boolean): Expr => {
+    if (depth === 0 || rng.next() < 0.35)
+      return holes && rng.next() < 0.5
+        ? hole()
+        : rng.next() < 0.6
+          ? arg(rng.int(2))
+          : { op: "const", value: rng.pick([-2, -1, 0, 1, 2]), args: [] };
+    const op = rng.pick(["add", "sub", "mul", "min", "max", "neg"]);
+    return {
+      op,
+      args: Array.from({ length: op === "neg" ? 1 : 2 }, () =>
+        random(depth - 1, holes),
+      ),
+    };
+  };
+  const complete = (e: Expr): Expr =>
+    e.op === "?" ? random(2, false) : { ...e, args: e.args.map(complete) };
+  for (let i = 0; i < 300; i++) {
+    const partial = random(3, true),
+      full = complete(partial),
+      bound = interval(partial);
+    const examples = inputs(i, 25, 5).map((input) => ({
+      input,
+      output: evalExpr(full, input),
+    }));
+    assert.ok(feasible(partial, examples, []));
+    for (const e of examples) {
+      const [lo, hi] = bound(...e.input);
+      assert.ok(e.output >= lo - 1e-7 && e.output <= hi + 1e-7);
+    }
+  }
+  const impossible = {
+    op: "max",
+    args: [{ op: "const", value: 0, args: [] }, hole()],
+  };
+  assert.equal(feasible(impossible, task(() => -1).examples, []), false);
+  const alias = abstraction({
+    op: "add",
+    args: [arg(0), { op: "neg", args: [arg(1)] }],
+  })!;
+  assert.equal(aliasesBase(alias), true);
+  assert.equal(abstraction(alias.body, 0, [], true), null);
+  const magnitude = abstraction({
+    op: "max",
+    args: [arg(0), { op: "neg", args: [arg(0)] }],
+  })!;
+  assert.equal(aliasesBase(magnitude), false);
+  assert.ok(
+    feasible(
+      { op: magnitude.name, args: [hole()] },
+      task((x) => Math.abs(x)).examples,
+      [magnitude],
+    ),
+  );
+  for (const cap of [1, 2, 11, 100]) {
+    const r = search(
+      task((x) => x + 0.123),
+      [],
+      undefined,
+      7,
+      32,
+      cap,
+      { semanticPruning: true },
+    );
+    assert.ok(r.expansions + r.boundChecks! <= cap);
+    assert.ok(r.evaluations <= 32);
+  }
+});
+
+test("canonical algebra preserves finite scalar behavior and removes redundant clamp syntax", () => {
+  const c = (value: number): Expr => ({ op: "const", value, args: [] });
+  const clip = { op: "max", args: [{ op: "min", args: [arg(0), c(1)] }, c(0)] };
+  const redundant = {
+    op: "max",
+    args: [
+      { op: "min", args: [clip, c(1)] },
+      { op: "min", args: [c(0), c(1)] },
+    ],
+  };
+  const result = canonical(redundant);
+  assert.equal(JSON.stringify(result), JSON.stringify(canonical(clip)));
+  for (const input of inputs(31, 100, 20))
+    assert.equal(evalExpr(redundant, input), evalExpr(result, input));
+});
+
+test("exported larger policy agrees with PyTorch and cached conditioning preserves predictions", () => {
+  const policy: JointPolicy = JSON.parse(
+    readFileSync("output/joint/neural/policy.json", "utf8"),
+  );
+  const fixture: { contexts: number[][]; probabilities: number[][] } =
+    JSON.parse(readFileSync("output/joint/neural/parity.json", "utf8"));
+  const ps = productions([]),
+    predict = encoder(policy, ps);
+  fixture.contexts.forEach((x, j) =>
+    predict(x).forEach((v, i) =>
+      assert.ok(Math.abs(v - fixture.probabilities[j][i]) < 1e-10),
+    ),
+  );
+  const t = task((x) => Math.abs(x)),
+    fast = taskContext(t.examples, ps, []),
+    partial = { op: "max", args: [arg(0), hole()] };
+  const a = context(t.examples, partial, [1], ps, []),
+    b = fast(partial, [1]);
+  assert.deepEqual(a, b);
+  assert.deepEqual(predict(a), encoder(policy, ps, a.slice(0, 29))(b));
+  const full = search(t, [], policy, 7, 128, 1024, { evolutionary: true }),
+    cached = search(t, [], policy, 7, 128, 1024, {
+      evolutionary: true,
+      fastPolicy: true,
+    });
+  assert.deepEqual({ ...full, elapsedMs: 0 }, { ...cached, elapsedMs: 0 });
+  const retrained = fitJoint(
+    [
+      {
+        task: t,
+        tree: { op: "max", args: [arg(0), { op: "neg", args: [arg(0)] }] },
+      },
+    ],
+    [],
+    3,
+    policy,
+    { dreams: 2, epochs: 1 },
+  );
+  assert.equal(retrained.contextWeights.length, 64);
+  assert.ok(Number.isFinite(retrained.loss));
 });

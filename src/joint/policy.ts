@@ -73,21 +73,25 @@ export function context(
   path: number[],
   ps: Production[],
   macros: Macro[],
+  fixed?: { task: number[]; language: number[] },
 ): number[] {
   const nodes = paths(tree).map((p) => at(tree, p));
   const parent = path.length ? at(tree, path.slice(0, -1)) : null;
   const parentProduction = ps.find(
     (p) => p.node.op === parent?.op && p.node.value === parent?.value,
   );
+  const filled = fill(tree);
   return [
-    ...Array.from({ length: 25 }, (_, i) =>
-      Math.tanh((examples[i]?.output ?? 0) / 4),
-    ),
-    ...[0, 1].flatMap((j) => [
-      examples.reduce((s, e) => s + e.input[j], 0) / examples.length / 4,
-      examples.reduce((s, e) => s + Math.abs(e.input[j]), 0) /
-        examples.length /
-        4,
+    ...(fixed?.task ?? [
+      ...Array.from({ length: 25 }, (_, i) =>
+        Math.tanh((examples[i]?.output ?? 0) / 4),
+      ),
+      ...[0, 1].flatMap((j) => [
+        examples.reduce((s, e) => s + e.input[j], 0) / examples.length / 4,
+        examples.reduce((s, e) => s + Math.abs(e.input[j]), 0) /
+          examples.length /
+          4,
+      ]),
     ]),
     path.length / 10,
     (path.at(-1) ?? -1) / 3,
@@ -96,15 +100,27 @@ export function context(
     ...BASE.map((op) => nodes.filter((n) => n.op === op).length / 10),
     ...(parentProduction?.semantic ?? Array(18).fill(0)),
     ...PROBES.slice(0, 6).map((xs) =>
-      Math.tanh(evalExpr(fill(tree), xs, macros) / 4),
+      Math.tanh(evalExpr(filled, xs, macros) / 4),
     ),
-    ps.length / 24,
-    ...Array.from(
-      { length: 6 },
-      (_, i) => ps.reduce((s, p) => s + p.semantic[i + 2], 0) / ps.length,
-    ),
-    1,
+    ...(fixed?.language ?? [
+      ps.length / 24,
+      ...Array.from(
+        { length: 6 },
+        (_, i) => ps.reduce((s, p) => s + p.semantic[i + 2], 0) / ps.length,
+      ),
+      1,
+    ]),
   ];
+}
+export function taskContext(
+  examples: Example[],
+  ps: Production[],
+  macros: Macro[],
+) {
+  const initial = context(examples, hole(), [], ps, macros);
+  const fixed = { task: initial.slice(0, 29), language: initial.slice(-8) };
+  return (tree: Expr, path: number[]) =>
+    context(examples, tree, path, ps, macros, fixed);
 }
 const H = 12;
 export type JointPolicy = {
@@ -123,15 +139,31 @@ export const softmax = (xs: number[]) => {
     sum = es.reduce((a, b) => a + b, 0);
   return es.map((v) => v / sum);
 };
-export function encoder(p: JointPolicy | undefined, ps: Production[]) {
+export function encoder(
+  p: JointPolicy | undefined,
+  ps: Production[],
+  prefix?: number[],
+) {
   const ys = ps.map((op) => [...op.semantic, 1]);
   const embeddings =
     p && ys.map((y) => p.operatorWeights.map((w) => Math.tanh(dot(w, y))));
+  const biases = p && ys.map((y) => dot(p.bias, y));
+  const starts =
+    p &&
+    prefix &&
+    p.contextWeights.map((w) => prefix.reduce((s, v, i) => s + w[i] * v, 0));
   return (x: number[]) => {
     if (!p || !embeddings) return ps.map(() => 1 / ps.length);
-    const h = p.contextWeights.map((w) => Math.tanh(dot(w, x)));
+    const h = p.contextWeights.map((w, k) => {
+      if (!starts || !prefix) return Math.tanh(dot(w, x));
+      let sum = starts[k];
+      for (let i = prefix.length; i < x.length; i++) sum += w[i] * x[i];
+      return Math.tanh(sum);
+    });
     const probs = softmax(
-      embeddings.map((e, i) => dot(h, e) / Math.sqrt(H) + dot(p.bias, ys[i])),
+      embeddings.map(
+        (e, i) => dot(h, e) / Math.sqrt(p.contextWeights.length) + biases![i],
+      ),
     );
     return probs.map((v) => 0.95 * v + 0.05 / ps.length);
   };
@@ -213,6 +245,7 @@ export function fitJoint(
       };
   const ys = ps.map((op) => [...op.semantic, 1]);
   let loss = 0;
+  const width = p.contextWeights.length;
   for (let epoch = 0; epoch < options.epochs; epoch++) {
     // Fisher-Yates shuffle, never sorted with a random comparator.
     for (let i = decisions.length - 1; i > 0; i--) {
@@ -225,15 +258,15 @@ export function fitJoint(
         p.operatorWeights.map((w) => Math.tanh(dot(w, y))),
       );
       const probs = softmax(
-        es.map((e, i) => dot(h, e) / Math.sqrt(H) + dot(p.bias, ys[i])),
+        es.map((e, i) => dot(h, e) / Math.sqrt(width) + dot(p.bias, ys[i])),
       );
-      const dh = Array(H).fill(0),
+      const dh = Array(width).fill(0),
         dw = p.operatorWeights.map((w) => w.map(() => 0));
       const db = p.bias.map(() => 0);
       loss += -Math.log(Math.max(1e-12, probs[row.target]));
       probs.forEach((prob, i) => {
-        const d = (Number(i === row.target) - prob) / Math.sqrt(H);
-        for (let k = 0; k < H; k++) {
+        const d = (Number(i === row.target) - prob) / Math.sqrt(width);
+        for (let k = 0; k < width; k++) {
           dh[k] += d * es[i][k];
           for (let j = 0; j < ys[i].length; j++)
             dw[k][j] += d * h[k] * (1 - es[i][k] ** 2) * ys[i][j];
@@ -241,7 +274,7 @@ export function fitJoint(
         for (let j = 0; j < db.length; j++)
           db[j] += (Number(i === row.target) - prob) * ys[i][j];
       });
-      for (let k = 0; k < H; k++) {
+      for (let k = 0; k < width; k++) {
         for (let j = 0; j < row.x.length; j++)
           p.contextWeights[k][j] += 0.018 * dh[k] * (1 - h[k] ** 2) * row.x[j];
         for (let j = 0; j < dw[k].length; j++)

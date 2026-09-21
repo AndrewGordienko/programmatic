@@ -1,0 +1,9 @@
+{
+  "seed": 7721,
+  "corpus": 23,
+  "programs": 5000,
+  "decisions": 63571,
+  "bootstrapEvaluations": 126086,
+  "generationMs": 1341.61775,
+  "note": "Training corpus + executed random/corpus-mutated dreams only. No calibration or final target ASTs."
+}

@@ -1,0 +1,88 @@
+{
+  "note": "Diagnostic labels only; not fed into proposal ranking, selection or training.",
+  "runs": [
+    {
+      "seed": 0,
+      "corpus": 44,
+      "mined": {
+        "count": 15,
+        "matches": {
+          "magnitude": [],
+          "positivePart": [
+            "fn_1(a) = max(a, 0)"
+          ],
+          "unitClamp": [
+            "fn_4(a) = max(min(a, 1), 0)"
+          ]
+        }
+      },
+      "proposed": {
+        "languages": 128,
+        "definitions": 134,
+        "matches": {
+          "magnitude": [
+            "fn_3916817425(a) = max((-a), a)"
+          ],
+          "positivePart": [
+            "fn_715306984(a) = max(a, 0)"
+          ],
+          "unitClamp": [
+            "fn_3627050543(a) = max(min(max(min(a, 1), 0), 1), min(0, 1))"
+          ]
+        }
+      }
+    },
+    {
+      "seed": 7,
+      "corpus": 34,
+      "mined": {
+        "count": 8,
+        "matches": {
+          "magnitude": [],
+          "positivePart": [],
+          "unitClamp": []
+        }
+      },
+      "proposed": {
+        "languages": 128,
+        "definitions": 135,
+        "matches": {
+          "magnitude": [],
+          "positivePart": [
+            "fn_2300872539(a) = max((max(a, a) * (--1)), (a - a))"
+          ],
+          "unitClamp": [
+            "fn_775401372(a) = max(max(min(-2, -1), min(1, a)), 0)"
+          ]
+        }
+      }
+    },
+    {
+      "seed": 42,
+      "corpus": 39,
+      "mined": {
+        "count": 12,
+        "matches": {
+          "magnitude": [
+            "fn_5(a) = max(a, (-a))"
+          ],
+          "positivePart": [
+            "fn_1(a) = max(0, a)"
+          ],
+          "unitClamp": []
+        }
+      },
+      "proposed": {
+        "languages": 128,
+        "definitions": 135,
+        "matches": {
+          "magnitude": [
+            "fn_2352281741(a) = max(a, (-a))"
+          ],
+          "positivePart": [],
+          "unitClamp": []
+        }
+      }
+    }
+  ]
+}

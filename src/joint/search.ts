@@ -10,8 +10,10 @@ import {
   replace,
 } from "../dsl/expressions";
 import type { Expr, Macro, Task } from "../dsl/types";
+import { feasible } from "./semantics";
 import {
   context,
+  taskContext,
   encoder,
   firstHole,
   hole,
@@ -25,6 +27,8 @@ export type SearchResult = {
   solved: boolean;
   evaluations: number;
   expansions: number;
+  boundChecks?: number;
+  pruned?: number;
   budget: number;
   expansionBudget: number;
   effort: number;
@@ -89,6 +93,12 @@ export function search(
   seed: number,
   budget: number,
   expansionBudget = budget * 8,
+  options: {
+    semanticPruning?: boolean;
+    evolutionary?: boolean;
+    fastPolicy?: boolean;
+    learnedShape?: boolean;
+  } = {},
 ): SearchResult {
   if (
     !Number.isInteger(budget) ||
@@ -100,45 +110,91 @@ export function search(
   const start = performance.now(),
     rng = new Random(seed),
     ps = productions(macros),
-    predict = encoder(policy, ps);
+    describe = options.fastPolicy
+      ? taskContext(task.examples, ps, macros)
+      : (tree: Expr, path: number[]) =>
+          context(task.examples, tree, path, ps, macros),
+    predict = encoder(
+      policy,
+      ps,
+      options.fastPolicy ? describe(hole(), []).slice(0, 29) : undefined,
+    );
   const q = new Queue(),
     seen = new Set<string>();
   q.push({ tree: hole(), cost: 0, priority: 0 });
   let evaluations = 0,
     expansions = 0,
+    boundChecks = 0,
+    pruned = 0,
     duplicates = 0,
     best: Expr = { op: "const", value: 0, args: [] },
     error = Infinity;
-  const pool: { tree: Expr; error: number }[] = [];
+  const pool: {
+    tree: Expr;
+    error: number;
+    errors: number[];
+    behavior: string;
+  }[] = [];
+  const parent = () => {
+    if (!options.evolutionary) return rng.pick(pool.slice(0, 8)).tree;
+    let candidates = [...pool];
+    const cases = Array.from({ length: task.examples.length }, (_, i) => i);
+    for (let i = cases.length - 1; i > 0; i--) {
+      const j = rng.int(i + 1);
+      [cases[i], cases[j]] = [cases[j], cases[i]];
+    }
+    for (const i of cases) {
+      const best = Math.min(...candidates.map((c) => c.errors[i]));
+      candidates = candidates.filter((c) => c.errors[i] <= best + 1e-7);
+      if (candidates.length <= 1) break;
+    }
+    return rng.pick(candidates).tree;
+  };
   let lastSampled = -1;
   while (
     q.rows.length &&
     evaluations < budget &&
-    expansions < expansionBudget
+    expansions + boundChecks < expansionBudget
   ) {
     // Interleave conditional stochastic completions with best-first expansion.
     // This reaches deeper trees before exhaustive prefix search gets there.
-    if (evaluations % 2 === 0 && evaluations !== lastSampled) {
+    if (
+      (options.evolutionary ? evaluations % 10 !== 9 : evaluations % 2 === 0) &&
+      evaluations !== lastSampled
+    ) {
       lastSampled = evaluations;
       let partial = hole();
       if (pool.length && rng.next() < 0.7) {
-        const parent = rng.pick(pool.slice(0, 8)).tree;
-        partial = replace(parent, rng.pick(paths(parent)), hole());
+        const p = parent();
+        partial = replace(p, rng.pick(paths(p)), hole());
       }
       const depthLimit = 2 + rng.int(4);
       let h = firstHole(partial);
-      while (h && expansions < expansionBudget) {
-        const probabilities = predict(
-          context(task.examples, partial, h, ps, macros),
-        );
+      let rejected = false;
+      while (h && expansions + boundChecks < expansionBudget) {
+        if (options.semanticPruning) {
+          boundChecks++;
+          if (!feasible(partial, task.examples, macros)) {
+            pruned++;
+            rejected = true;
+            break;
+          }
+          if (expansions + boundChecks >= expansionBudget) break;
+        }
+        const probabilities = predict(policy ? describe(partial, h) : []);
         const terminal =
           h.length >= depthLimit || exprSize(partial) >= 29 || rng.next() < 0.3;
         const legal = ps
           .map((p, i) => ({ p, i }))
           .filter(({ p }) =>
-            terminal
-              ? !p.arity
-              : p.arity > 0 && exprSize(partial) + p.arity <= 31,
+            options.learnedShape &&
+            policy &&
+            h!.length < depthLimit &&
+            exprSize(partial) < 29
+              ? exprSize(partial) + p.arity <= 31
+              : terminal
+                ? !p.arity
+                : p.arity > 0 && exprSize(partial) + p.arity <= 31,
           );
         const sum = legal.reduce((s, { i }) => s + probabilities[i], 0);
         let u = rng.next() * sum,
@@ -154,14 +210,22 @@ export function search(
         expansions++;
         h = firstHole(partial);
       }
-      if (!h) q.push({ tree: partial, cost: 0, priority: -2 });
+      if (!h && !rejected) q.push({ tree: partial, cost: 0, priority: -2 });
     }
     const row = q.pop(),
       path = firstHole(row.tree);
     if (path) {
-      if (expansions >= expansionBudget) break;
+      if (expansions + boundChecks >= expansionBudget) break;
+      if (options.semanticPruning) {
+        boundChecks++;
+        if (!feasible(row.tree, task.examples, macros)) {
+          pruned++;
+          continue;
+        }
+        if (expansions + boundChecks >= expansionBudget) break;
+      }
       expansions++;
-      const probs = predict(context(task.examples, row.tree, path, ps, macros));
+      const probs = predict(policy ? describe(row.tree, path) : []);
       const n = exprSize(row.tree),
         depth = path.length;
       ps.forEach((p, i) => {
@@ -188,20 +252,22 @@ export function search(
     seen.add(k);
     if (exprSize(expandExpr(row.tree, macros)) > 96) continue;
     const f = compile(row.tree, macros);
-    const err =
-      task.examples.reduce((s, e) => {
-        const d = Math.abs(f(...e.input) - e.output);
-        return s + (Number.isFinite(d) ? Math.min(1e6, d) : 1e6);
-      }, 0) / task.examples.length;
+    const errors = task.examples.map((e) => {
+      const d = Math.abs(f(...e.input) - e.output);
+      return Number.isFinite(d) ? Math.min(1e6, d) : 1e6;
+    });
+    const err = errors.reduce((s, d) => s + d, 0) / task.examples.length;
     if (err < error || (err === error && exprSize(row.tree) < exprSize(best))) {
       error = err;
       best = row.tree;
     }
-    pool.push({ tree: row.tree, error: err });
+    const behavior = errors.map((v) => v.toFixed(8)).join(",");
+    if (!options.evolutionary || !pool.some((c) => c.behavior === behavior))
+      pool.push({ tree: row.tree, error: err, errors, behavior });
     pool.sort(
       (a, b) => a.error - b.error || exprSize(a.tree) - exprSize(b.tree),
     );
-    pool.splice(16);
+    pool.splice(options.evolutionary ? 64 : 16);
     if (error < 1e-8) break;
     // Evolution proposes partial trees; the same conditional policy fills holes.
     if (evaluations % 8 === 0 && pool.length) {
@@ -225,10 +291,11 @@ export function search(
     solved,
     evaluations,
     expansions,
+    ...(options.semanticPruning ? { boundChecks, pruned } : {}),
     budget,
     expansionBudget,
     effort: solved ? evaluations : budget,
-    work: evaluations + expansions,
+    work: evaluations + expansions + boundChecks,
     trainError: error,
     checkError,
     nodes: exprSize(best),
@@ -242,7 +309,7 @@ export function search(
         ? "fit"
         : evaluations >= budget
           ? "evaluations"
-          : expansions >= expansionBudget
+          : expansions + boundChecks >= expansionBudget
             ? "expansions"
             : "frontier",
   };

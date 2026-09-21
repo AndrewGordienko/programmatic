@@ -19,6 +19,8 @@ import {
   type CorpusEntry,
 } from "../dsl/types";
 import { PROBES } from "./policy";
+import { canonical as normalizeExpression } from "./canonical";
+import { aliasesBase } from "./semantics";
 export type Genome = {
   id: string;
   macros: Macro[];
@@ -40,7 +42,9 @@ export function abstraction(
   source: Expr,
   support = 0,
   sourceTasks: string[] = [],
+  normalized = false,
 ): Macro | null {
+  if (normalized) source = normalizeExpression(source);
   const ids = new Map<number, number>();
   const canonical = (e: Expr): Expr => {
     if (e.op === "arg") {
@@ -63,6 +67,7 @@ export function abstraction(
     definition: `${name}(${["a", "b", "c"].slice(0, arity).join(", ")}) = ${formatExpr(body, ["a", "b", "c"])}`,
   };
   if (!validLibrary([macro]) || size < 3) return null;
+  if (normalized && aliasesBase(macro)) return null;
   const values = PROBES.map((xs) => evalExpr(body, xs));
   if (
     values.some((v) => !Number.isFinite(v)) ||
@@ -119,16 +124,25 @@ export function propose(
   corpus: CorpusEntry[],
   seed: number,
   count: number,
+  options: { normalized?: boolean } = {},
 ): Genome[] {
   const rng = new Random(seed),
     pool: Macro[] = [];
   const add = (e: Expr, support = 0, sources: string[] = []) => {
-    const m = abstraction(e, support, sources);
-    if (m && !pool.some((p) => signature(p.body) === signature(m.body)))
-      pool.push(m);
+    const m = abstraction(e, support, sources, options.normalized);
+    if (!m) return;
+    const old = pool.findIndex((p) => signature(p.body) === signature(m.body));
+    if (old < 0) pool.push(m);
+    else if (options.normalized && m.size < pool[old].size)
+      pool[old] = {
+        ...m,
+        support: Math.max(m.support, pool[old].support),
+        sourceTasks: [...new Set([...m.sourceTasks, ...pool[old].sourceTasks])],
+      };
   };
   for (const { macro } of mine(corpus, []))
     add(macro.body, macro.support, macro.sourceTasks);
+  const mined = [...pool];
   // All synthesized subtrees may contribute, including rare ones; no hidden target syntax.
   for (const c of corpus)
     for (const p of paths(c.tree)) add(at(c.tree, p), 1, [c.task.id]);
@@ -152,6 +166,26 @@ export function propose(
       genome(p.macros, "retain", [p.id], corpus.length),
     ]),
   );
+  if (options.normalized) {
+    // Retain mined candidates in the proposal set instead of hoping mutation
+    // happens to sample them. Ranking still uses no oracle concept labels.
+    for (const m of mined.slice(0, Math.min(32, count - 1))) {
+      if (out.size >= count) break;
+      const g = genome([m], "mined-single", [], corpus.length);
+      out.set(g.id, g);
+    }
+    for (let i = 0; i < Math.min(8, mined.length); i++)
+      for (let j = i + 1; j < Math.min(8, mined.length); j++)
+        if (out.size < count) {
+          const g = genome(
+            [mined[i], mined[j]],
+            "mined-pair",
+            [],
+            corpus.length,
+          );
+          out.set(g.id, g);
+        }
+  }
   for (let attempt = 0; out.size < count && attempt < count * 100; attempt++) {
     const parent = rng.pick(population),
       other = rng.pick(population),
@@ -187,7 +221,7 @@ export function propose(
       else if (operation === "merge")
         body = replace(base.body, path, rng.pick(pool).body);
       else body = replace(base.body, path, random(2));
-      const m = abstraction(expandExpr(body, []));
+      const m = abstraction(expandExpr(body, []), 0, [], options.normalized);
       if (!m) continue;
       if (operation === "replace" && ms.length)
         ms.splice(rng.int(ms.length), 1);
