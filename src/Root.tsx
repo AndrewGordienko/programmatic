@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 const Workbench = lazy(() => import("./App"));
 const Demo = lazy(() => import("./demo/DemoApp"));
+const Joint = lazy(() => import("./joint/JointReport"));
 export function demoStep(hash: string): number | null {
   const match = /^#demo(?:\/([1-4]))?$/.exec(hash);
   return match ? Number(match[1] ?? 1) - 1 : null;
@@ -17,7 +18,13 @@ export default function Root() {
     <Suspense
       fallback={<div className="route-loading">Opening the experiment…</div>}
     >
-      {step === null ? <Workbench /> : <Demo step={step} />}
+      {hash === "#joint" ? (
+        <Joint />
+      ) : step === null ? (
+        <Workbench />
+      ) : (
+        <Demo step={step} />
+      )}
     </Suspense>
   );
 }

@@ -1,0 +1,37 @@
+{
+  "version": "joint-language-v1",
+  "seeds": [
+    0
+  ],
+  "config": {
+    "seed": 0,
+    "rounds": 2,
+    "proposals": 24,
+    "shortlist": 4,
+    "exploration": 2,
+    "survivors": 4,
+    "finalists": 2,
+    "wakeBudget": 128,
+    "screenBudget": 32,
+    "mediumBudget": 64,
+    "finalBudget": 128,
+    "replicates": 1,
+    "tasksPerStage": 3,
+    "complexityPenalty": 0.0005,
+    "workPenalty": 0.01,
+    "amortizationHorizon": 1000
+  },
+  "sizes": {
+    "training": 16,
+    "development": 12,
+    "confirmation": 4,
+    "testing": 10
+  },
+  "generatedBeforeRuns": "2026-09-21T01:28:57.856Z",
+  "suites": [
+    {
+      "seed": 0,
+      "hash": "deacf98fc2b8a91c801157a437176249e15ac91bd2af869fc48dbf06ddeef8dd"
+    }
+  ]
+}

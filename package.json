@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsx scripts/demo-evidence.ts && tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "tsx --test src/engine/engine.test.ts src/driving/driving.test.ts src/offroad/offroad.test.ts src/dsl/library.test.ts src/challenge/challenge.test.ts src/demo/demo.test.ts",
+    "test": "tsx --test src/engine/engine.test.ts src/driving/driving.test.ts src/offroad/offroad.test.ts src/dsl/library.test.ts src/challenge/challenge.test.ts src/demo/demo.test.ts src/joint/joint.test.ts",
     "library:reference": "tsx scripts/library-benchmark.ts --reference",
     "library:benchmark": "tsx scripts/library-benchmark.ts",
     "library:surrogate": "tsx scripts/library-surrogate.ts",
@@ -20,7 +20,11 @@
     "offroad:freeze": "tsx scripts/freeze-offroad.ts",
     "inner:calibration": "tsx scripts/inner-calibration.ts",
     "challenge:diagnose": "tsx scripts/challenge-diagnose.ts",
-    "demo:evidence": "tsx scripts/demo-evidence.ts"
+    "demo:evidence": "tsx scripts/demo-evidence.ts",
+    "joint:calibration": "tsx scripts/joint-calibration.ts",
+    "joint:pilot": "tsx scripts/joint-benchmark.ts --iid",
+    "joint:filtered": "tsx scripts/joint-benchmark.ts",
+    "joint:report": "tsx scripts/joint-report.ts"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",

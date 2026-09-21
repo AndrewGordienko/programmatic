@@ -273,7 +273,7 @@ function NextExperiment() {
     <div className="demo-next">
       <div className="demo-screen-intro">
         <span className="presentation-label">
-          04 / PROPOSED NEXT EXPERIMENT · NOT IMPLEMENTED
+          04 / NEW SCALAR PILOT · BENEFIT UNPROVEN
         </span>
         <h1>
           Learn which language edits
@@ -358,9 +358,11 @@ function NextExperiment() {
             primitives.
           </p>
           <small>
-            Current proposal selection already measures utility. This experiment
-            changes ranking and compute allocation; it has not yet demonstrated
-            savings.
+            The separate scalar pilot now implements joint conditional search,
+            population evolution and prospective ranking. Reliable improvement
+            and quality-preserving compute savings remain unproven.
+            <br />
+            <a href="#joint">Inspect the recorded pilot →</a>
           </small>
         </div>
       </div>

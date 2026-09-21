@@ -1,0 +1,137 @@
+{
+  "version": "joint-language-v1",
+  "description": "Predeclared three-seed pilot, independent meta-task draws. Not the 20-seed acceptance benchmark.",
+  "seeds": [
+    0
+  ],
+  "sizes": {
+    "training": 16,
+    "development": 12,
+    "confirmation": 4,
+    "testing": 10
+  },
+  "config": {
+    "seed": 0,
+    "rounds": 2,
+    "proposals": 24,
+    "shortlist": 4,
+    "exploration": 2,
+    "survivors": 4,
+    "finalists": 2,
+    "wakeBudget": 128,
+    "screenBudget": 32,
+    "mediumBudget": 64,
+    "finalBudget": 128,
+    "replicates": 1,
+    "tasksPerStage": 3,
+    "complexityPenalty": 0.0005,
+    "workPenalty": 0.01,
+    "amortizationHorizon": 1000
+  },
+  "runs": [
+    {
+      "seed": 0,
+      "selected": {
+        "id": "L2166136261",
+        "macros": [],
+        "edit": "base",
+        "parents": [],
+        "features": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "confirmation": {
+        "mean": 0,
+        "standardError": 0,
+        "lowerHeuristicBound": 0,
+        "accepted": false,
+        "taskDifferences": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "note": "Single frozen candidate, task-clustered mean ± 2 SE heuristic; not a sequential confidence guarantee."
+      },
+      "corpus": 0,
+      "summary": {
+        "fixed-uniform": {
+          "trials": 10,
+          "solved": 0,
+          "auc": 0,
+          "evaluations": 1280,
+          "expansions": 4264,
+          "effort": 1280,
+          "wallMs": 48.973917999999685,
+          "macroUses": 0
+        },
+        "fixed-joint": {
+          "trials": 10,
+          "solved": 0,
+          "auc": 0,
+          "evaluations": 1280,
+          "expansions": 4392,
+          "effort": 1280,
+          "wallMs": 98.35300099999995,
+          "macroUses": 0
+        },
+        "candidate-uniform": {
+          "trials": 10,
+          "solved": 0,
+          "auc": 0,
+          "evaluations": 1280,
+          "expansions": 4264,
+          "effort": 1280,
+          "wallMs": 47.9554999999998,
+          "macroUses": 0
+        },
+        "candidate-joint": {
+          "trials": 10,
+          "solved": 0,
+          "auc": 0,
+          "evaluations": 1280,
+          "expansions": 4392,
+          "effort": 1280,
+          "wallMs": 98.68391999999994,
+          "macroUses": 0
+        }
+      },
+      "cost": {
+        "bootstrapEvaluations": 2048,
+        "wakeEvaluations": 2048,
+        "wakeExpansions": 8789,
+        "raceEvaluations": 2781,
+        "raceExpansions": 10642,
+        "confirmationEvaluations": 1024,
+        "confirmationExpansions": 3590,
+        "policyMs": 580.216126,
+        "policyDecisions": 10212,
+        "surrogateMs": 0.434291000000087
+      },
+      "discoveryMs": 1145.0590829999999,
+      "rounds": [
+        {
+          "round": 0,
+          "candidates": 24,
+          "selected": 6,
+          "modelTrainingRows": 0,
+          "winner": "L2166136261"
+        },
+        {
+          "round": 1,
+          "candidates": 24,
+          "selected": 7,
+          "modelTrainingRows": 6,
+          "winner": "L2166136261"
+        }
+      ]
+    }
+  ]
+}
