@@ -92,3 +92,33 @@ The interval experiment has a separate bound-check counter and charges checks to
 The opt-in normalized proposal mode adds algebraic constant folding, identity/cancellation and min/max absorption/bound simplification; it rejects base-production aliases using 272 semantic probes. It preserves mined singletons and some mined pairs before filling the population with mutations. After normalization, seed 0 proposes compact equivalents of all three concepts and seed 42 preserves magnitude and positive-part. Seed 7 still proposes none. Thus both proposal coverage and selection need improvement; normalization alone has not solved discovery. Probe-based equivalence checks remain empirical.
 
 Artifacts: `output/joint/semantic-calibration.json`, `evolution-calibration.json`, `proposal-recall*.json`, and `output/joint/neural/`. Reproduction scripts are named after those experiments; neural training uses the locally installed PyTorch 2.10.0 on CPU and exports ordinary JSON weights. These additional training costs have not been amortized. The next target is stronger executable/inverse guidance at holes, with fresh validation and explicit work accounting.
+
+## Executable inverse-search iteration
+
+`src/joint/inverse.ts` adds a **piecewise-affine scalar-domain heuristic**, not a general solution to language discovery. It infers bounded integer affine fragments from I/O triples, builds them from the original arithmetic operators, and propagates desired output intervals backward through add/subtract/multiply/min/max/negation. A semantic fragment bank answers inverse constraints. The same frozen neural policy ranks remaining production choices. There are no abs, positive-part or clamp templates in the solver.
+
+Every proposed complete expression, including support screening and duplicates, counts against the program cap. Plane fits, inverse steps and constraint queries have a separate structural cap; constraint-point checks and wall time are reported too. These heterogeneous operations are not equivalent CPU units. The initial exploratory `inverse-calibration.json` omitted support-screening executions and is explicitly invalid for compute claims. Corrected v2 and v3 artifacts are retained; v3 also fixes reuse of cached fragment semantics.
+
+With a cap of 512 program proposals and 4,096 structural operations, v3 training-only calibration obtains 87/180 guided solves, 80/180 uniform solves, and 41/180 with the affine heuristic removed. The subsequent **fresh 40-task inner-validation batch × three optimizer seeds** gives:
+
+| Solver | Solved / 120 | Program proposals | Structural operations | Wall time |
+| --- | ---: | ---: | ---: | ---: |
+| Legacy genetic | 11 | 58,988 | — | 0.32 s |
+| Previous joint solver | 34 | 48,457 | 225,853 | 3.32 s |
+| Inverse, uniform | 52 | 9,501 | 302,027 | 0.58 s |
+| Inverse, frozen joint policy | 61 | 8,631 | 224,977 | 0.45 s |
+| Inverse, affine heuristic removed | 26 | 1,706 | 405,156 | 0.78 s |
+
+The guided inverse solver gets 57/96 related, 4/12 nested and 0/12 longer-expression solves. These are 40 task instances, not 120 independent tasks or independently trained policies. All arms have the same program cap; heterogeneous work and CPU overhead still differ. The three optimizer seeds share one previously trained policy. This is a meaningful inner-search improvement, not a final multi-meta-seed language-learning result.
+
+That solver produces correct programs for **90/160 training tasks** across three searches each (264/480 successful trials). Equality-aware abstraction replaces all occurrences of the same computation with one shared argument. A commutative pattern-matching fix prevents equivalent min/max operand orders from hiding compression. The resulting 94 proposed definitions include:
+
+```
+fn_2352281741(a) = max(a, -a)       support: 23 training tasks
+fn_715306984(a)  = max(a, 0)        support: 58 training tasks
+fn_2597717659(a) = min(1, max(a,0)) support: 22 training tasks
+```
+
+These were mined from synthesized programs; oracle names enter only the subsequent diagnostic. They are **proposals, not accepted language improvements**. No fresh downstream selection, structural-transfer advantage or discovery amortization has yet been established for them. The inverse engine currently uses arbitrary unary macros as forward fragments; general macro inversion remains unimplemented.
+
+Artifacts: `inverse-calibration-v3.json`, `inverse-validation-v3.json`, `inverse-corpus-v4.json`. The corpus took 36,914 program proposals, 877,042 structural operations and about 2.23 seconds including abstraction mining on this machine, excluding earlier neural-data generation/training and research calibration. Report those additional costs before claiming total amortization. Tests cover inverse-constraint soundness, out-of-sample execution, check-output isolation, budget caps, shared arguments and commutative rewriting.

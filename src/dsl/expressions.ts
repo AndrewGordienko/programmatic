@@ -54,13 +54,37 @@ export function validLibrary(ms: Macro[]): boolean {
   );
 }
 // Pattern matching permits arbitrary expression arguments and repeated holes.
-function match(pattern: Expr, e: Expr, args: Map<number, Expr>): boolean {
+function match(
+  pattern: Expr,
+  e: Expr,
+  args: Map<number, Expr>,
+  commutative = false,
+): boolean {
   if (pattern.op === "arg") {
     const i = pattern.value!,
       old = args.get(i);
     if (old) return key(old) === key(e);
     args.set(i, e);
     return true;
+  }
+  if (commutative) {
+    if (
+      pattern.op !== e.op ||
+      pattern.value !== e.value ||
+      pattern.args.length !== e.args.length
+    )
+      return false;
+    const orders = [e.args];
+    if (["add", "mul", "min", "max"].includes(e.op))
+      orders.push([...e.args].reverse());
+    for (const order of orders) {
+      const local = new Map(args);
+      if (pattern.args.every((p, i) => match(p, order[i], local, true))) {
+        for (const [i, value] of local) args.set(i, value);
+        return true;
+      }
+    }
+    return false;
   }
   return (
     pattern.op === e.op &&
@@ -69,13 +93,21 @@ function match(pattern: Expr, e: Expr, args: Map<number, Expr>): boolean {
     pattern.args.every((p, i) => match(p, e.args[i], args))
   );
 }
-export function rewrite(e: Expr, macros: Macro[]): Expr {
+export function rewrite(
+  e: Expr,
+  macros: Macro[],
+  options: { commutative?: boolean } = {},
+): Expr {
   // Corpus is expanded first: learned definitions remain independent base ASTs.
   const visit = (node: Expr): Expr => {
     let best = { ...node, args: node.args.map(visit) };
     for (const m of macros) {
       const args = new Map<number, Expr>();
-      if (!match(m.body, node, args) || args.size !== m.arity) continue;
+      if (
+        !match(m.body, node, args, options.commutative) ||
+        args.size !== m.arity
+      )
+        continue;
       const candidate = {
         op: m.name,
         args: Array.from({ length: m.arity }, (_, i) => visit(args.get(i)!)),
