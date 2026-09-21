@@ -1,0 +1,19 @@
+{
+  "programs": 2719,
+  "states": 414283,
+  "positive": 16926,
+  "cost": {
+    "signatureExecutions": 3736,
+    "signaturePoints": 362392,
+    "searches": 5438,
+    "evaluations": 323821,
+    "expansions": 11197979,
+    "searchMs": 67960.25338099962,
+    "witnessProgramExecutions": 63963,
+    "witnessPointExecutions": 4797225,
+    "witnessComparisons": 11368036,
+    "featureProbes": 2485698
+  },
+  "generationMs": 84178.32370800001,
+  "note": "States at entry to the existing solver, including fast-success states before direct/affine checks. Visited by the existing solver on synthesized training programs and executed dreams. Known witness subtrees label feasible productions after synthesis; missing witnesses are weak negatives, not impossibility proofs. Whole-function signatures partition training/validation. No final targets or check feedback guide trajectories. Wider state features and all witness executions are charged separately. Future evaluation must exclude all exposed roots and subtrees."
+}

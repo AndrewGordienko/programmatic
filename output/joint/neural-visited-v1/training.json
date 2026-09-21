@@ -1,0 +1,97 @@
+{
+  "seed": 192017,
+  "threads": 2,
+  "trainingRows": 39082,
+  "validationRows": 4129,
+  "selectedEpoch": 15,
+  "validationLoss": 0.06692726165056229,
+  "elapsedMs": 3953.1312080216594,
+  "history": [
+    {
+      "epoch": 0,
+      "validationLoss": 0.18783549964427948,
+      "validationAccuracy": 0.9370307326316833
+    },
+    {
+      "epoch": 5,
+      "validationLoss": 0.08406103402376175,
+      "validationAccuracy": 0.9786873459815979
+    },
+    {
+      "epoch": 10,
+      "validationLoss": 0.06707055121660233,
+      "validationAccuracy": 0.9859530329704285
+    },
+    {
+      "epoch": 15,
+      "validationLoss": 0.06692726165056229,
+      "validationAccuracy": 0.9859530329704285
+    },
+    {
+      "epoch": 20,
+      "validationLoss": 0.07366994768381119,
+      "validationAccuracy": 0.9811092019081116
+    },
+    {
+      "epoch": 25,
+      "validationLoss": 0.0696406438946724,
+      "validationAccuracy": 0.9852264523506165
+    },
+    {
+      "epoch": 30,
+      "validationLoss": 0.07070549577474594,
+      "validationAccuracy": 0.98353111743927
+    },
+    {
+      "epoch": 35,
+      "validationLoss": 0.0755467638373375,
+      "validationAccuracy": 0.9818357825279236
+    },
+    {
+      "epoch": 40,
+      "validationLoss": 0.07649306207895279,
+      "validationAccuracy": 0.9818357825279236
+    },
+    {
+      "epoch": 45,
+      "validationLoss": 0.0744987353682518,
+      "validationAccuracy": 0.9840155243873596
+    },
+    {
+      "epoch": 50,
+      "validationLoss": 0.08256793022155762,
+      "validationAccuracy": 0.9784451723098755
+    },
+    {
+      "epoch": 55,
+      "validationLoss": 0.08467371761798859,
+      "validationAccuracy": 0.9803826808929443
+    },
+    {
+      "epoch": 60,
+      "validationLoss": 0.08233672380447388,
+      "validationAccuracy": 0.9803826808929443
+    },
+    {
+      "epoch": 65,
+      "validationLoss": 0.08444178104400635,
+      "validationAccuracy": 0.9823201894760132
+    },
+    {
+      "epoch": 70,
+      "validationLoss": 0.08580439537763596,
+      "validationAccuracy": 0.9813514351844788
+    },
+    {
+      "epoch": 75,
+      "validationLoss": 0.10273343324661255,
+      "validationAccuracy": 0.9779607653617859
+    },
+    {
+      "epoch": 80,
+      "validationLoss": 0.09099574387073517,
+      "validationAccuracy": 0.9813514351844788
+    }
+  ],
+  "note": "Negative labels mean no known teacher-subtree witness, not impossibility. This model may only rank branches, never prune them as unsatisfiable. Programs group train/validation; individual programs receive equal total training weight."
+}

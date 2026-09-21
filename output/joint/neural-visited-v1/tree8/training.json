@@ -1,0 +1,10 @@
+{
+  "seed": 91273,
+  "trainingRows": 39082,
+  "validationRows": 4129,
+  "elapsedMs": 2928.8059580139816,
+  "validationAccuracy": 0.9842576895131994,
+  "validationLogLoss": 0.08057736503105241,
+  "treeNodes": 121,
+  "note": "One decision tree and a 16-tree forest are predeclared alternatives; no downstream calibration labels train them. Float32 comparisons match sklearn prediction. Per-program training weights; empirical whole-function validation grouping. Weak witness labels guide ranking only."
+}

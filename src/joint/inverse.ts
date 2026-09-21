@@ -20,6 +20,7 @@ import {
   encoder,
   hole,
   productions,
+  taskContext,
   type JointPolicy,
 } from "./policy";
 import { canonical } from "./canonical";
@@ -27,7 +28,16 @@ import type { SearchResult } from "./search";
 import { additiveJoin } from "./joins";
 import { sparseCompose } from "./sparse";
 import { specificationFeatures } from "./specification";
-import { fullObservationContext } from "./full-context";
+import {
+  fullObservationContext,
+  observationFeatures,
+  specificationFeature,
+} from "./full-context";
+import {
+  predictHoleValue,
+  predictHoleTree,
+  type HoleValueModel,
+} from "./hole-value";
 import {
   type Box,
   type Domain,
@@ -52,6 +62,11 @@ export type InverseResult = SearchResult & {
   fragmentFeaturePairs: number;
   fragmentNeuralMultiplications: number;
   debugFragments?: { tree: Expr; active: boolean }[];
+  traceStates?: { spec: Box; x: number[] }[];
+  holeValuePredictions: number;
+  holeValueMultiplications: number;
+  holeValueTreeComparisons: number;
+  holeValueFeatures: number;
 };
 const c = (value: number): Expr => ({ op: "const", value, args: [] });
 const a = (value: number): Expr => ({ op: "arg", value, args: [] });
@@ -184,6 +199,12 @@ export function inverseSearch(
     sparseSteps?: number;
     unaryFirst?: number;
     compiledRelations?: boolean;
+    traceStates?: boolean;
+    tracePhase?: "entry" | "decision";
+    holeValue?: HoleValueModel;
+    holeValueWeight?: number;
+    holeValueCandidates?: number;
+    lazyHoleFeatures?: boolean;
   } = {},
 ): InverseResult {
   if (!Number.isInteger(budget) || budget < 1)
@@ -193,6 +214,11 @@ export function inverseSearch(
     limit = options.workBudget ?? budget * 8;
   const maxNodes = options.maxNodes ?? 31;
   let localLimit = limit;
+  let holeValuePredictions = 0;
+  let holeValueTreeComparisons = 0;
+  let holeValueFeatures = 0;
+  let holeTaskFeatures: number[] | undefined,
+    holeContextBuilder: ReturnType<typeof taskContext> | undefined;
   let evaluations = 0,
     expansions = 0,
     linearFits = 0,
@@ -206,6 +232,7 @@ export function inverseSearch(
     behavior = new Set<string>();
   const fittedPlanes = new Map<string, number[]>();
   const appliedCache = new Map<string, Segment[] | null>();
+  const traceStates: { spec: Box; x: number[] }[] = [];
   const relations = new Map(
     macros
       .filter(
@@ -720,6 +747,14 @@ export function inverseSearch(
     ancestors: Set<string>,
   ): Expr | undefined => {
     if (expansions >= localLimit || evaluations >= budget) return;
+    if (options.traceStates && options.tracePhase === "entry")
+      traceStates.push({
+        spec,
+        x: [
+          ...context(task.examples, partial, path, ps, macros),
+          ...fullObservationContext(task.examples, spec),
+        ],
+      });
     const direct = find(spec);
     if (direct) return direct.tree;
     const fitted = affine(spec);
@@ -741,6 +776,14 @@ export function inverseSearch(
     if (policy?.contextKind === "full-observations-v1")
       neuralContext.push(...fullObservationContext(task.examples, spec));
     const probabilities = predict(neuralContext);
+    if (options.traceStates && options.tracePhase !== "entry")
+      traceStates.push({
+        spec,
+        x: [
+          ...context(task.examples, partial, path, ps, macros),
+          ...fullObservationContext(task.examples, spec),
+        ],
+      });
     const attempted = new Set<string>();
     if (options.unaryFirst && path.length === 0 && depth > 0) {
       const unary = ps
@@ -893,7 +936,10 @@ export function inverseSearch(
       if (joined) return joined;
     }
     candidates.sort((x, y) => x.cost - y.cost);
-    let frontier = candidates.slice(0, options.beam ?? 12);
+    const frontierWidth = options.holeValue
+      ? (options.holeValueCandidates ?? 24)
+      : (options.beam ?? 12);
+    let frontier = candidates.slice(0, frontierWidth);
     if (options.diverseBeam) {
       const first = [
         ...new Map(
@@ -903,7 +949,61 @@ export function inverseSearch(
       frontier = [
         ...first,
         ...candidates.filter((c) => !first.includes(c)),
-      ].slice(0, options.beam ?? 12);
+      ].slice(0, frontierWidth);
+    }
+    if (options.holeValue) {
+      const model = options.holeValue;
+      frontier = frontier
+        .map((candidate) => {
+          const next = replace(partial, path, candidate.tree),
+            p = [...path, candidate.slot];
+          let value: number;
+          const record = (n: number) => {
+            holeValueTreeComparisons += n;
+          };
+          if (
+            options.lazyHoleFeatures &&
+            model.version === "visited-hole-tree-v1"
+          ) {
+            const memo = new Map<number, number>();
+            let programFeatures: number[] | undefined;
+            const feature = (i: number) => {
+              if (memo.has(i)) return memo.get(i)!;
+              holeValueFeatures++;
+              const v =
+                i < 71
+                  ? (programFeatures ??= (holeContextBuilder ??= taskContext(
+                      task.examples,
+                      ps,
+                      macros,
+                    ))(next, p))[i]
+                  : i < 296
+                    ? (holeTaskFeatures ??= observationFeatures(task.examples))[
+                        i - 71
+                      ]
+                    : specificationFeature(candidate.child, i - 296);
+              memo.set(i, v);
+              return v;
+            };
+            value = predictHoleTree(model, feature, record);
+          } else {
+            const features = [
+              ...context(task.examples, next, p, ps, macros),
+              ...fullObservationContext(task.examples, candidate.child),
+            ];
+            holeValueFeatures += features.length;
+            value = predictHoleValue(model, features, record);
+          }
+          holeValuePredictions++;
+          return {
+            ...candidate,
+            cost:
+              candidate.cost -
+              (options.holeValueWeight ?? 1) * Math.log(Math.max(0.001, value)),
+          };
+        })
+        .sort((a, b) => a.cost - b.cost)
+        .slice(0, options.beam ?? 12);
     }
     for (const candidate of frontier) {
       const next = replace(partial, path, candidate.tree),
@@ -977,6 +1077,17 @@ export function inverseSearch(
     constraintChecks,
     constraintPoints,
     bankSize: bank.length,
+    holeValuePredictions,
+    holeValueTreeComparisons,
+    holeValueFeatures,
+    holeValueMultiplications:
+      holeValuePredictions *
+      (options.holeValue &&
+      options.holeValue.version === "visited-hole-value-v1"
+        ? options.holeValue.w1.length * options.holeValue.mean.length +
+          options.holeValue.w2.length
+        : 0),
+    ...(options.traceStates ? { traceStates } : {}),
     ...(options.debugBank
       ? {
           debugFragments: bank.map((row) => ({

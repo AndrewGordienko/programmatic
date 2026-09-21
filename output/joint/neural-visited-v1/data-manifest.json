@@ -1,0 +1,20 @@
+{
+  "programs": 2719,
+  "states": 43211,
+  "positive": 8167,
+  "cost": {
+    "signatureExecutions": 3736,
+    "signaturePoints": 362392,
+    "searches": 5438,
+    "evaluations": 323821,
+    "expansions": 11197979,
+    "searchMs": 48593.5258210002,
+    "witnessProgramExecutions": 63963,
+    "witnessPointExecutions": 4797225,
+    "witnessComparisons": 1747558,
+    "featureProbes": 259266
+  },
+  "generationMs": 51719.11825000001,
+  "note": "States visited by the existing solver on synthesized training programs and executed dreams. Known witness subtrees label feasible productions after synthesis; missing witnesses are weak negatives, not impossibility proofs. Whole-function signatures partition training/validation. No final targets or check feedback guide trajectories. Wider state features and all witness executions are charged separately. Future evaluation must exclude all exposed roots and subtrees.",
+  "tracePhase": "After direct-fragment and affine completion attempts fail; this omits fast-success states and can bias a critic used before those checks."
+}

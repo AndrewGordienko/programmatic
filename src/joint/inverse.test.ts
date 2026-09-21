@@ -35,7 +35,112 @@ import {
 import { parametricSearch } from "./parametric-search";
 import { languageValueFeatures } from "./language-value";
 import { fragmentFeatures, predictFragmentValue } from "./fragment-value";
-import { fullObservationContext } from "./full-context";
+import { fullObservationContext, specificationFeature } from "./full-context";
+import { predictHoleValue, predictHoleTree } from "./hole-value";
+
+test("visited-state critics match independent exports and lazy disjoint-domain features", () => {
+  const roots = ["neural-visited-v1", "neural-visited-v2"];
+  for (const root of roots) {
+    for (const suffix of root.endsWith("v1")
+      ? ["", "/tree8", "/forest16"]
+      : ["/tree8", "/forest16"]) {
+      const folder = `output/joint/${root}${suffix}/`;
+      const model = JSON.parse(readFileSync(folder + "model.json", "utf8"));
+      for (const row of JSON.parse(
+        readFileSync(folder + "parity.json", "utf8"),
+      )) {
+        assert.ok(
+          Math.abs(predictHoleValue(model, row.features) - row.value) < 1e-10,
+        );
+        if (model.version === "visited-hole-tree-v1")
+          assert.equal(
+            predictHoleTree(model, (i) => row.features[i]),
+            predictHoleValue(model, row.features),
+          );
+      }
+    }
+  }
+  const spec = {
+    low: [-Infinity, -2, 0],
+    high: [Infinity, 2, 1],
+    ranges: [
+      [[-Infinity, Infinity]],
+      [
+        [-2, -1],
+        [1, 2],
+      ],
+      [
+        [0, 0],
+        [0.25, 0.5],
+        [1, 1],
+      ],
+    ] as [number, number][][],
+  };
+  assert.deepEqual(
+    Array.from({ length: 375 }, (_, i) => specificationFeature(spec, i)),
+    specificationFeatures(spec, 75),
+  );
+});
+
+test("critic and tracing preserve budgets and never use final checks for search", () => {
+  const model = JSON.parse(
+    readFileSync("output/joint/neural-visited-v2/forest16/model.json", "utf8"),
+  );
+  const examples = inputs(19281, 75, 5).map((input) => ({
+    input,
+    output: Math.abs(input[0]) + Math.max(0, input[1]),
+  }));
+  const settings = {
+    affineFits: 64,
+    maxNodes: 96,
+    holeValue: model,
+    holeValueWeight: 1,
+  };
+  const t = { examples, checks: examples };
+  const eager = inverseSearch(t, [], undefined, 817, 128, settings);
+  const lazy = inverseSearch(t, [], undefined, 817, 128, {
+    ...settings,
+    lazyHoleFeatures: true,
+  });
+  const changedChecks = inverseSearch(
+    { ...t, checks: examples.map((e) => ({ ...e, output: 100000 })) },
+    [],
+    undefined,
+    817,
+    128,
+    {
+      ...settings,
+      lazyHoleFeatures: true,
+      traceStates: true,
+      tracePhase: "entry",
+    },
+  );
+  assert.ok(lazy.holeValuePredictions > 0);
+  for (const row of [lazy, changedChecks]) {
+    assert.deepEqual(row.tree, eager.tree);
+    assert.equal(row.evaluations, eager.evaluations);
+    assert.equal(row.expansions, eager.expansions);
+    assert.ok(row.evaluations <= 128 && row.expansions <= 1024);
+  }
+  assert.ok(changedChecks.traceStates!.length > 0);
+  const easyExamples = inputs(7319, 25, 3).map((input) => ({
+    input,
+    output: input[0] + input[1],
+  }));
+  const easy = { examples: easyExamples, checks: easyExamples };
+  const entry = inverseSearch(easy, [], undefined, 913, 128, {
+    affineFits: 0,
+    traceStates: true,
+    tracePhase: "entry",
+  });
+  const decision = inverseSearch(easy, [], undefined, 913, 128, {
+    affineFits: 0,
+    traceStates: true,
+    tracePhase: "decision",
+  });
+  assert.deepEqual(entry.tree, decision.tree);
+  assert.equal(entry.expansions, decision.expansions);
+});
 
 test("full-observation policy matches PyTorch and includes later inputs and hole constraints", () => {
   const folder = "output/joint/neural-full-v1/width-128/";
