@@ -1,0 +1,778 @@
+{
+  "protocolHash": "ad3fe538579ff2e8785cb37e08bd988913e86251c83a908dd11e5d9f9af1046a",
+  "complete": true,
+  "completed": 18,
+  "expected": 18,
+  "note": "DEVELOPMENT comparison only. Task-cluster bootstrap retains optimizer/library correlation and stratifies by group. Selection over six variants makes winner intervals descriptive, not confirmation. Search work excludes separately reported critic inference; observational wall is not a controlled CPU test. Excluding all historical functions changes this finite generator's mixture, so old calibration rates are not directly comparable.",
+  "summaries": [
+    {
+      "name": "original",
+      "completedLanguages": 3,
+      "balancedAuc": 0.2707548064557613,
+      "solved": 1338,
+      "work": 8711883,
+      "wallMs": 49890.04710399994,
+      "constraintPoints": 1635844,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    },
+    {
+      "name": "local6",
+      "completedLanguages": 3,
+      "balancedAuc": 0.3120178272890947,
+      "solved": 1515,
+      "work": 8230594,
+      "wallMs": 50783.22436000011,
+      "constraintPoints": 18339886,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    },
+    {
+      "name": "local12-relations",
+      "completedLanguages": 3,
+      "balancedAuc": 0.28390998746141977,
+      "solved": 1413,
+      "work": 8624305,
+      "wallMs": 66900.42854500056,
+      "constraintPoints": 22472816,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    },
+    {
+      "name": "local6-lattice",
+      "completedLanguages": 3,
+      "balancedAuc": 0.36025868859310695,
+      "solved": 1689,
+      "work": 7421457,
+      "wallMs": 37280.3202980005,
+      "constraintPoints": 84690598,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    },
+    {
+      "name": "critic",
+      "completedLanguages": 3,
+      "balancedAuc": 0.29121298707561727,
+      "solved": 1357,
+      "work": 8474004,
+      "wallMs": 55982.195225,
+      "constraintPoints": 1958032,
+      "criticPredictions": 583017,
+      "criticTreeComparisons": 73239378
+    },
+    {
+      "name": "local6-critic",
+      "completedLanguages": 3,
+      "balancedAuc": 0.3326126864711933,
+      "solved": 1544,
+      "work": 7929931,
+      "wallMs": 61037.21823499957,
+      "constraintPoints": 18659464,
+      "criticPredictions": 442535,
+      "criticTreeComparisons": 55370222
+    }
+  ],
+  "comparisons": [
+    {
+      "variant": "local6",
+      "balancedAucDelta": 0.04126302083333335,
+      "interval": [
+        0.028562242798353912,
+        0.0544552549511317
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.03702437789351854,
+          "solveDelta": 0.05222222222222222
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.06597258391203704,
+          "solveDelta": 0.10500000000000002
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.02079210069444445,
+          "solveDelta": 0.03333333333333335
+        }
+      ]
+    },
+    {
+      "variant": "local12-relations",
+      "balancedAucDelta": 0.01315518100565844,
+      "interval": [
+        -0.0017673369984567914,
+        0.028565055941358025
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.01058822820216049,
+          "solveDelta": 0.020555555555555553
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.02844328703703704,
+          "solveDelta": 0.07333333333333333
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.00043402777777777987,
+          "solveDelta": -0.01
+        }
+      ]
+    },
+    {
+      "variant": "local6-lattice",
+      "balancedAucDelta": 0.08950388213734568,
+      "interval": [
+        0.07126535172325103,
+        0.10989623521090537
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.10849681712962962,
+          "solveDelta": 0.13277777777777772
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.10676504629629634,
+          "solveDelta": 0.11333333333333336
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.053249782986111105,
+          "solveDelta": 0.07333333333333333
+        }
+      ]
+    },
+    {
+      "variant": "critic",
+      "balancedAucDelta": 0.020458180619855975,
+      "interval": [
+        0.012665131494341562,
+        0.028132957175925927
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.014582007137345686,
+          "solveDelta": 0.001666666666666669
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.043029152199074085,
+          "solveDelta": 0.025
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.003763382523148149,
+          "solveDelta": 0.0016666666666666668
+        }
+      ]
+    },
+    {
+      "variant": "local6-critic",
+      "balancedAucDelta": 0.061857880015432125,
+      "interval": [
+        0.04801641268004114,
+        0.07694609214248971
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.059727285879629645,
+          "solveDelta": 0.0638888888888889
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.11234157986111117,
+          "solveDelta": 0.12333333333333334
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.013504774305555554,
+          "solveDelta": 0.028333333333333332
+        }
+      ]
+    }
+  ],
+  "selectedForFreshConfirmation": "local6-lattice",
+  "runs": [
+    {
+      "variant": "original",
+      "language": "base",
+      "solved": 283,
+      "work": 3412640,
+      "wallMs": 18225.77302700001,
+      "constraintPoints": 779999,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 164,
+          "fitted": 169,
+          "auc": 0.17238968460648144
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 115,
+          "fitted": 119,
+          "auc": 0.3876280381944446
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 4,
+          "fitted": 4,
+          "auc": 0.01077690972222222
+        }
+      },
+      "balancedAuc": 0.19026487750771606
+    },
+    {
+      "variant": "original",
+      "language": "pilot-v4",
+      "solved": 525,
+      "work": 2717317,
+      "wallMs": 14990.575249999947,
+      "constraintPoints": 492941,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 393,
+          "fitted": 396,
+          "auc": 0.46443938078703667
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 113,
+          "fitted": 125,
+          "auc": 0.3864322916666667
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 19,
+          "fitted": 25,
+          "auc": 0.044144965277777774
+        }
+      },
+      "balancedAuc": 0.298338879243827
+    },
+    {
+      "variant": "original",
+      "language": "replication-7",
+      "solved": 530,
+      "work": 2581926,
+      "wallMs": 16673.698826999986,
+      "constraintPoints": 362904,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 394,
+          "fitted": 397,
+          "auc": 0.4983702256944444
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 117,
+          "fitted": 123,
+          "auc": 0.4269314236111111
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 19,
+          "fitted": 23,
+          "auc": 0.04568033854166667
+        }
+      },
+      "balancedAuc": 0.3236606626157407
+    },
+    {
+      "variant": "local6",
+      "language": "base",
+      "solved": 309,
+      "work": 3373083,
+      "wallMs": 19482.997097000174,
+      "constraintPoints": 6343069,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 167,
+          "fitted": 174,
+          "auc": 0.16525462962962972
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 138,
+          "fitted": 144,
+          "auc": 0.45935980902777784
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 4,
+          "fitted": 4,
+          "auc": 0.011790364583333334
+        }
+      },
+      "balancedAuc": 0.2121349344135803
+    },
+    {
+      "variant": "local6",
+      "language": "pilot-v4",
+      "solved": 576,
+      "work": 2592760,
+      "wallMs": 16084.064068999927,
+      "constraintPoints": 6033354,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 421,
+          "fitted": 428,
+          "auc": 0.5002029079861114
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 132,
+          "fitted": 141,
+          "auc": 0.43523328993055554
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 23,
+          "fitted": 30,
+          "auc": 0.05240234375
+        }
+      },
+      "balancedAuc": 0.329279513888889
+    },
+    {
+      "variant": "local6",
+      "language": "replication-7",
+      "solved": 630,
+      "work": 2264751,
+      "wallMs": 15216.163194000008,
+      "constraintPoints": 5963463,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 457,
+          "fitted": 464,
+          "auc": 0.5808148871527775
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 138,
+          "fitted": 149,
+          "auc": 0.5043164062500001
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 35,
+          "fitted": 40,
+          "auc": 0.09878580729166668
+        }
+      },
+      "balancedAuc": 0.39463903356481483
+    },
+    {
+      "variant": "local12-relations",
+      "language": "base",
+      "solved": 296,
+      "work": 3437237,
+      "wallMs": 20985.080176000163,
+      "constraintPoints": 6338544,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 159,
+          "fitted": 165,
+          "auc": 0.15384331597222223
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 133,
+          "fitted": 135,
+          "auc": 0.4398860677083333
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 4,
+          "fitted": 4,
+          "auc": 0.011790364583333334
+        }
+      },
+      "balancedAuc": 0.20183991608796295
+    },
+    {
+      "variant": "local12-relations",
+      "language": "pilot-v4",
+      "solved": 532,
+      "work": 2730737,
+      "wallMs": 24754.14257700008,
+      "constraintPoints": 7843577,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 400,
+          "fitted": 405,
+          "auc": 0.47057002314814855
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 120,
+          "fitted": 130,
+          "auc": 0.39364040798611094
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 12,
+          "fitted": 12,
+          "auc": 0.03025282118055556
+        }
+      },
+      "balancedAuc": 0.2981544174382717
+    },
+    {
+      "variant": "local12-relations",
+      "language": "replication-7",
+      "solved": 585,
+      "work": 2456331,
+      "wallMs": 21161.205792000314,
+      "constraintPoints": 8290695,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 429,
+          "fitted": 434,
+          "auc": 0.5425506365740737
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 136,
+          "fitted": 145,
+          "auc": 0.452795138888889
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 20,
+          "fitted": 20,
+          "auc": 0.05986111111111111
+        }
+      },
+      "balancedAuc": 0.3517356288580246
+    },
+    {
+      "variant": "local6-lattice",
+      "language": "base",
+      "solved": 414,
+      "work": 2787037,
+      "wallMs": 13884.851869999897,
+      "constraintPoints": 28368437,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 258,
+          "fitted": 267,
+          "auc": 0.34466616030092595
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 141,
+          "fitted": 147,
+          "auc": 0.5277484809027775
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 15,
+          "fitted": 21,
+          "auc": 0.06177842881944444
+        }
+      },
+      "balancedAuc": 0.31139769000771594
+    },
+    {
+      "variant": "local6-lattice",
+      "language": "pilot-v4",
+      "solved": 615,
+      "work": 2434624,
+      "wallMs": 12768.173628000077,
+      "constraintPoints": 28180568,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 452,
+          "fitted": 463,
+          "auc": 0.5279626012731482
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 134,
+          "fitted": 142,
+          "auc": 0.4736024305555551
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 29,
+          "fitted": 35,
+          "auc": 0.08565212673611108
+        }
+      },
+      "balancedAuc": 0.3624057195216048
+    },
+    {
+      "variant": "local6-lattice",
+      "language": "replication-7",
+      "solved": 660,
+      "work": 2199796,
+      "wallMs": 10627.294800000527,
+      "constraintPoints": 28141593,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 480,
+          "fitted": 491,
+          "auc": 0.5880609809027781
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 138,
+          "fitted": 148,
+          "auc": 0.5199359809027776
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 42,
+          "fitted": 48,
+          "auc": 0.11292100694444444
+        }
+      },
+      "balancedAuc": 0.40697265625
+    },
+    {
+      "variant": "critic",
+      "language": "base",
+      "solved": 292,
+      "work": 3253482,
+      "wallMs": 24496.287681999413,
+      "constraintPoints": 914045,
+      "criticPredictions": 342497,
+      "criticTreeComparisons": 43263305,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 171,
+          "fitted": 176,
+          "auc": 0.21208912037037056
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 117,
+          "fitted": 120,
+          "auc": 0.45044596354166666
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 4,
+          "fitted": 4,
+          "auc": 0.014420572916666667
+        }
+      },
+      "balancedAuc": 0.22565188560956795
+    },
+    {
+      "variant": "critic",
+      "language": "pilot-v4",
+      "solved": 532,
+      "work": 2672709,
+      "wallMs": 15968.522188000206,
+      "constraintPoints": 576877,
+      "criticPredictions": 101324,
+      "criticTreeComparisons": 12558324,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 396,
+          "fitted": 398,
+          "auc": 0.47159975405092563
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 119,
+          "fitted": 125,
+          "auc": 0.4267447916666666
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 17,
+          "fitted": 23,
+          "auc": 0.041069878472222224
+        }
+      },
+      "balancedAuc": 0.31313814139660484
+    },
+    {
+      "variant": "critic",
+      "language": "replication-7",
+      "solved": 533,
+      "work": 2547813,
+      "wallMs": 15517.385355000384,
+      "constraintPoints": 467110,
+      "criticPredictions": 139196,
+      "criticTreeComparisons": 17417749,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 387,
+          "fitted": 392,
+          "auc": 0.49525643807870373
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 124,
+          "fitted": 130,
+          "auc": 0.45288845486111107
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 22,
+          "fitted": 26,
+          "auc": 0.05640190972222223
+        }
+      },
+      "balancedAuc": 0.334848934220679
+    },
+    {
+      "variant": "local6-critic",
+      "language": "base",
+      "solved": 315,
+      "work": 3192706,
+      "wallMs": 25164.089623000997,
+      "constraintPoints": 6482895,
+      "criticPredictions": 273365,
+      "criticTreeComparisons": 34435133,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 173,
+          "fitted": 180,
+          "auc": 0.20984592013888878
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 138,
+          "fitted": 143,
+          "auc": 0.5247146267361112
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 4,
+          "fitted": 4,
+          "auc": 0.014772135416666665
+        }
+      },
+      "balancedAuc": 0.2497775607638889
+    },
+    {
+      "variant": "local6-critic",
+      "language": "pilot-v4",
+      "solved": 590,
+      "work": 2523140,
+      "wallMs": 17094.781714999408,
+      "constraintPoints": 6129091,
+      "criticPredictions": 81230,
+      "criticTreeComparisons": 10014571,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 428,
+          "fitted": 440,
+          "auc": 0.5079575376157406
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 141,
+          "fitted": 146,
+          "auc": 0.485022786458333
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 21,
+          "fitted": 28,
+          "auc": 0.04740125868055555
+        }
+      },
+      "balancedAuc": 0.3467938609182097
+    },
+    {
+      "variant": "local6-critic",
+      "language": "replication-7",
+      "solved": 639,
+      "work": 2214085,
+      "wallMs": 18778.346896999166,
+      "constraintPoints": 6047478,
+      "criticPredictions": 87940,
+      "criticTreeComparisons": 10920518,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 465,
+          "fitted": 472,
+          "auc": 0.5965776909722218
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 140,
+          "fitted": 150,
+          "auc": 0.5282790798611111
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 34,
+          "fitted": 38,
+          "auc": 0.07894314236111113
+        }
+      },
+      "balancedAuc": 0.40126663773148136
+    }
+  ]
+}
