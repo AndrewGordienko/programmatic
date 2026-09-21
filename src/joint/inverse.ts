@@ -27,6 +27,7 @@ import type { SearchResult } from "./search";
 import { additiveJoin } from "./joins";
 import { sparseCompose } from "./sparse";
 import { specificationFeatures } from "./specification";
+import { fullObservationContext } from "./full-context";
 import {
   type Box,
   type Domain,
@@ -37,6 +38,7 @@ import {
   linearPieces,
   inversePieces,
   inverseApplied,
+  type Segment,
 } from "./domains";
 
 type Fragment = { tree: Expr; values: number[]; error: number; size: number };
@@ -181,6 +183,7 @@ export function inverseSearch(
     sparseWidth?: number;
     sparseSteps?: number;
     unaryFirst?: number;
+    compiledRelations?: boolean;
   } = {},
 ): InverseResult {
   if (!Number.isInteger(budget) || budget < 1)
@@ -202,6 +205,7 @@ export function inverseSearch(
     syntax = new Map<string, Fragment>(),
     behavior = new Set<string>();
   const fittedPlanes = new Map<string, number[]>();
+  const appliedCache = new Map<string, Segment[] | null>();
   const relations = new Map(
     macros
       .filter(
@@ -734,6 +738,8 @@ export function inverseSearch(
       : [];
     if (policy?.contextKind === "inverse-domains-v1")
       neuralContext.push(...specificationFeatures(spec));
+    if (policy?.contextKind === "full-observations-v1")
+      neuralContext.push(...fullObservationContext(task.examples, spec));
     const probabilities = predict(neuralContext);
     const attempted = new Set<string>();
     if (options.unaryFirst && path.length === 0 && depth > 0) {
@@ -809,9 +815,17 @@ export function inverseSearch(
                 known.map((r) => r.values),
                 spec,
                 () => {
-                  constraintPoints++;
+                  if (!options.compiledRelations) constraintPoints++;
                   return charge();
                 },
+                options.compiledRelations
+                  ? {
+                      cache: appliedCache,
+                      point: () => {
+                        constraintPoints++;
+                      },
+                    }
+                  : undefined,
               )
             : pieces
               ? inversePieces(pieces, spec)

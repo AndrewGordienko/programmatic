@@ -35,6 +35,85 @@ import {
 import { parametricSearch } from "./parametric-search";
 import { languageValueFeatures } from "./language-value";
 import { fragmentFeatures, predictFragmentValue } from "./fragment-value";
+import { fullObservationContext } from "./full-context";
+
+test("full-observation policy matches PyTorch and includes later inputs and hole constraints", () => {
+  const folder = "output/joint/neural-full-v1/width-128/";
+  const model = JSON.parse(readFileSync(folder + "policy.json", "utf8"));
+  const parity = JSON.parse(readFileSync(folder + "parity.json", "utf8"));
+  const ps = parity.semantics.map((values: number[], i: number) => ({
+    id: String(i),
+    node: { op: "arg", value: 0, args: [] },
+    arity: 0,
+    semantic: values.slice(0, -1),
+  }));
+  for (const row of parity.fixtures) {
+    const actual = encoder(
+      model,
+      ps.filter((_: unknown, i: number) => row.legal[i]),
+    )(row.x);
+    actual.forEach((v, i) =>
+      assert.ok(Math.abs(v - row.probabilities[i]) < 1e-10),
+    );
+  }
+  const examples = inputs(3891, 75, 5).map((input) => ({ input, output: 0 }));
+  const spec = { low: Array(75).fill(0), high: Array(75).fill(0) };
+  const before = fullObservationContext(examples, spec);
+  examples[64].output = 3;
+  spec.low[70] = -2;
+  const after = fullObservationContext(examples, spec);
+  assert.equal(before.length, 600);
+  assert.notEqual(before[64 * 3 + 2], after[64 * 3 + 2]);
+  assert.notEqual(before[225 + 70 * 5], after[225 + 70 * 5]);
+});
+
+test("compiled partial applications reuse derivations while checking every observation", () => {
+  const body = {
+    op: "add",
+    args: [
+      { op: "arg", value: 0, args: [] },
+      {
+        op: "max",
+        args: [
+          { op: "arg", value: 1, args: [] },
+          { op: "const", value: 0, args: [] },
+        ],
+      },
+    ],
+  };
+  const known = [Array.from({ length: 75 }, (_, i) => i % 3)],
+    values = known[0].map((v) => v + 2);
+  const target = { low: values, high: values };
+  let cold = 0,
+    compiled = 0,
+    points = 0;
+  const a = inverseApplied(body, known, target, () => {
+    cold++;
+    return true;
+  });
+  const b = inverseApplied(
+    body,
+    known,
+    target,
+    () => {
+      compiled++;
+      return true;
+    },
+    {
+      cache: new Map(),
+      point: () => {
+        points++;
+      },
+    },
+  );
+  assert.deepEqual(a, b);
+  assert.equal(cold, 75);
+  assert.equal(compiled, 3);
+  assert.equal(points, 75);
+  assert.ok(
+    b && values.every((_, i) => contains(b, i, 2) && !contains(b, i, 1)),
+  );
+});
 
 test("experimental composition heuristics preserve execution caps and keep checks out of search", () => {
   const macros = JSON.parse(

@@ -126,17 +126,26 @@ export function inverseApplied(
   known: number[][],
   target: Box,
   charge: () => boolean,
+  compiled?: { cache: Map<string, Segment[] | null>; point: () => void },
 ): Box | null {
   const domains: Domain[] = [];
   for (let i = 0; i < target.low.length; i++) {
-    if (!charge()) return null;
+    compiled?.point();
+    const cacheKey = compiled
+      ? JSON.stringify([body, known.map((values) => values[i])])
+      : undefined;
+    const cached = cacheKey !== undefined && compiled!.cache.has(cacheKey);
+    if (!cached && !charge()) return null;
     const bind = (e: Expr): Expr =>
       e.op === "arg"
         ? e.value === known.length
           ? { op: "arg", value: 0, args: [] }
           : { op: "const", value: known[e.value!][i], args: [] }
         : { ...e, args: e.args.map(bind) };
-    const pieces = linearPieces(bind(body));
+    const pieces = cached
+      ? compiled!.cache.get(cacheKey!)!
+      : linearPieces(bind(body));
+    if (compiled && !cached) compiled.cache.set(cacheKey!, pieces);
     if (!pieces) return null;
     const one = boxFrom([domainAt(target, i)])!,
       inverse = inversePieces(pieces, one);

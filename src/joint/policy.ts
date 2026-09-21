@@ -125,7 +125,7 @@ export function taskContext(
 const H = 12;
 export type JointPolicy = {
   version: "joint-semantic-v1";
-  contextKind?: "inverse-domains-v1";
+  contextKind?: "inverse-domains-v1" | "full-observations-v1";
   contextWeights: number[][];
   operatorWeights: number[][];
   bias: number[];

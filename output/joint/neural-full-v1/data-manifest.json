@@ -1,0 +1,21 @@
+{
+  "version": "inverse-teacher-data-v1",
+  "contextKind": "full-observations-v1",
+  "source": "output/joint/neural-v2/data.json.gz",
+  "programs": 10000,
+  "decisions": 85780,
+  "exposureTrees": 33875,
+  "features": 671,
+  "accounting": {
+    "programExecutions": 70662,
+    "exampleExecutions": 5299650,
+    "inverseDerivations": 65780,
+    "partialFeatureProbes": 514680,
+    "omittedExpandedPrograms": 0,
+    "signatureProgramExecutions": 20000,
+    "signatureExampleExecutions": 1940000
+  },
+  "generationMs": 9036.1665,
+  "note": "Paired base/library representations of executed programs. Teacher traverses the rightmost unknown child with actual inverse constraints and known sibling programs. Whole-function empirical signatures group both representations and every source in the same training/validation split. All 75 observations, including inputs, and hole specifications enter the policy. Float32 binary features avoid excessive JSON storage. Legal-production masks remove unavailable macro actions. Final tasks are not used; exposure audit must include all recorded teacher subprograms.",
+  "accountingNote": "Signature grouping executions are reconstructed exactly from both evaluated representations of every non-omitted source program; features, decisions and split assignments are unchanged."
+}
