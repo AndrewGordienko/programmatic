@@ -1,5 +1,10 @@
 import { Random } from "../engine/random";
 import {
+  fragmentFeatures,
+  predictFragmentValue,
+  type FragmentValueModel,
+} from "./fragment-value";
+import {
   compile,
   exprSize,
   expandExpr,
@@ -40,6 +45,9 @@ export type InverseResult = SearchResult & {
   constraintChecks: number;
   constraintPoints: number;
   bankSize: number;
+  fragmentPredictions: number;
+  fragmentFeaturePairs: number;
+  fragmentNeuralMultiplications: number;
 };
 const c = (value: number): Expr => ({ op: "const", value, args: [] });
 const a = (value: number): Expr => ({ op: "arg", value, args: [] });
@@ -160,6 +168,9 @@ export function inverseSearch(
     joinBudget?: number;
     envelopePlanes?: number;
     activeLimit?: number;
+    fragmentValue?: FragmentValueModel;
+    fragmentPreserve?: number;
+    fragmentWeight?: number;
   } = {},
 ): InverseResult {
   if (!Number.isInteger(budget) || budget < 1)
@@ -397,7 +408,31 @@ export function inverseSearch(
       }
   }
   bank.sort((x, y) => x.error - y.error || x.size - y.size);
-  const active = bank.slice(0, options.activeLimit ?? 64),
+  const fragmentScores = new Map<Fragment, number>();
+  const width = options.activeLimit ?? 64;
+  let ordered = bank;
+  if (options.fragmentValue && !answer) {
+    for (const r of bank)
+      fragmentScores.set(
+        r,
+        predictFragmentValue(
+          options.fragmentValue,
+          fragmentFeatures(task.examples, r.values, r.tree, macros),
+        ),
+      );
+    const preserve = bank.slice(0, options.fragmentPreserve ?? 0);
+    ordered = [
+      ...preserve,
+      ...bank
+        .filter((r) => !preserve.includes(r))
+        .sort(
+          (a, b) =>
+            fragmentScores.get(b)! - fragmentScores.get(a)! ||
+            a.error - b.error,
+        ),
+    ];
+  }
+  const active = ordered.slice(0, width),
     ps = productions(macros),
     predict = encoder(policy, ps);
   const indexes = task.examples.map((_, i) =>
@@ -628,6 +663,12 @@ export function inverseSearch(
         const cost =
           -Math.log(probabilities[ps.indexOf(p)]) +
           0.02 * known.reduce((s, r) => s + r.size, 0) +
+          (options.fragmentWeight ?? 0) *
+            known.reduce(
+              (s, r) =>
+                s - Math.log(Math.max(0.001, fragmentScores.get(r) ?? 1)),
+              0,
+            ) +
           ((options.semanticRank ?? 0) *
             child.low.reduce(
               (s, l, i) =>
@@ -734,5 +775,13 @@ export function inverseSearch(
     constraintChecks,
     constraintPoints,
     bankSize: bank.length,
+    fragmentPredictions: fragmentScores.size,
+    fragmentFeaturePairs: fragmentScores.size * task.examples.length,
+    fragmentNeuralMultiplications:
+      fragmentScores.size *
+      (options.fragmentValue
+        ? options.fragmentValue.w1.length * options.fragmentValue.mean.length +
+          options.fragmentValue.w2.length
+        : 0),
   };
 }
