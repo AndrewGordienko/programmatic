@@ -21,6 +21,83 @@ import {
 import { additiveJoin } from "./joins";
 import { dreamDataset } from "./dreams";
 import { paths, at } from "../dsl/expressions";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { encoder, productions, type JointPolicy } from "./policy";
+import { specificationFeatures } from "./specification";
+import { languagePopulation } from "./population";
+import { genome } from "./genome";
+
+test("inverse policy matches independent masked PyTorch inference for base and learned languages", () => {
+  const folder = "output/joint/neural-inverse/";
+  const model = readFileSync(folder + "policy.json");
+  const policy: JointPolicy = JSON.parse(model.toString());
+  const fixture = JSON.parse(readFileSync(folder + "parity.json", "utf8"));
+  assert.equal(
+    createHash("sha256").update(model).digest("hex"),
+    fixture.modelSha256,
+  );
+  const ps = productions(fixture.library);
+  for (const row of fixture.rows) {
+    const legal = row.available.map((i: number) => ps[i]);
+    const actual = encoder(policy, legal)(row.context);
+    const cached = encoder(
+      policy,
+      legal,
+      row.context.slice(0, 29),
+    )(row.context);
+    for (let i = 0; i < actual.length; i++) {
+      assert.ok(Math.abs(actual[i] - row.probabilities[i]) < 1e-12);
+      assert.ok(Math.abs(cached[i] - actual[i]) < 1e-12);
+    }
+  }
+  assert.throws(
+    () => encoder(policy, ps)(Array(71).fill(0)),
+    /context mismatch/,
+  );
+});
+
+test("hole semantic features preserve disjointness and remain finite for unbounded specifications", () => {
+  const gap = specificationFeatures({
+    low: [-2],
+    high: [2],
+    ranges: [
+      [
+        [-2, -2],
+        [2, 2],
+      ],
+    ],
+  });
+  const convex = specificationFeatures({ low: [-2], high: [2] });
+  assert.equal(gap.length, 125);
+  assert.notDeepEqual(gap, convex);
+  assert.ok(
+    specificationFeatures({ low: [-Infinity], high: [Infinity] }).every(
+      Number.isFinite,
+    ),
+  );
+});
+
+test("population reserves additions to the incumbent before unrelated languages", () => {
+  const c = JSON.parse(
+    readFileSync("output/joint/inverse-corpus-v5.json", "utf8"),
+  );
+  const pool = c.proposed.map(
+    (r: { macro: Parameters<typeof genome>[0][number] }) => r.macro,
+  );
+  const parent = genome(c.parentLibrary);
+  const population = languagePopulation([parent], pool, 73, 512, 133);
+  const ids = new Set(population.map((g) => g.id));
+  assert.equal(ids.size, population.length);
+  assert.ok(ids.has(parent.id));
+  assert.ok(ids.has(genome([]).id));
+  for (const m of pool) assert.ok(ids.has(genome([...parent.macros, m]).id));
+  assert.deepEqual(
+    languagePopulation([parent], pool, 73, 512, 133),
+    population,
+  );
+  assert.ok(population.every((g) => g.macros.length <= 4));
+});
 
 test("refactored dream teachers lower synthesized integer literals into available productions", () => {
   const t = {

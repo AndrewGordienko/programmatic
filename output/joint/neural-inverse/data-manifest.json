@@ -1,0 +1,18 @@
+{
+  "version": "inverse-teacher-data-v1",
+  "contextKind": "inverse-domains-v1",
+  "source": "output/joint/neural-v2/data.json.gz",
+  "programs": 10000,
+  "decisions": 85780,
+  "exposureTrees": 33875,
+  "features": 196,
+  "accounting": {
+    "programExecutions": 70662,
+    "exampleExecutions": 1766550,
+    "inverseDerivations": 65780,
+    "partialFeatureProbes": 514680,
+    "omittedExpandedPrograms": 0
+  },
+  "generationMs": 4702.212375,
+  "note": "Paired base/library representations of executed programs. Teacher traverses the rightmost unknown child with actual inverse constraints and known sibling programs. Both variants of a source program remain in one train/validation split. Legal-production masks remove unavailable macro actions. Final tasks are not used; exposure audit must include all recorded teacher subprograms."
+}

@@ -20,6 +20,7 @@ import {
 import { canonical } from "./canonical";
 import type { SearchResult } from "./search";
 import { additiveJoin } from "./joins";
+import { specificationFeatures } from "./specification";
 import {
   type Box,
   type Domain,
@@ -147,7 +148,7 @@ export function inverseSearch(
     affineFits?: number;
     depth?: number;
     beam?: number;
-    relational?: boolean;
+    relational?: boolean | "monotone";
     diverseBeam?: boolean;
     affineDifferences?: number;
     maxNodes?: number;
@@ -181,7 +182,18 @@ export function inverseSearch(
   const relations = new Map(
     macros
       .filter((m) => m.arity === 1 && options.relational)
-      .map((m) => [m.name, linearPieces(m.body)]),
+      .map((m) => {
+        const pieces = linearPieces(m.body);
+        return [
+          m.name,
+          options.relational === "monotone" &&
+          pieces &&
+          !pieces.every((p) => p.a >= 0) &&
+          !pieces.every((p) => p.a <= 0)
+            ? null
+            : pieces,
+        ] as const;
+      }),
   );
   const charge = () => {
     if (expansions >= limit) return false;
@@ -547,9 +559,12 @@ export function inverseSearch(
     if (ancestors.has(sk)) return;
     const history = new Set(ancestors);
     history.add(sk);
-    const probabilities = predict(
-      policy ? context(task.examples, partial, path, ps, macros) : [],
-    );
+    const neuralContext = policy
+      ? context(task.examples, partial, path, ps, macros)
+      : [];
+    if (policy?.contextKind === "inverse-domains-v1")
+      neuralContext.push(...specificationFeatures(spec));
+    const probabilities = predict(neuralContext);
     const candidates: { tree: Expr; child: Box; cost: number; slot: number }[] =
       [];
     const ops = ps

@@ -26,6 +26,7 @@ rows = data['decisions']
 x = torch.tensor([r['x'] for r in rows], dtype=torch.float32)
 y = torch.tensor([r['y'] for r in rows], dtype=torch.long)
 s = torch.tensor(data['semantics'], dtype=torch.float32)
+legal = torch.tensor([r.get('legal', [True] * len(data['semantics'])) for r in rows], dtype=torch.bool)
 train = torch.tensor([i for i, r in enumerate(rows) if r['split'] == 'training'])
 corpus = torch.tensor([i for i, r in enumerate(rows) if r['source'] == 'corpus'])
 dream = torch.tensor([i for i, r in enumerate(rows) if r['split'] == 'training' and r['source'] == 'dream'])
@@ -54,14 +55,14 @@ for epoch in range(61):
         for _ in range(max(1, len(train) // 512)):
             left = corpus[torch.randint(len(corpus), (256,))] if len(corpus) else dream[torch.randint(len(dream), (256,))]
             indices = torch.cat([left, dream[torch.randint(len(dream), (256,))]])
-            loss = torch.nn.functional.cross_entropy(forward(x[indices]), y[indices])
+            loss = torch.nn.functional.cross_entropy(forward(x[indices]).masked_fill(~legal[indices], -1e9), y[indices])
             opt.zero_grad()
             loss.backward()
             torch.nn.utils.clip_grad_norm_(params, 2.0)
             opt.step()
             updates += len(indices)
     with torch.no_grad():
-        logits = forward(x[valid])
+        logits = forward(x[valid]).masked_fill(~legal[valid], -1e9)
         val_loss = torch.nn.functional.cross_entropy(logits, y[valid]).item()
         accuracy = (logits.argmax(-1) == y[valid]).float().mean().item()
     history.append(dict(epoch=epoch, validationLoss=val_loss, validationAccuracy=accuracy))
@@ -72,5 +73,7 @@ for epoch in range(61):
         print(history[-1], flush=True)
 
 model = dict(version='joint-semantic-v1', contextWeights=best[0], operatorWeights=best[1], bias=best[2], decisions=updates, loss=best_loss)
+if data.get('contextKind'):
+    model['contextKind'] = data['contextKind']
 (destination / 'policy.json').write_text(json.dumps(model))
 (destination / 'training.json').write_text(json.dumps(dict(torchVersion=torch.__version__, seed=options.seed, device='cpu', threads=4, width=width, updates=updates, elapsedMs=(time.perf_counter()-started)*1000, history=history), indent=2))

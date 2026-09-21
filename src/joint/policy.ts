@@ -125,6 +125,7 @@ export function taskContext(
 const H = 12;
 export type JointPolicy = {
   version: "joint-semantic-v1";
+  contextKind?: "inverse-domains-v1";
   contextWeights: number[][];
   operatorWeights: number[][];
   bias: number[];
@@ -154,6 +155,10 @@ export function encoder(
     p.contextWeights.map((w) => prefix.reduce((s, v, i) => s + w[i] * v, 0));
   return (x: number[]) => {
     if (!p || !embeddings) return ps.map(() => 1 / ps.length);
+    if (x.length !== p.contextWeights[0].length)
+      throw new Error(
+        `Policy context mismatch: expected ${p.contextWeights[0].length}, received ${x.length}`,
+      );
     const h = p.contextWeights.map((w, k) => {
       if (!starts || !prefix) return Math.tanh(dot(w, x));
       let sum = starts[k];
@@ -176,6 +181,10 @@ export function fitJoint(
   previous?: JointPolicy,
   options = { dreams: 128, epochs: 6 },
 ): JointPolicy {
+  if (previous?.contextKind)
+    throw new Error(
+      "Inverse-domain policies require inverse-specification training data",
+    );
   const rng = new Random(seed),
     ps = productions(macros),
     xs = inputs(301, 25, 3);
