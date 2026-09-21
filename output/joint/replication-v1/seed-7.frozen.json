@@ -1,0 +1,251 @@
+{
+  "protocolHash": "b7f051048d60131292a955e094a204b47eee2a9a95d8db47ba8bcba847a55c88",
+  "seed": 7,
+  "frozenHash": "f5203143d8463b7a49d8e0f732996bee035d1aa9b6bb0fb3db3847c626ffa75b",
+  "frozenAt": "2026-09-21T04:22:16.525Z",
+  "candidate": {
+    "id": "L3676341650",
+    "macros": [
+      {
+        "name": "fn_2352281741",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "arg",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 55,
+        "sourceTasks": [
+          "meta-7-train-001",
+          "meta-7-train-003",
+          "meta-7-train-006",
+          "meta-7-train-010",
+          "meta-7-train-011",
+          "meta-7-train-012",
+          "meta-7-train-026",
+          "meta-7-train-027",
+          "meta-7-train-032",
+          "meta-7-train-038",
+          "meta-7-train-039",
+          "meta-7-train-042",
+          "meta-7-train-046",
+          "meta-7-train-047",
+          "meta-7-train-050",
+          "meta-7-train-058",
+          "meta-7-train-061",
+          "meta-7-train-065",
+          "meta-7-train-066",
+          "meta-7-train-068",
+          "meta-7-train-071",
+          "meta-7-train-073",
+          "meta-7-train-074",
+          "meta-7-train-077",
+          "meta-7-train-078",
+          "meta-7-train-084",
+          "meta-7-train-085",
+          "meta-7-train-100",
+          "meta-7-train-104",
+          "meta-7-train-108",
+          "meta-7-train-121",
+          "meta-7-train-124",
+          "meta-7-train-130",
+          "meta-7-train-134",
+          "meta-7-train-143",
+          "meta-7-train-148",
+          "meta-7-train-159",
+          "meta-7-train-115",
+          "meta-7-train-125",
+          "meta-7-train-147",
+          "meta-7-train-023",
+          "meta-7-train-031",
+          "meta-7-train-043",
+          "meta-7-train-045",
+          "meta-7-train-062",
+          "meta-7-train-086",
+          "meta-7-train-098",
+          "meta-7-train-099",
+          "meta-7-train-101",
+          "meta-7-train-103",
+          "meta-7-train-107",
+          "meta-7-train-111",
+          "meta-7-train-117",
+          "meta-7-train-150",
+          "meta-7-train-154"
+        ],
+        "size": 4,
+        "definition": "fn_2352281741(a) = max(a, (-a))"
+      },
+      {
+        "name": "fn_3518208291",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "min",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "const",
+                  "value": 1,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 37,
+        "sourceTasks": [
+          "meta-7-train-005",
+          "meta-7-train-007",
+          "meta-7-train-014",
+          "meta-7-train-018",
+          "meta-7-train-020",
+          "meta-7-train-024",
+          "meta-7-train-030",
+          "meta-7-train-035",
+          "meta-7-train-040",
+          "meta-7-train-049",
+          "meta-7-train-054",
+          "meta-7-train-057",
+          "meta-7-train-060",
+          "meta-7-train-063",
+          "meta-7-train-070",
+          "meta-7-train-075",
+          "meta-7-train-080",
+          "meta-7-train-090",
+          "meta-7-train-094",
+          "meta-7-train-097",
+          "meta-7-train-106",
+          "meta-7-train-114",
+          "meta-7-train-123",
+          "meta-7-train-126",
+          "meta-7-train-129",
+          "meta-7-train-135",
+          "meta-7-train-140",
+          "meta-7-train-141",
+          "meta-7-train-142",
+          "meta-7-train-149",
+          "meta-7-train-151",
+          "meta-7-train-153",
+          "meta-7-train-158",
+          "meta-7-train-055",
+          "meta-7-train-067",
+          "meta-7-train-125",
+          "meta-7-train-117"
+        ],
+        "size": 5,
+        "definition": "fn_3518208291(a) = max(0, min(a, 1))"
+      },
+      {
+        "name": "fn_3549247544",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 42,
+        "sourceTasks": [
+          "meta-7-train-002",
+          "meta-7-train-004",
+          "meta-7-train-008",
+          "meta-7-train-013",
+          "meta-7-train-016",
+          "meta-7-train-017",
+          "meta-7-train-022",
+          "meta-7-train-028",
+          "meta-7-train-051",
+          "meta-7-train-054",
+          "meta-7-train-056",
+          "meta-7-train-061",
+          "meta-7-train-063",
+          "meta-7-train-073",
+          "meta-7-train-076",
+          "meta-7-train-077",
+          "meta-7-train-081",
+          "meta-7-train-088",
+          "meta-7-train-089",
+          "meta-7-train-091",
+          "meta-7-train-092",
+          "meta-7-train-093",
+          "meta-7-train-095",
+          "meta-7-train-118",
+          "meta-7-train-119",
+          "meta-7-train-127",
+          "meta-7-train-129",
+          "meta-7-train-131",
+          "meta-7-train-133",
+          "meta-7-train-145",
+          "meta-7-train-155",
+          "meta-7-train-048",
+          "meta-7-train-055",
+          "meta-7-train-067",
+          "meta-7-train-109",
+          "meta-7-train-120",
+          "meta-7-train-144",
+          "meta-7-train-147",
+          "meta-7-train-156",
+          "meta-7-train-069",
+          "meta-7-train-098",
+          "meta-7-train-101"
+        ],
+        "size": 4,
+        "definition": "fn_3549247544(a) = max(0, (-a))"
+      }
+    ],
+    "edit": "incumbent-add",
+    "parents": [
+      "L4238592834"
+    ],
+    "features": [
+      3,
+      13,
+      1,
+      134,
+      55,
+      152,
+      5,
+      7
+    ]
+  }
+}

@@ -33,6 +33,59 @@ import {
   instantiateAffine,
 } from "./parametric";
 import { parametricSearch } from "./parametric-search";
+import { languageValueFeatures } from "./language-value";
+import { fragmentFeatures, predictFragmentValue } from "./fragment-value";
+
+test("fragment guide matches independent PyTorch inference and preserves later observation geometry", () => {
+  const folder = "output/joint/fragment-value-v1/";
+  const model = JSON.parse(readFileSync(folder + "model.json", "utf8"));
+  for (const row of JSON.parse(readFileSync(folder + "parity.json", "utf8")))
+    assert.ok(
+      Math.abs(predictFragmentValue(model, row.features) - row.value) < 1e-10,
+    );
+  const examples = inputs(6112, 75, 5).map((input) => ({ input, output: 0 }));
+  examples[55].output = 2;
+  examples[56].output = -2;
+  const swapped = examples.map((e) => ({ ...e }));
+  swapped[55].output = -2;
+  swapped[56].output = 2;
+  const tree = { op: "const", value: 1, args: [] },
+    values = Array(75).fill(1);
+  assert.notDeepEqual(
+    fragmentFeatures(examples, values, tree, []),
+    fragmentFeatures(swapped, values, tree, []),
+  );
+});
+
+test("outer value features ignore invented names and library order while retaining executable behavior", () => {
+  const run = JSON.parse(
+    readFileSync("output/joint/inverse-language-pilot-v4.json", "utf8"),
+  );
+  const g = run.candidate;
+  const context = {
+    corpus: 133,
+    training: 160,
+    budget: 512,
+    tasks: 12,
+    reps: 3,
+  };
+  const original = languageValueFeatures(g, context);
+  const renamed = {
+    ...g,
+    macros: [...g.macros]
+      .reverse()
+      .map((m: Parameters<typeof genome>[0][number], i: number) => ({
+        ...m,
+        name: `renamed_${i}`,
+        definition: "opaque label",
+      })),
+  };
+  const changed = languageValueFeatures(renamed, context);
+  assert.equal(original.length, 280);
+  for (let i = 0; i < original.length; i++)
+    assert.ok(Math.abs(original[i] - changed[i]) < 1e-12);
+  assert.notDeepEqual(original, languageValueFeatures(genome([]), context));
+});
 
 test("richer observation protocol preserves task identity and hides independent checks", () => {
   const counts = {
