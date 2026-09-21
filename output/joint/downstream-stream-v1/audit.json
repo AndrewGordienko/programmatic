@@ -1,0 +1,362 @@
+{
+  "protocolHash": "242c3618b440c03408f6d79f31b4d557993023d944dd63638a67b6f2d277f143",
+  "programs": 40000,
+  "pointExecutions": 5600000,
+  "replays": [
+    {
+      "index": 0,
+      "arm": "base",
+      "work": 4117,
+      "evaluations": 21,
+      "recordedMs": 41.08729200000002,
+      "replayMs": 42.170916000000034
+    },
+    {
+      "index": 0,
+      "arm": "learned",
+      "work": 4143,
+      "evaluations": 47,
+      "recordedMs": 23.727374999999995,
+      "replayMs": 22.901666000000034
+    },
+    {
+      "index": 997,
+      "arm": "base",
+      "work": 1243,
+      "evaluations": 91,
+      "recordedMs": 5.746999999999389,
+      "replayMs": 10.291917000000012
+    },
+    {
+      "index": 997,
+      "arm": "learned",
+      "work": 785,
+      "evaluations": 226,
+      "recordedMs": 4.615041999997629,
+      "replayMs": 6.568666000000007
+    },
+    {
+      "index": 1215,
+      "arm": "base",
+      "work": 4128,
+      "evaluations": 32,
+      "recordedMs": 52704466.931875,
+      "replayMs": 25.874792000000014
+    },
+    {
+      "index": 1215,
+      "arm": "learned",
+      "work": 4177,
+      "evaluations": 81,
+      "recordedMs": 32.54516700000022,
+      "replayMs": 24.937166999999988
+    },
+    {
+      "index": 1994,
+      "arm": "base",
+      "work": 1339,
+      "evaluations": 63,
+      "recordedMs": 6.80358400195837,
+      "replayMs": 10.258500000000026
+    },
+    {
+      "index": 1994,
+      "arm": "learned",
+      "work": 965,
+      "evaluations": 156,
+      "recordedMs": 5.014792002737522,
+      "replayMs": 5.7240829999999505
+    },
+    {
+      "index": 2991,
+      "arm": "base",
+      "work": 4134,
+      "evaluations": 38,
+      "recordedMs": 16.668707996606827,
+      "replayMs": 22.330832999999984
+    },
+    {
+      "index": 2991,
+      "arm": "learned",
+      "work": 728,
+      "evaluations": 96,
+      "recordedMs": 2.5946249961853027,
+      "replayMs": 3.155708000000004
+    },
+    {
+      "index": 3988,
+      "arm": "base",
+      "work": 4170,
+      "evaluations": 74,
+      "recordedMs": 19.402458995580673,
+      "replayMs": 24.95129200000008
+    },
+    {
+      "index": 3988,
+      "arm": "learned",
+      "work": 721,
+      "evaluations": 117,
+      "recordedMs": 3.382041998207569,
+      "replayMs": 4.159750000000031
+    },
+    {
+      "index": 4985,
+      "arm": "base",
+      "work": 815,
+      "evaluations": 27,
+      "recordedMs": 3.4799170047044754,
+      "replayMs": 4.120957999999973
+    },
+    {
+      "index": 4985,
+      "arm": "learned",
+      "work": 595,
+      "evaluations": 66,
+      "recordedMs": 2.4345420002937317,
+      "replayMs": 2.8557919999999513
+    },
+    {
+      "index": 5982,
+      "arm": "base",
+      "work": 852,
+      "evaluations": 23,
+      "recordedMs": 3.175207994878292,
+      "replayMs": 5.242042000000083
+    },
+    {
+      "index": 5982,
+      "arm": "learned",
+      "work": 616,
+      "evaluations": 56,
+      "recordedMs": 2.048707999289036,
+      "replayMs": 2.974207999999976
+    },
+    {
+      "index": 6979,
+      "arm": "base",
+      "work": 4143,
+      "evaluations": 47,
+      "recordedMs": 15.410374999046326,
+      "replayMs": 21.781458000000043
+    },
+    {
+      "index": 6979,
+      "arm": "learned",
+      "work": 1158,
+      "evaluations": 101,
+      "recordedMs": 4.540875002741814,
+      "replayMs": 6.0346250000000055
+    },
+    {
+      "index": 7976,
+      "arm": "base",
+      "work": 4144,
+      "evaluations": 48,
+      "recordedMs": 15.916416995227337,
+      "replayMs": 20.896624999999858
+    },
+    {
+      "index": 7976,
+      "arm": "learned",
+      "work": 4218,
+      "evaluations": 122,
+      "recordedMs": 17.077916994690895,
+      "replayMs": 22.36783300000002
+    },
+    {
+      "index": 8973,
+      "arm": "base",
+      "work": 4150,
+      "evaluations": 54,
+      "recordedMs": 15.537832997739315,
+      "replayMs": 20.21225000000004
+    },
+    {
+      "index": 8973,
+      "arm": "learned",
+      "work": 778,
+      "evaluations": 126,
+      "recordedMs": 2.9495829939842224,
+      "replayMs": 3.9037080000000515
+    },
+    {
+      "index": 9970,
+      "arm": "base",
+      "work": 1587,
+      "evaluations": 65,
+      "recordedMs": 7.1760419979691505,
+      "replayMs": 8.602166000000125
+    },
+    {
+      "index": 9970,
+      "arm": "learned",
+      "work": 1442,
+      "evaluations": 161,
+      "recordedMs": 7.31470900028944,
+      "replayMs": 8.156375000000025
+    },
+    {
+      "index": 10967,
+      "arm": "base",
+      "work": 4208,
+      "evaluations": 112,
+      "recordedMs": 17.769166998565197,
+      "replayMs": 20.154624999999896
+    },
+    {
+      "index": 10967,
+      "arm": "learned",
+      "work": 4317,
+      "evaluations": 221,
+      "recordedMs": 16.461915999650955,
+      "replayMs": 20.56183299999998
+    },
+    {
+      "index": 11964,
+      "arm": "base",
+      "work": 4142,
+      "evaluations": 46,
+      "recordedMs": 15.955707997083664,
+      "replayMs": 21.86233399999992
+    },
+    {
+      "index": 11964,
+      "arm": "learned",
+      "work": 4162,
+      "evaluations": 66,
+      "recordedMs": 15.968334004282951,
+      "replayMs": 18.929833000000144
+    },
+    {
+      "index": 12961,
+      "arm": "base",
+      "work": 640,
+      "evaluations": 45,
+      "recordedMs": 2.199874997138977,
+      "replayMs": 2.712541000000101
+    },
+    {
+      "index": 12961,
+      "arm": "learned",
+      "work": 647,
+      "evaluations": 111,
+      "recordedMs": 3.2218750044703484,
+      "replayMs": 4.729499999999916
+    },
+    {
+      "index": 13958,
+      "arm": "base",
+      "work": 4153,
+      "evaluations": 57,
+      "recordedMs": 16.146250002086163,
+      "replayMs": 22.084124999999858
+    },
+    {
+      "index": 13958,
+      "arm": "learned",
+      "work": 4215,
+      "evaluations": 119,
+      "recordedMs": 16.35412499308586,
+      "replayMs": 21.367249999999785
+    },
+    {
+      "index": 14955,
+      "arm": "base",
+      "work": 4147,
+      "evaluations": 51,
+      "recordedMs": 17.019250005483627,
+      "replayMs": 23.450250000000096
+    },
+    {
+      "index": 14955,
+      "arm": "learned",
+      "work": 1013,
+      "evaluations": 72,
+      "recordedMs": 4.3532499969005585,
+      "replayMs": 4.945750000000089
+    },
+    {
+      "index": 15952,
+      "arm": "base",
+      "work": 4128,
+      "evaluations": 32,
+      "recordedMs": 15.384332999587059,
+      "replayMs": 18.32899999999995
+    },
+    {
+      "index": 15952,
+      "arm": "learned",
+      "work": 4138,
+      "evaluations": 42,
+      "recordedMs": 16.188124999403954,
+      "replayMs": 20.48762499999998
+    },
+    {
+      "index": 16949,
+      "arm": "base",
+      "work": 587,
+      "evaluations": 53,
+      "recordedMs": 2.5310840010643005,
+      "replayMs": 2.728291999999783
+    },
+    {
+      "index": 16949,
+      "arm": "learned",
+      "work": 668,
+      "evaluations": 131,
+      "recordedMs": 3.8027499988675117,
+      "replayMs": 5.691583000000264
+    },
+    {
+      "index": 17946,
+      "arm": "base",
+      "work": 1243,
+      "evaluations": 24,
+      "recordedMs": 4.856750003993511,
+      "replayMs": 6.962750000000142
+    },
+    {
+      "index": 17946,
+      "arm": "learned",
+      "work": 1024,
+      "evaluations": 57,
+      "recordedMs": 4.453708000481129,
+      "replayMs": 4.93224999999984
+    },
+    {
+      "index": 18943,
+      "arm": "base",
+      "work": 4137,
+      "evaluations": 41,
+      "recordedMs": 18.988833002746105,
+      "replayMs": 21.7052920000001
+    },
+    {
+      "index": 18943,
+      "arm": "learned",
+      "work": 622,
+      "evaluations": 87,
+      "recordedMs": 2.1812500059604645,
+      "replayMs": 2.2620829999996204
+    },
+    {
+      "index": 19999,
+      "arm": "base",
+      "work": 4153,
+      "evaluations": 57,
+      "recordedMs": 17.098375000059605,
+      "replayMs": 19.464750000000095
+    },
+    {
+      "index": 19999,
+      "arm": "learned",
+      "work": 1065,
+      "evaluations": 101,
+      "recordedMs": 4.899125002324581,
+      "replayMs": 5.2188750000000255
+    }
+  ],
+  "elapsedMs": 2210.282833,
+  "replayWork": 108557,
+  "note": "Post-run verification expense, separately charged as research audit. Every returned program is re-executed on all observations/checks; deterministic selected searches include the timing-anomaly trial. Timings are not replaced. Equal trajectories/counters on replay support count-based results, not a wall-payback claim."
+}

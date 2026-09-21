@@ -299,6 +299,23 @@ The value arm's projected incremental language payback is 9,385–13,505 future 
 
 Nested transfer still fails the broad gate: the value arm's aggregate nested count is one solve below its base arm across 480 trials, while longer improves. This pipeline is therefore useful bounded library learning with promising selective evaluation, not a complete solution to general language discovery. `output/joint/selective-evolution-v1/analysis.json` contains paired quality/cost differences, each frozen library and group, raw rejected-policy handling, and all accounting. Some timings shared the host with independent neural-policy experiments; `host-load-events.json` records that.
 
+## Sealed downstream stream: observed incremental work payback
+
+`downstream-stream.ts` predeclares the first selective/value meta-run (211), rather than choosing the best language after inspecting future performance. All **20,000 tasks** are generated and cryptographically sealed before any stream search. Functions are empirically distinct across the stream, excluded from historical training/selection/confirmation/testing and prior exposure, and shuffled within fixed 500-task batches. Both arms use the original frozen solver, the same neural weights, identical search seeds and equal caps. Execution order alternates; learning remains disabled. The entire 40-batch horizon is retained, including failures after the first cost crossing.
+
+| Stream arm | Solved / 20,000 | Search work | Complete proposals |
+| --- | ---: | ---: | ---: |
+| Base DSL, frozen prior | 5,863 | 66,258,403 | 1,035,921 |
+| Learned DSL, same prior | 10,238 | 52,366,804 | 2,250,200 |
+
+The selected language cost **6,448,868 work units** to discover, including wake synthesis, selection and confirmation. Its cumulative search savings first cover that incremental investment at **task 8,944**. After the complete stream, language discovery plus learned search costs 58,815,672 versus 66,258,403 for the base arm: a net saving of **7,442,731 recorded work units**. This is an observed conditional amortization result for one preselected language, not another 20-language replication or a universal guarantee. The extra **455,357,069-work source investment** in the shared outer value model, its fitting, inner-policy pretraining and historical R&D are additional; the stream has not repaid all of those. Complete proposal count increases, so this is not a candidate-evaluation speedup claim.
+
+Related solves improve 3,242→7,361/12,000 and longer 180→459/4,000. Nested changes 2,441→2,418/4,000. That repeated negative result still prevents a broad structural-transfer claim. The stream's exclusion-conditioned finite task distribution also differs from an unrestricted draw from the original generator.
+
+**Wall-clock payback is unassessable.** One base search at zero-based index 1,215 records an unexplained 52,704,466.9 ms elapsed-time jump, whereas the other searches are short. Raw timings and that row remain intact. The report flags the anomaly and does not remove it, winsorize durations or use the resulting artificial wall crossing as evidence. Later batches also share the host with independent inner-search confirmation. The execution audit rechecks every returned program on all supplied and hidden examples and replays selected searches, including the anomalous trial, against exact program/evaluation/expansion counters. Audit expense is separate research work.
+
+`output/joint/downstream-stream-v1/` retains the protocol, all sealed tasks, every trial/program, the complete cumulative curve and audit. The successful main engine was unchanged throughout this experiment.
+
 ### Post-search component audit and broader construction (experimental branch)
 
 `fragment-coverage-v1.json` audits the existing adaptive nested/longer sample against one known generating expression, **only after synthesis returns**. A separate auditor mirror must exactly reproduce all 80 task signatures and supplied/check outputs before diagnosis; no oracle expression enters search. It checks empirical equivalence of known components to executed fragments. In the 27 failed learned-language longer trials, none has all three known nonlinear terms in the bank. The first/second/third terms are present in only 4/5/13 trials. In 13 failed nested trials, only one contains both the known inner transform and other affine operand; that pair never both survives the active-bank cutoff. These are findings about one decomposition, not proof that it is necessary for every solution.

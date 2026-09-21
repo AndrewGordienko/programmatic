@@ -1,0 +1,2081 @@
+{
+  "protocolHash": "242c3618b440c03408f6d79f31b4d557993023d944dd63638a67b6f2d277f143",
+  "complete": true,
+  "batches": 40,
+  "plannedBatches": 40,
+  "tasks": 20000,
+  "uniqueEmpiricalFunctions": 20000,
+  "totals": {
+    "base": {
+      "work": 66258403,
+      "evaluations": 1035921,
+      "expansions": 65222482,
+      "wallMs": 52980194.671834536,
+      "solved": 5863,
+      "points": 15363293
+    },
+    "learned": {
+      "work": 52366804,
+      "evaluations": 2250200,
+      "expansions": 50116604,
+      "wallMs": 226383.80351883182,
+      "solved": 10238,
+      "points": 12039396
+    }
+  },
+  "groups": [
+    {
+      "group": "Related compositions",
+      "tasks": 12000,
+      "baseSolved": 3242,
+      "learnedSolved": 7361,
+      "baseFits": 3525,
+      "learnedFits": 7602,
+      "workSaved": 13344894
+    },
+    {
+      "group": "Longer expressions",
+      "tasks": 4000,
+      "baseSolved": 180,
+      "learnedSolved": 459,
+      "baseFits": 197,
+      "learnedFits": 503,
+      "workSaved": 323421
+    },
+    {
+      "group": "Nested compositions",
+      "tasks": 4000,
+      "baseSolved": 2441,
+      "learnedSolved": 2418,
+      "baseFits": 2622,
+      "learnedFits": 2626,
+      "workSaved": 223284
+    }
+  ],
+  "discovery": {
+    "work": 6448868,
+    "evaluations": 223910,
+    "expansions": 6224958,
+    "wallMs": 28498.635459,
+    "sharedValueSourceWork": 455357069,
+    "sharedValueTrainingMs": 1610.983541002497,
+    "note": "Incremental language cost includes wake synthesis, selection, confirmation. Value-model source labels/fitting and shared inner-policy pretraining remain additional; prior cost cancels only in the matched-prior comparison. Earlier R&D is not fully priced."
+  },
+  "firstWorkCrossing": 8944,
+  "firstWallCrossing": null,
+  "rawFirstWallCrossing": 1216,
+  "timingAnomalies": [
+    {
+      "index": 1215,
+      "arm": "base",
+      "elapsedMs": 52704466.931875
+    }
+  ],
+  "wallPaybackAssessable": false,
+  "firstIncludingValueCrossing": null,
+  "netWorkAtCurrentEnd": 7442731,
+  "netWallMsAtCurrentEnd": 52725312.232856706,
+  "curve": [
+    {
+      "tasks": 100,
+      "baseWork": 314433,
+      "learnedWorkIncludingDiscovery": 6699602,
+      "learnedWorkIncludingValueInvestment": 462056671,
+      "netWork": -6385169,
+      "baseWallMs": 1523.6114990000008,
+      "learnedWallMsIncludingDiscovery": 29720.284297000002,
+      "netWall": -28196.672798
+    },
+    {
+      "tasks": 200,
+      "baseWork": 637520,
+      "learnedWorkIncludingDiscovery": 6935263,
+      "learnedWorkIncludingValueInvestment": 462292332,
+      "netWork": -6297743,
+      "baseWallMs": 2939.8567870000043,
+      "learnedWallMsIncludingDiscovery": 30763.435791,
+      "netWall": -27823.579003999996
+    },
+    {
+      "tasks": 300,
+      "baseWork": 966727,
+      "learnedWorkIncludingDiscovery": 7198825,
+      "learnedWorkIncludingValueInvestment": 462555894,
+      "netWork": -6232098,
+      "baseWallMs": 4300.697327000007,
+      "learnedWallMsIncludingDiscovery": 31879.915747,
+      "netWall": -27579.218419999994
+    },
+    {
+      "tasks": 400,
+      "baseWork": 1317659,
+      "learnedWorkIncludingDiscovery": 7482664,
+      "learnedWorkIncludingValueInvestment": 462839733,
+      "netWork": -6165005,
+      "baseWallMs": 5713.424691000004,
+      "learnedWallMsIncludingDiscovery": 33072.35775000002,
+      "netWall": -27358.933059000014
+    },
+    {
+      "tasks": 500,
+      "baseWork": 1657090,
+      "learnedWorkIncludingDiscovery": 7745427,
+      "learnedWorkIncludingValueInvestment": 463102496,
+      "netWork": -6088337,
+      "baseWallMs": 7166.666774999998,
+      "learnedWallMsIncludingDiscovery": 34204.80204600001,
+      "netWall": -27038.135271000017
+    },
+    {
+      "tasks": 600,
+      "baseWork": 1977200,
+      "learnedWorkIncludingDiscovery": 7983810,
+      "learnedWorkIncludingValueInvestment": 463340879,
+      "netWork": -6006610,
+      "baseWallMs": 8513.152687999991,
+      "learnedWallMsIncludingDiscovery": 35255.32417000002,
+      "netWall": -26742.171482000027
+    },
+    {
+      "tasks": 700,
+      "baseWork": 2314163,
+      "learnedWorkIncludingDiscovery": 8249018,
+      "learnedWorkIncludingValueInvestment": 463606087,
+      "netWork": -5934855,
+      "baseWallMs": 9888.416730000004,
+      "learnedWallMsIncludingDiscovery": 36382.21170900003,
+      "netWall": -26493.794979000024
+    },
+    {
+      "tasks": 800,
+      "baseWork": 2618446,
+      "learnedWorkIncludingDiscovery": 8493100,
+      "learnedWorkIncludingValueInvestment": 463850169,
+      "netWork": -5874654,
+      "baseWallMs": 11130.014732000018,
+      "learnedWallMsIncludingDiscovery": 37408.50891200002,
+      "netWall": -26278.49418
+    },
+    {
+      "tasks": 900,
+      "baseWork": 2955824,
+      "learnedWorkIncludingDiscovery": 8771371,
+      "learnedWorkIncludingValueInvestment": 464128440,
+      "netWork": -5815547,
+      "baseWallMs": 12539.58885600001,
+      "learnedWallMsIncludingDiscovery": 38609.23283000001,
+      "netWall": -26069.643974000002
+    },
+    {
+      "tasks": 1000,
+      "baseWork": 3295992,
+      "learnedWorkIncludingDiscovery": 9056735,
+      "learnedWorkIncludingValueInvestment": 464413804,
+      "netWork": -5760743,
+      "baseWallMs": 13937.867938999992,
+      "learnedWallMsIncludingDiscovery": 39823.30733300002,
+      "netWall": -25885.439394000023
+    },
+    {
+      "tasks": 1100,
+      "baseWork": 3640434,
+      "learnedWorkIncludingDiscovery": 9336345,
+      "learnedWorkIncludingValueInvestment": 464693414,
+      "netWork": -5695911,
+      "baseWallMs": 15348.880765999987,
+      "learnedWallMsIncludingDiscovery": 41004.343417,
+      "netWall": -25655.46265100001
+    },
+    {
+      "tasks": 1200,
+      "baseWork": 3974042,
+      "learnedWorkIncludingDiscovery": 9602014,
+      "learnedWorkIncludingValueInvestment": 464959083,
+      "netWork": -5627972,
+      "baseWallMs": 17040.623351000006,
+      "learnedWallMsIncludingDiscovery": 42372.262821999975,
+      "netWall": -25331.639470999973
+    },
+    {
+      "tasks": 1300,
+      "baseWork": 4303449,
+      "learnedWorkIncludingDiscovery": 9847697,
+      "learnedWorkIncludingValueInvestment": 465204766,
+      "netWork": -5544248,
+      "baseWallMs": 52723996.55014298,
+      "learnedWallMsIncludingDiscovery": 44470.744369985376,
+      "netWall": 52679525.805773
+    },
+    {
+      "tasks": 1400,
+      "baseWork": 4622931,
+      "learnedWorkIncludingDiscovery": 10097943,
+      "learnedWorkIncludingValueInvestment": 465455012,
+      "netWork": -5475012,
+      "baseWallMs": 52725406.90076303,
+      "learnedWallMsIncludingDiscovery": 45649.18765898964,
+      "netWall": 52679757.71310404
+    },
+    {
+      "tasks": 1500,
+      "baseWork": 4963631,
+      "learnedWorkIncludingDiscovery": 10343876,
+      "learnedWorkIncludingValueInvestment": 465700945,
+      "netWork": -5380245,
+      "baseWallMs": 52727054.50964602,
+      "learnedWallMsIncludingDiscovery": 46875.074620956395,
+      "netWall": 52680179.435025066
+    },
+    {
+      "tasks": 1600,
+      "baseWork": 5294538,
+      "learnedWorkIncludingDiscovery": 10596756,
+      "learnedWorkIncludingValueInvestment": 465953825,
+      "netWork": -5302218,
+      "baseWallMs": 52728428.33410003,
+      "learnedWallMsIncludingDiscovery": 47968.93778891287,
+      "netWall": 52680459.39631112
+    },
+    {
+      "tasks": 1700,
+      "baseWork": 5640024,
+      "learnedWorkIncludingDiscovery": 10872746,
+      "learnedWorkIncludingValueInvestment": 466229815,
+      "netWork": -5232722,
+      "baseWallMs": 52730143.17193203,
+      "learnedWallMsIncludingDiscovery": 49377.34412395379,
+      "netWall": 52680765.827808075
+    },
+    {
+      "tasks": 1800,
+      "baseWork": 5960749,
+      "learnedWorkIncludingDiscovery": 11147962,
+      "learnedWorkIncludingValueInvestment": 466505031,
+      "netWork": -5187213,
+      "baseWallMs": 52731495.37046703,
+      "learnedWallMsIncludingDiscovery": 50570.916543962274,
+      "netWall": 52680924.45392307
+    },
+    {
+      "tasks": 1900,
+      "baseWork": 6297454,
+      "learnedWorkIncludingDiscovery": 11407315,
+      "learnedWorkIncludingValueInvestment": 466764384,
+      "netWork": -5109861,
+      "baseWallMs": 52732919.182132006,
+      "learnedWallMsIncludingDiscovery": 51726.427088031385,
+      "netWall": 52681192.755043976
+    },
+    {
+      "tasks": 2000,
+      "baseWork": 6633188,
+      "learnedWorkIncludingDiscovery": 11670543,
+      "learnedWorkIncludingValueInvestment": 467027612,
+      "netWork": -5037355,
+      "baseWallMs": 52734411.517510004,
+      "learnedWallMsIncludingDiscovery": 52952.8324630352,
+      "netWall": 52681458.68504697
+    },
+    {
+      "tasks": 2100,
+      "baseWork": 6943136,
+      "learnedWorkIncludingDiscovery": 11919628,
+      "learnedWorkIncludingValueInvestment": 467276697,
+      "netWork": -4976492,
+      "baseWallMs": 52735748.966471046,
+      "learnedWallMsIncludingDiscovery": 54075.09225600383,
+      "netWall": 52681673.874215044
+    },
+    {
+      "tasks": 2200,
+      "baseWork": 7266995,
+      "learnedWorkIncludingDiscovery": 12189953,
+      "learnedWorkIncludingValueInvestment": 467547022,
+      "netWork": -4922958,
+      "baseWallMs": 52737144.684933044,
+      "learnedWallMsIncludingDiscovery": 55288.144626999114,
+      "netWall": 52681856.54030605
+    },
+    {
+      "tasks": 2300,
+      "baseWork": 7610023,
+      "learnedWorkIncludingDiscovery": 12460917,
+      "learnedWorkIncludingValueInvestment": 467817986,
+      "netWork": -4850894,
+      "baseWallMs": 52738686.36284902,
+      "learnedWallMsIncludingDiscovery": 56523.59704306147,
+      "netWall": 52682162.76580596
+    },
+    {
+      "tasks": 2400,
+      "baseWork": 7947784,
+      "learnedWorkIncludingDiscovery": 12708045,
+      "learnedWorkIncludingValueInvestment": 468065114,
+      "netWork": -4760261,
+      "baseWallMs": 52740106.90089903,
+      "learnedWallMsIncludingDiscovery": 57594.230799095545,
+      "netWall": 52682512.67009994
+    },
+    {
+      "tasks": 2500,
+      "baseWork": 8278991,
+      "learnedWorkIncludingDiscovery": 12957974,
+      "learnedWorkIncludingValueInvestment": 468315043,
+      "netWork": -4678983,
+      "baseWallMs": 52741500.33827906,
+      "learnedWallMsIncludingDiscovery": 58692.41154008529,
+      "netWall": 52682807.92673898
+    },
+    {
+      "tasks": 2600,
+      "baseWork": 8606126,
+      "learnedWorkIncludingDiscovery": 13230302,
+      "learnedWorkIncludingValueInvestment": 468587371,
+      "netWork": -4624176,
+      "baseWallMs": 52742861.937364034,
+      "learnedWallMsIncludingDiscovery": 59855.6118670868,
+      "netWall": 52683006.32549695
+    },
+    {
+      "tasks": 2700,
+      "baseWork": 8930679,
+      "learnedWorkIncludingDiscovery": 13505975,
+      "learnedWorkIncludingValueInvestment": 468863044,
+      "netWork": -4575296,
+      "baseWallMs": 52744180.275316045,
+      "learnedWallMsIncludingDiscovery": 61026.43058115414,
+      "netWall": 52683153.84473489
+    },
+    {
+      "tasks": 2800,
+      "baseWork": 9259677,
+      "learnedWorkIncludingDiscovery": 13763677,
+      "learnedWorkIncludingValueInvestment": 469120746,
+      "netWork": -4504000,
+      "baseWallMs": 52745551.84064902,
+      "learnedWallMsIncludingDiscovery": 62135.4964581596,
+      "netWall": 52683416.344190866
+    },
+    {
+      "tasks": 2900,
+      "baseWork": 9580654,
+      "learnedWorkIncludingDiscovery": 14018105,
+      "learnedWorkIncludingValueInvestment": 469375174,
+      "netWork": -4437451,
+      "baseWallMs": 52746885.77206301,
+      "learnedWallMsIncludingDiscovery": 63249.99490912429,
+      "netWall": 52683635.77715389
+    },
+    {
+      "tasks": 3000,
+      "baseWork": 9922293,
+      "learnedWorkIncludingDiscovery": 14279457,
+      "learnedWorkIncludingValueInvestment": 469636526,
+      "netWork": -4357164,
+      "baseWallMs": 52748305.08906401,
+      "learnedWallMsIncludingDiscovery": 64356.56290710888,
+      "netWall": 52683948.5261569
+    },
+    {
+      "tasks": 3100,
+      "baseWork": 10258150,
+      "learnedWorkIncludingDiscovery": 14564593,
+      "learnedWorkIncludingValueInvestment": 469921662,
+      "netWork": -4306443,
+      "baseWallMs": 52749703.205603,
+      "learnedWallMsIncludingDiscovery": 65600.03411308846,
+      "netWall": 52684103.17148992
+    },
+    {
+      "tasks": 3200,
+      "baseWork": 10578305,
+      "learnedWorkIncludingDiscovery": 14815699,
+      "learnedWorkIncludingValueInvestment": 470172768,
+      "netWork": -4237394,
+      "baseWallMs": 52751012.37964203,
+      "learnedWallMsIncludingDiscovery": 66682.82807411424,
+      "netWall": 52684329.55156792
+    },
+    {
+      "tasks": 3300,
+      "baseWork": 10902854,
+      "learnedWorkIncludingDiscovery": 15062147,
+      "learnedWorkIncludingValueInvestment": 470419216,
+      "netWork": -4159293,
+      "baseWallMs": 52752374.88568603,
+      "learnedWallMsIncludingDiscovery": 67745.50936613402,
+      "netWall": 52684629.3763199
+    },
+    {
+      "tasks": 3400,
+      "baseWork": 11229028,
+      "learnedWorkIncludingDiscovery": 15332325,
+      "learnedWorkIncludingValueInvestment": 470689394,
+      "netWork": -4103297,
+      "baseWallMs": 52753693.72452502,
+      "learnedWallMsIncludingDiscovery": 68876.83191011271,
+      "netWall": 52684816.89261491
+    },
+    {
+      "tasks": 3500,
+      "baseWork": 11538164,
+      "learnedWorkIncludingDiscovery": 15590303,
+      "learnedWorkIncludingValueInvestment": 470947372,
+      "netWork": -4052139,
+      "baseWallMs": 52754945.80923598,
+      "learnedWallMsIncludingDiscovery": 69963.96282313934,
+      "netWall": 52684981.846412845
+    },
+    {
+      "tasks": 3600,
+      "baseWork": 11864218,
+      "learnedWorkIncludingDiscovery": 15854447,
+      "learnedWorkIncludingValueInvestment": 471211516,
+      "netWork": -3990229,
+      "baseWallMs": 52756326.898687966,
+      "learnedWallMsIncludingDiscovery": 71108.26789910517,
+      "netWall": 52685218.63078886
+    },
+    {
+      "tasks": 3700,
+      "baseWork": 12195757,
+      "learnedWorkIncludingDiscovery": 16088169,
+      "learnedWorkIncludingValueInvestment": 471445238,
+      "netWork": -3892412,
+      "baseWallMs": 52757680.51743398,
+      "learnedWallMsIncludingDiscovery": 72100.87772911957,
+      "netWall": 52685579.63970486
+    },
+    {
+      "tasks": 3800,
+      "baseWork": 12531554,
+      "learnedWorkIncludingDiscovery": 16346225,
+      "learnedWorkIncludingValueInvestment": 471703294,
+      "netWork": -3814671,
+      "baseWallMs": 52759073.44272994,
+      "learnedWallMsIncludingDiscovery": 73182.88706215641,
+      "netWall": 52685890.55566779
+    },
+    {
+      "tasks": 3900,
+      "baseWork": 12848886,
+      "learnedWorkIncludingDiscovery": 16612746,
+      "learnedWorkIncludingValueInvestment": 471969815,
+      "netWork": -3763860,
+      "baseWallMs": 52760443.169271976,
+      "learnedWallMsIncludingDiscovery": 74387.6280951517,
+      "netWall": 52686055.541176826
+    },
+    {
+      "tasks": 4000,
+      "baseWork": 13183625,
+      "learnedWorkIncludingDiscovery": 16866985,
+      "learnedWorkIncludingValueInvestment": 472224054,
+      "netWork": -3683360,
+      "baseWallMs": 52761814.68663995,
+      "learnedWallMsIncludingDiscovery": 75458.46809014848,
+      "netWall": 52686356.2185498
+    },
+    {
+      "tasks": 4100,
+      "baseWork": 13486527,
+      "learnedWorkIncludingDiscovery": 17112470,
+      "learnedWorkIncludingValueInvestment": 472469539,
+      "netWork": -3625943,
+      "baseWallMs": 52762993.575259954,
+      "learnedWallMsIncludingDiscovery": 76472.09409016541,
+      "netWall": 52686521.48116979
+    },
+    {
+      "tasks": 4200,
+      "baseWork": 13822119,
+      "learnedWorkIncludingDiscovery": 17349685,
+      "learnedWorkIncludingValueInvestment": 472706754,
+      "netWork": -3527566,
+      "baseWallMs": 52764383.225218005,
+      "learnedWallMsIncludingDiscovery": 77476.45813516698,
+      "netWall": 52686906.76708284
+    },
+    {
+      "tasks": 4300,
+      "baseWork": 14148002,
+      "learnedWorkIncludingDiscovery": 17611529,
+      "learnedWorkIncludingValueInvestment": 472968598,
+      "netWork": -3463527,
+      "baseWallMs": 52765700.91755399,
+      "learnedWallMsIncludingDiscovery": 78564.56088517031,
+      "netWall": 52687136.35666882
+    },
+    {
+      "tasks": 4400,
+      "baseWork": 14482539,
+      "learnedWorkIncludingDiscovery": 17868645,
+      "learnedWorkIncludingValueInvestment": 473225714,
+      "netWork": -3386106,
+      "baseWallMs": 52767061.423600994,
+      "learnedWallMsIncludingDiscovery": 79642.55000315777,
+      "netWall": 52687418.87359784
+    },
+    {
+      "tasks": 4500,
+      "baseWork": 14811650,
+      "learnedWorkIncludingDiscovery": 18129910,
+      "learnedWorkIncludingValueInvestment": 473486979,
+      "netWork": -3318260,
+      "baseWallMs": 52768417.287554994,
+      "learnedWallMsIncludingDiscovery": 80765.27137611977,
+      "netWall": 52687652.016178876
+    },
+    {
+      "tasks": 4600,
+      "baseWork": 15108048,
+      "learnedWorkIncludingDiscovery": 18372563,
+      "learnedWorkIncludingValueInvestment": 473729632,
+      "netWork": -3264515,
+      "baseWallMs": 52769642.99251598,
+      "learnedWallMsIncludingDiscovery": 81793.40754011444,
+      "netWall": 52687849.58497587
+    },
+    {
+      "tasks": 4700,
+      "baseWork": 15458087,
+      "learnedWorkIncludingDiscovery": 18647869,
+      "learnedWorkIncludingValueInvestment": 474004938,
+      "netWork": -3189782,
+      "baseWallMs": 52771062.41917798,
+      "learnedWallMsIncludingDiscovery": 82956.72333010456,
+      "netWall": 52688105.69584788
+    },
+    {
+      "tasks": 4800,
+      "baseWork": 15811847,
+      "learnedWorkIncludingDiscovery": 18947075,
+      "learnedWorkIncludingValueInvestment": 474304144,
+      "netWork": -3135228,
+      "baseWallMs": 52772486.76888296,
+      "learnedWallMsIncludingDiscovery": 84238.85724511913,
+      "netWall": 52688247.91163784
+    },
+    {
+      "tasks": 4900,
+      "baseWork": 16140815,
+      "learnedWorkIncludingDiscovery": 19196775,
+      "learnedWorkIncludingValueInvestment": 474553844,
+      "netWork": -3055960,
+      "baseWallMs": 52773843.414924,
+      "learnedWallMsIncludingDiscovery": 85312.11916115305,
+      "netWall": 52688531.29576285
+    },
+    {
+      "tasks": 5000,
+      "baseWork": 16457520,
+      "learnedWorkIncludingDiscovery": 19425593,
+      "learnedWorkIncludingValueInvestment": 474782662,
+      "netWork": -2968073,
+      "baseWallMs": 52775105.87300803,
+      "learnedWallMsIncludingDiscovery": 86247.12016719005,
+      "netWall": 52688858.75284084
+    },
+    {
+      "tasks": 5100,
+      "baseWork": 16767642,
+      "learnedWorkIncludingDiscovery": 19658212,
+      "learnedWorkIncludingValueInvestment": 475015281,
+      "netWork": -2890570,
+      "baseWallMs": 52776355.01280001,
+      "learnedWallMsIncludingDiscovery": 87208.67117315701,
+      "netWall": 52689146.34162685
+    },
+    {
+      "tasks": 5200,
+      "baseWork": 17108031,
+      "learnedWorkIncludingDiscovery": 19923341,
+      "learnedWorkIncludingValueInvestment": 475280410,
+      "netWork": -2815310,
+      "baseWallMs": 52777740.254719,
+      "learnedWallMsIncludingDiscovery": 88336.54130213133,
+      "netWall": 52689403.71341687
+    },
+    {
+      "tasks": 5300,
+      "baseWork": 17460980,
+      "learnedWorkIncludingDiscovery": 20200494,
+      "learnedWorkIncludingValueInvestment": 475557563,
+      "netWork": -2739514,
+      "baseWallMs": 52779153.55097401,
+      "learnedWallMsIncludingDiscovery": 89468.52158612928,
+      "netWall": 52689685.029387884
+    },
+    {
+      "tasks": 5400,
+      "baseWork": 17796416,
+      "learnedWorkIncludingDiscovery": 20465830,
+      "learnedWorkIncludingValueInvestment": 475822899,
+      "netWork": -2669414,
+      "baseWallMs": 52780501.68597397,
+      "learnedWallMsIncludingDiscovery": 90565.06337718091,
+      "netWall": 52689936.62259679
+    },
+    {
+      "tasks": 5500,
+      "baseWork": 18134023,
+      "learnedWorkIncludingDiscovery": 20746557,
+      "learnedWorkIncludingValueInvestment": 476103626,
+      "netWork": -2612534,
+      "baseWallMs": 52781893.423514985,
+      "learnedWallMsIncludingDiscovery": 91768.8547551798,
+      "netWall": 52690124.56875981
+    },
+    {
+      "tasks": 5600,
+      "baseWork": 18473223,
+      "learnedWorkIncludingDiscovery": 21010567,
+      "learnedWorkIncludingValueInvestment": 476367636,
+      "netWork": -2537344,
+      "baseWallMs": 52783287.27543298,
+      "learnedWallMsIncludingDiscovery": 92914.50625022671,
+      "netWall": 52690372.76918276
+    },
+    {
+      "tasks": 5700,
+      "baseWork": 18821737,
+      "learnedWorkIncludingDiscovery": 21250974,
+      "learnedWorkIncludingValueInvestment": 476608043,
+      "netWork": -2429237,
+      "baseWallMs": 52784662.197931,
+      "learnedWallMsIncludingDiscovery": 93888.45928920976,
+      "netWall": 52690773.73864179
+    },
+    {
+      "tasks": 5800,
+      "baseWork": 19156544,
+      "learnedWorkIncludingDiscovery": 21505961,
+      "learnedWorkIncludingValueInvestment": 476863030,
+      "netWork": -2349417,
+      "baseWallMs": 52785991.887013026,
+      "learnedWallMsIncludingDiscovery": 94929.99412216416,
+      "netWall": 52691061.89289086
+    },
+    {
+      "tasks": 5900,
+      "baseWork": 19502832,
+      "learnedWorkIncludingDiscovery": 21763370,
+      "learnedWorkIncludingValueInvestment": 477120439,
+      "netWork": -2260538,
+      "baseWallMs": 52787383.58135101,
+      "learnedWallMsIncludingDiscovery": 96005.490707198,
+      "netWall": 52691378.090643816
+    },
+    {
+      "tasks": 6000,
+      "baseWork": 19834097,
+      "learnedWorkIncludingDiscovery": 22025217,
+      "learnedWorkIncludingValueInvestment": 477382286,
+      "netWork": -2191120,
+      "baseWallMs": 52788741.07822404,
+      "learnedWallMsIncludingDiscovery": 97141.68125519327,
+      "netWall": 52691599.39696885
+    },
+    {
+      "tasks": 6100,
+      "baseWork": 20186294,
+      "learnedWorkIncludingDiscovery": 22295496,
+      "learnedWorkIncludingValueInvestment": 477652565,
+      "netWork": -2109202,
+      "baseWallMs": 52790172.771850035,
+      "learnedWallMsIncludingDiscovery": 98289.31492518059,
+      "netWall": 52691883.456924856
+    },
+    {
+      "tasks": 6200,
+      "baseWork": 20523953,
+      "learnedWorkIncludingDiscovery": 22555151,
+      "learnedWorkIncludingValueInvestment": 477912220,
+      "netWork": -2031198,
+      "baseWallMs": 52791570.63839503,
+      "learnedWallMsIncludingDiscovery": 99381.02571420542,
+      "netWall": 52692189.61268082
+    },
+    {
+      "tasks": 6300,
+      "baseWork": 20865946,
+      "learnedWorkIncludingDiscovery": 22814800,
+      "learnedWorkIncludingValueInvestment": 478171869,
+      "netWork": -1948854,
+      "baseWallMs": 52792981.98769297,
+      "learnedWallMsIncludingDiscovery": 100510.45775221458,
+      "netWall": 52692471.529940754
+    },
+    {
+      "tasks": 6400,
+      "baseWork": 21198609,
+      "learnedWorkIncludingDiscovery": 23085293,
+      "learnedWorkIncludingValueInvestment": 478442362,
+      "netWork": -1886684,
+      "baseWallMs": 52794347.51573093,
+      "learnedWallMsIncludingDiscovery": 101667.32404627076,
+      "netWall": 52692680.19168466
+    },
+    {
+      "tasks": 6500,
+      "baseWork": 21532384,
+      "learnedWorkIncludingDiscovery": 23332976,
+      "learnedWorkIncludingValueInvestment": 478690045,
+      "netWork": -1800592,
+      "baseWallMs": 52795702.688304916,
+      "learnedWallMsIncludingDiscovery": 102712.80446225575,
+      "netWall": 52692989.88384266
+    },
+    {
+      "tasks": 6600,
+      "baseWork": 21862944,
+      "learnedWorkIncludingDiscovery": 23583667,
+      "learnedWorkIncludingValueInvestment": 478940736,
+      "netWork": -1720723,
+      "baseWallMs": 52797038.08933985,
+      "learnedWallMsIncludingDiscovery": 103748.49996222726,
+      "netWall": 52693289.58937763
+    },
+    {
+      "tasks": 6700,
+      "baseWork": 22210806,
+      "learnedWorkIncludingDiscovery": 23865179,
+      "learnedWorkIncludingValueInvestment": 479222248,
+      "netWork": -1654373,
+      "baseWallMs": 52798461.92063488,
+      "learnedWallMsIncludingDiscovery": 104933.27779622546,
+      "netWall": 52693528.64283866
+    },
+    {
+      "tasks": 6800,
+      "baseWork": 22539911,
+      "learnedWorkIncludingDiscovery": 24148669,
+      "learnedWorkIncludingValueInvestment": 479505738,
+      "netWork": -1608758,
+      "baseWallMs": 52799769.98625585,
+      "learnedWallMsIncludingDiscovery": 106101.07713522187,
+      "netWall": 52693668.90912063
+    },
+    {
+      "tasks": 6900,
+      "baseWork": 22882124,
+      "learnedWorkIncludingDiscovery": 24409043,
+      "learnedWorkIncludingValueInvestment": 479766112,
+      "netWork": -1526919,
+      "baseWallMs": 52801123.69026086,
+      "learnedWallMsIncludingDiscovery": 107152.76210423729,
+      "netWall": 52693970.92815662
+    },
+    {
+      "tasks": 7000,
+      "baseWork": 23217800,
+      "learnedWorkIncludingDiscovery": 24686884,
+      "learnedWorkIncludingValueInvestment": 480043953,
+      "netWork": -1469084,
+      "baseWallMs": 52802485.92997487,
+      "learnedWallMsIncludingDiscovery": 108310.25260527602,
+      "netWall": 52694175.677369595
+    },
+    {
+      "tasks": 7100,
+      "baseWork": 23533653,
+      "learnedWorkIncludingDiscovery": 24935361,
+      "learnedWorkIncludingValueInvestment": 480292430,
+      "netWork": -1401708,
+      "baseWallMs": 52803778.32038689,
+      "learnedWallMsIncludingDiscovery": 109379.93393724582,
+      "netWall": 52694398.38644964
+    },
+    {
+      "tasks": 7200,
+      "baseWork": 23846067,
+      "learnedWorkIncludingDiscovery": 25163293,
+      "learnedWorkIncludingValueInvestment": 480520362,
+      "netWork": -1317226,
+      "baseWallMs": 52805083.64367782,
+      "learnedWallMsIncludingDiscovery": 110380.58693924716,
+      "netWall": 52694703.05673858
+    },
+    {
+      "tasks": 7300,
+      "baseWork": 24164137,
+      "learnedWorkIncludingDiscovery": 25415105,
+      "learnedWorkIncludingValueInvestment": 480772174,
+      "netWork": -1250968,
+      "baseWallMs": 52806359.637012824,
+      "learnedWallMsIncludingDiscovery": 111428.31160126052,
+      "netWall": 52694931.325411566
+    },
+    {
+      "tasks": 7400,
+      "baseWork": 24506670,
+      "learnedWorkIncludingDiscovery": 25692680,
+      "learnedWorkIncludingValueInvestment": 481049749,
+      "netWork": -1186010,
+      "baseWallMs": 52807713.980261825,
+      "learnedWallMsIncludingDiscovery": 112583.54077524862,
+      "netWall": 52695130.43948658
+    },
+    {
+      "tasks": 7500,
+      "baseWork": 24857275,
+      "learnedWorkIncludingDiscovery": 25952769,
+      "learnedWorkIncludingValueInvestment": 481309838,
+      "netWork": -1095494,
+      "baseWallMs": 52809138.49430187,
+      "learnedWallMsIncludingDiscovery": 113674.74190125785,
+      "netWall": 52695463.752400614
+    },
+    {
+      "tasks": 7600,
+      "baseWork": 25209448,
+      "learnedWorkIncludingDiscovery": 26213670,
+      "learnedWorkIncludingValueInvestment": 481570739,
+      "netWork": -1004222,
+      "baseWallMs": 52810560.56034585,
+      "learnedWallMsIncludingDiscovery": 114764.23740230671,
+      "netWall": 52695796.322943546
+    },
+    {
+      "tasks": 7700,
+      "baseWork": 25540725,
+      "learnedWorkIncludingDiscovery": 26460599,
+      "learnedWorkIncludingValueInvestment": 481817668,
+      "netWork": -919874,
+      "baseWallMs": 52811899.56584688,
+      "learnedWallMsIncludingDiscovery": 115805.50756628982,
+      "netWall": 52696094.058280595
+    },
+    {
+      "tasks": 7800,
+      "baseWork": 25875675,
+      "learnedWorkIncludingDiscovery": 26717953,
+      "learnedWorkIncludingValueInvestment": 482075022,
+      "netWork": -842278,
+      "baseWallMs": 52813250.74855985,
+      "learnedWallMsIncludingDiscovery": 116883.13019228897,
+      "netWall": 52696367.61836756
+    },
+    {
+      "tasks": 7900,
+      "baseWork": 26203600,
+      "learnedWorkIncludingDiscovery": 26975852,
+      "learnedWorkIncludingValueInvestment": 482332921,
+      "netWork": -772252,
+      "baseWallMs": 52814524.571438804,
+      "learnedWallMsIncludingDiscovery": 117911.23048929295,
+      "netWall": 52696613.34094951
+    },
+    {
+      "tasks": 8000,
+      "baseWork": 26506987,
+      "learnedWorkIncludingDiscovery": 27209598,
+      "learnedWorkIncludingValueInvestment": 482566667,
+      "netWork": -702611,
+      "baseWallMs": 52815746.32056782,
+      "learnedWallMsIncludingDiscovery": 118899.64527931235,
+      "netWall": 52696846.675288506
+    },
+    {
+      "tasks": 8100,
+      "baseWork": 26836494,
+      "learnedWorkIncludingDiscovery": 27455890,
+      "learnedWorkIncludingValueInvestment": 482812959,
+      "netWork": -619396,
+      "baseWallMs": 52817081.365606815,
+      "learnedWallMsIncludingDiscovery": 119930.46107031575,
+      "netWall": 52697150.9045365
+    },
+    {
+      "tasks": 8200,
+      "baseWork": 27178215,
+      "learnedWorkIncludingDiscovery": 27733085,
+      "learnedWorkIncludingValueInvestment": 483090154,
+      "netWork": -554870,
+      "baseWallMs": 52818440.1162738,
+      "learnedWallMsIncludingDiscovery": 121062.80828032068,
+      "netWall": 52697377.30799348
+    },
+    {
+      "tasks": 8300,
+      "baseWork": 27523207,
+      "learnedWorkIncludingDiscovery": 28003666,
+      "learnedWorkIncludingValueInvestment": 483360735,
+      "netWork": -480459,
+      "baseWallMs": 52819823.25131578,
+      "learnedWallMsIncludingDiscovery": 122195.83278233728,
+      "netWall": 52697627.418533444
+    },
+    {
+      "tasks": 8400,
+      "baseWork": 27853101,
+      "learnedWorkIncludingDiscovery": 28269276,
+      "learnedWorkIncludingValueInvestment": 483626345,
+      "netWork": -416175,
+      "baseWallMs": 52821164.34722879,
+      "learnedWallMsIncludingDiscovery": 123322.55445529691,
+      "netWall": 52697841.79277349
+    },
+    {
+      "tasks": 8500,
+      "baseWork": 28198747,
+      "learnedWorkIncludingDiscovery": 28538400,
+      "learnedWorkIncludingValueInvestment": 483895469,
+      "netWork": -339653,
+      "baseWallMs": 52822555.41285579,
+      "learnedWallMsIncludingDiscovery": 124460.2198253142,
+      "netWall": 52698095.19303048
+    },
+    {
+      "tasks": 8600,
+      "baseWork": 28547873,
+      "learnedWorkIncludingDiscovery": 28798524,
+      "learnedWorkIncludingValueInvestment": 484155593,
+      "netWork": -250651,
+      "baseWallMs": 52823982.1783518,
+      "learnedWallMsIncludingDiscovery": 125559.10920132122,
+      "netWall": 52698423.06915048
+    },
+    {
+      "tasks": 8700,
+      "baseWork": 28871820,
+      "learnedWorkIncludingDiscovery": 29065679,
+      "learnedWorkIncludingValueInvestment": 484422748,
+      "netWork": -193859,
+      "baseWallMs": 52825302.28547879,
+      "learnedWallMsIncludingDiscovery": 126697.44615733794,
+      "netWall": 52698604.83932146
+    },
+    {
+      "tasks": 8800,
+      "baseWork": 29208682,
+      "learnedWorkIncludingDiscovery": 29337898,
+      "learnedWorkIncludingValueInvestment": 484694967,
+      "netWork": -129216,
+      "baseWallMs": 52826673.5947288,
+      "learnedWallMsIncludingDiscovery": 127854.4817853438,
+      "netWall": 52698819.112943456
+    },
+    {
+      "tasks": 8900,
+      "baseWork": 29541089,
+      "learnedWorkIncludingDiscovery": 29586834,
+      "learnedWorkIncludingValueInvestment": 484943903,
+      "netWork": -45745,
+      "baseWallMs": 52828020.013725765,
+      "learnedWallMsIncludingDiscovery": 128895.77299130878,
+      "netWall": 52699124.24073446
+    },
+    {
+      "tasks": 9000,
+      "baseWork": 29876891,
+      "learnedWorkIncludingDiscovery": 29840532,
+      "learnedWorkIncludingValueInvestment": 485197601,
+      "netWork": 36359,
+      "baseWallMs": 52829384.866309784,
+      "learnedWallMsIncludingDiscovery": 129968.76436433366,
+      "netWall": 52699416.10194545
+    },
+    {
+      "tasks": 9100,
+      "baseWork": 30222120,
+      "learnedWorkIncludingDiscovery": 30140784,
+      "learnedWorkIncludingValueInvestment": 485497853,
+      "netWork": 81336,
+      "baseWallMs": 52830756.08496679,
+      "learnedWallMsIncludingDiscovery": 131205.14640439473,
+      "netWall": 52699550.9385624
+    },
+    {
+      "tasks": 9200,
+      "baseWork": 30558967,
+      "learnedWorkIncludingDiscovery": 30401061,
+      "learnedWorkIncludingValueInvestment": 485758130,
+      "netWork": 157906,
+      "baseWallMs": 52832128.1576377,
+      "learnedWallMsIncludingDiscovery": 132320.29210832142,
+      "netWall": 52699807.86552938
+    },
+    {
+      "tasks": 9300,
+      "baseWork": 30879563,
+      "learnedWorkIncludingDiscovery": 30624532,
+      "learnedWorkIncludingValueInvestment": 485981601,
+      "netWork": 255031,
+      "baseWallMs": 52833437.71185167,
+      "learnedWallMsIncludingDiscovery": 133234.7609453591,
+      "netWall": 52700202.950906314
+    },
+    {
+      "tasks": 9400,
+      "baseWork": 31188190,
+      "learnedWorkIncludingDiscovery": 30874657,
+      "learnedWorkIncludingValueInvestment": 486231726,
+      "netWork": 313533,
+      "baseWallMs": 52834692.57392969,
+      "learnedWallMsIncludingDiscovery": 134288.34990138732,
+      "netWall": 52700404.224028304
+    },
+    {
+      "tasks": 9500,
+      "baseWork": 31517356,
+      "learnedWorkIncludingDiscovery": 31112492,
+      "learnedWorkIncludingValueInvestment": 486469561,
+      "netWork": 404864,
+      "baseWallMs": 52836052.861596644,
+      "learnedWallMsIncludingDiscovery": 135294.95777139984,
+      "netWall": 52700757.903825246
+    },
+    {
+      "tasks": 9600,
+      "baseWork": 31790627,
+      "learnedWorkIncludingDiscovery": 31330452,
+      "learnedWorkIncludingValueInvestment": 486687521,
+      "netWork": 460175,
+      "baseWallMs": 52837190.91959462,
+      "learnedWallMsIncludingDiscovery": 136229.91909837894,
+      "netWall": 52700961.000496246
+    },
+    {
+      "tasks": 9700,
+      "baseWork": 32116759,
+      "learnedWorkIncludingDiscovery": 31594263,
+      "learnedWorkIncludingValueInvestment": 486951332,
+      "netWork": 522496,
+      "baseWallMs": 52838519.86429763,
+      "learnedWallMsIncludingDiscovery": 137315.41434235297,
+      "netWall": 52701204.44995528
+    },
+    {
+      "tasks": 9800,
+      "baseWork": 32460978,
+      "learnedWorkIncludingDiscovery": 31885728,
+      "learnedWorkIncludingValueInvestment": 487242797,
+      "netWork": 575250,
+      "baseWallMs": 52839888.855633624,
+      "learnedWallMsIncludingDiscovery": 138549.8283803182,
+      "netWall": 52701339.02725331
+    },
+    {
+      "tasks": 9900,
+      "baseWork": 32791341,
+      "learnedWorkIncludingDiscovery": 32159515,
+      "learnedWorkIncludingValueInvestment": 487516584,
+      "netWork": 631826,
+      "baseWallMs": 52841244.476139575,
+      "learnedWallMsIncludingDiscovery": 139717.67634029113,
+      "netWall": 52701526.799799286
+    },
+    {
+      "tasks": 10000,
+      "baseWork": 33118849,
+      "learnedWorkIncludingDiscovery": 32420399,
+      "learnedWorkIncludingValueInvestment": 487777468,
+      "netWork": 698450,
+      "baseWallMs": 52842583.20559559,
+      "learnedWallMsIncludingDiscovery": 140826.61530430042,
+      "netWall": 52701756.59029129
+    },
+    {
+      "tasks": 10100,
+      "baseWork": 33436685,
+      "learnedWorkIncludingDiscovery": 32692445,
+      "learnedWorkIncludingValueInvestment": 488049514,
+      "netWork": 744240,
+      "baseWallMs": 52843852.13759257,
+      "learnedWallMsIncludingDiscovery": 141987.7640102821,
+      "netWall": 52701864.37358229
+    },
+    {
+      "tasks": 10200,
+      "baseWork": 33766554,
+      "learnedWorkIncludingDiscovery": 32968236,
+      "learnedWorkIncludingValueInvestment": 488325305,
+      "netWork": 798318,
+      "baseWallMs": 52845217.74255457,
+      "learnedWallMsIncludingDiscovery": 143173.05642430656,
+      "netWall": 52702044.68613026
+    },
+    {
+      "tasks": 10300,
+      "baseWork": 34096941,
+      "learnedWorkIncludingDiscovery": 33220937,
+      "learnedWorkIncludingValueInvestment": 488578006,
+      "netWork": 876004,
+      "baseWallMs": 52846562.85613058,
+      "learnedWallMsIncludingDiscovery": 144231.3278052973,
+      "netWall": 52702331.52832528
+    },
+    {
+      "tasks": 10400,
+      "baseWork": 34399098,
+      "learnedWorkIncludingDiscovery": 33461735,
+      "learnedWorkIncludingValueInvestment": 488818804,
+      "netWork": 937363,
+      "baseWallMs": 52847778.18784259,
+      "learnedWallMsIncludingDiscovery": 145252.50938729368,
+      "netWall": 52702525.6784553
+    },
+    {
+      "tasks": 10500,
+      "baseWork": 34723332,
+      "learnedWorkIncludingDiscovery": 33710474,
+      "learnedWorkIncludingValueInvestment": 489067543,
+      "netWork": 1012858,
+      "baseWallMs": 52849084.8518846,
+      "learnedWallMsIncludingDiscovery": 146294.97309636496,
+      "netWall": 52702789.87878824
+    },
+    {
+      "tasks": 10600,
+      "baseWork": 35067191,
+      "learnedWorkIncludingDiscovery": 33965773,
+      "learnedWorkIncludingValueInvestment": 489322842,
+      "netWork": 1101418,
+      "baseWallMs": 52850477.45546659,
+      "learnedWallMsIncludingDiscovery": 147351.5130114051,
+      "netWall": 52703125.94245519
+    },
+    {
+      "tasks": 10700,
+      "baseWork": 35405659,
+      "learnedWorkIncludingDiscovery": 34221483,
+      "learnedWorkIncludingValueInvestment": 489578552,
+      "netWork": 1184176,
+      "baseWallMs": 52851868.32437665,
+      "learnedWallMsIncludingDiscovery": 148442.41692239218,
+      "netWall": 52703425.90745426
+    },
+    {
+      "tasks": 10800,
+      "baseWork": 35723102,
+      "learnedWorkIncludingDiscovery": 34478979,
+      "learnedWorkIncludingValueInvestment": 489836048,
+      "netWork": 1244123,
+      "baseWallMs": 52853166.91470657,
+      "learnedWallMsIncludingDiscovery": 149549.30684241824,
+      "netWall": 52703617.60786416
+    },
+    {
+      "tasks": 10900,
+      "baseWork": 36068637,
+      "learnedWorkIncludingDiscovery": 34741919,
+      "learnedWorkIncludingValueInvestment": 490098988,
+      "netWork": 1326718,
+      "baseWallMs": 52854552.56916357,
+      "learnedWallMsIncludingDiscovery": 150630.0405914279,
+      "netWall": 52703922.52857214
+    },
+    {
+      "tasks": 11000,
+      "baseWork": 36386990,
+      "learnedWorkIncludingDiscovery": 34993894,
+      "learnedWorkIncludingValueInvestment": 490350963,
+      "netWork": 1393096,
+      "baseWallMs": 52855803.54575455,
+      "learnedWallMsIncludingDiscovery": 151652.4157124179,
+      "netWall": 52704151.130042136
+    },
+    {
+      "tasks": 11100,
+      "baseWork": 36712563,
+      "learnedWorkIncludingDiscovery": 35248054,
+      "learnedWorkIncludingValueInvestment": 490605123,
+      "netWork": 1464509,
+      "baseWallMs": 52857129.36679361,
+      "learnedWallMsIncludingDiscovery": 152727.12367844753,
+      "netWall": 52704402.243115164
+    },
+    {
+      "tasks": 11200,
+      "baseWork": 37044908,
+      "learnedWorkIncludingDiscovery": 35509956,
+      "learnedWorkIncludingValueInvestment": 490867025,
+      "netWork": 1534952,
+      "baseWallMs": 52858492.11559062,
+      "learnedWallMsIncludingDiscovery": 153851.05609145187,
+      "netWall": 52704641.05949917
+    },
+    {
+      "tasks": 11300,
+      "baseWork": 37386680,
+      "learnedWorkIncludingDiscovery": 35805046,
+      "learnedWorkIncludingValueInvestment": 491162115,
+      "netWork": 1581634,
+      "baseWallMs": 52859878.52054858,
+      "learnedWallMsIncludingDiscovery": 155073.41225642883,
+      "netWall": 52704805.108292155
+    },
+    {
+      "tasks": 11400,
+      "baseWork": 37699928,
+      "learnedWorkIncludingDiscovery": 36060526,
+      "learnedWorkIncludingValueInvestment": 491417595,
+      "netWork": 1639402,
+      "baseWallMs": 52861138.319136605,
+      "learnedWallMsIncludingDiscovery": 156152.76826141946,
+      "netWall": 52704985.55087519
+    },
+    {
+      "tasks": 11500,
+      "baseWork": 38047469,
+      "learnedWorkIncludingDiscovery": 36330764,
+      "learnedWorkIncludingValueInvestment": 491687833,
+      "netWork": 1716705,
+      "baseWallMs": 52862540.98576558,
+      "learnedWallMsIncludingDiscovery": 157293.95846742563,
+      "netWall": 52705247.02729815
+    },
+    {
+      "tasks": 11600,
+      "baseWork": 38370437,
+      "learnedWorkIncludingDiscovery": 36576950,
+      "learnedWorkIncludingValueInvestment": 491934019,
+      "netWork": 1793487,
+      "baseWallMs": 52863872.5636856,
+      "learnedWallMsIncludingDiscovery": 158320.5513874533,
+      "netWall": 52705552.01229815
+    },
+    {
+      "tasks": 11700,
+      "baseWork": 38695467,
+      "learnedWorkIncludingDiscovery": 36837354,
+      "learnedWorkIncludingValueInvestment": 492194423,
+      "netWork": 1858113,
+      "baseWallMs": 52865152.27439465,
+      "learnedWallMsIncludingDiscovery": 159371.46997346156,
+      "netWall": 52705780.80442119
+    },
+    {
+      "tasks": 11800,
+      "baseWork": 39018439,
+      "learnedWorkIncludingDiscovery": 37107783,
+      "learnedWorkIncludingValueInvestment": 492464852,
+      "netWork": 1910656,
+      "baseWallMs": 52866422.281765625,
+      "learnedWallMsIncludingDiscovery": 160471.07022448056,
+      "netWall": 52705951.211541146
+    },
+    {
+      "tasks": 11900,
+      "baseWork": 39361697,
+      "learnedWorkIncludingDiscovery": 37363767,
+      "learnedWorkIncludingValueInvestment": 492720836,
+      "netWork": 1997930,
+      "baseWallMs": 52867802.913264565,
+      "learnedWallMsIncludingDiscovery": 161538.33780649476,
+      "netWall": 52706264.57545807
+    },
+    {
+      "tasks": 12000,
+      "baseWork": 39681514,
+      "learnedWorkIncludingDiscovery": 37641545,
+      "learnedWorkIncludingValueInvestment": 492998614,
+      "netWork": 2039969,
+      "baseWallMs": 52869082.874514565,
+      "learnedWallMsIncludingDiscovery": 162708.29968148642,
+      "netWall": 52706374.57483308
+    },
+    {
+      "tasks": 12100,
+      "baseWork": 40021737,
+      "learnedWorkIncludingDiscovery": 37909891,
+      "learnedWorkIncludingValueInvestment": 493266960,
+      "netWork": 2111846,
+      "baseWallMs": 52870470.349340536,
+      "learnedWallMsIncludingDiscovery": 163829.82897543334,
+      "netWall": 52706640.520365104
+    },
+    {
+      "tasks": 12200,
+      "baseWork": 40351283,
+      "learnedWorkIncludingDiscovery": 38179587,
+      "learnedWorkIncludingValueInvestment": 493536656,
+      "netWork": 2171696,
+      "baseWallMs": 52871807.98338653,
+      "learnedWallMsIncludingDiscovery": 164958.84863940798,
+      "netWall": 52706849.134747125
+    },
+    {
+      "tasks": 12300,
+      "baseWork": 40696336,
+      "learnedWorkIncludingDiscovery": 38444838,
+      "learnedWorkIncludingValueInvestment": 493801907,
+      "netWork": 2251498,
+      "baseWallMs": 52873213.44742553,
+      "learnedWallMsIncludingDiscovery": 166093.67210345142,
+      "netWall": 52707119.77532208
+    },
+    {
+      "tasks": 12400,
+      "baseWork": 41027982,
+      "learnedWorkIncludingDiscovery": 38710873,
+      "learnedWorkIncludingValueInvestment": 494067942,
+      "netWork": 2317109,
+      "baseWallMs": 52874510.9387545,
+      "learnedWallMsIncludingDiscovery": 167166.69869844042,
+      "netWall": 52707344.24005606
+    },
+    {
+      "tasks": 12500,
+      "baseWork": 41361052,
+      "learnedWorkIncludingDiscovery": 38982840,
+      "learnedWorkIncludingValueInvestment": 494339909,
+      "netWork": 2378212,
+      "baseWallMs": 52875860.879670486,
+      "learnedWallMsIncludingDiscovery": 168321.96511644297,
+      "netWall": 52707538.914554045
+    },
+    {
+      "tasks": 12600,
+      "baseWork": 41695234,
+      "learnedWorkIncludingDiscovery": 39247921,
+      "learnedWorkIncludingValueInvestment": 494604990,
+      "netWork": 2447313,
+      "baseWallMs": 52877279.33367146,
+      "learnedWallMsIncludingDiscovery": 169508.06279339813,
+      "netWall": 52707771.27087806
+    },
+    {
+      "tasks": 12700,
+      "baseWork": 42014970,
+      "learnedWorkIncludingDiscovery": 39505909,
+      "learnedWorkIncludingValueInvestment": 494862978,
+      "netWork": 2509061,
+      "baseWallMs": 52878567.17529847,
+      "learnedWallMsIncludingDiscovery": 170603.41921242498,
+      "netWall": 52707963.756086044
+    },
+    {
+      "tasks": 12800,
+      "baseWork": 42367898,
+      "learnedWorkIncludingDiscovery": 39790354,
+      "learnedWorkIncludingValueInvestment": 495147423,
+      "netWork": 2577544,
+      "baseWallMs": 52879997.517547496,
+      "learnedWallMsIncludingDiscovery": 171814.74845838718,
+      "netWall": 52708182.76908911
+    },
+    {
+      "tasks": 12900,
+      "baseWork": 42712160,
+      "learnedWorkIncludingDiscovery": 40051267,
+      "learnedWorkIncludingValueInvestment": 495408336,
+      "netWork": 2660893,
+      "baseWallMs": 52881421.60096249,
+      "learnedWallMsIncludingDiscovery": 172951.50991641157,
+      "netWall": 52708470.09104608
+    },
+    {
+      "tasks": 13000,
+      "baseWork": 43037248,
+      "learnedWorkIncludingDiscovery": 40320644,
+      "learnedWorkIncludingValueInvestment": 495677713,
+      "netWork": 2716604,
+      "baseWallMs": 52882734.62067051,
+      "learnedWallMsIncludingDiscovery": 174083.83291942798,
+      "netWall": 52708650.787751086
+    },
+    {
+      "tasks": 13100,
+      "baseWork": 43383198,
+      "learnedWorkIncludingDiscovery": 40580614,
+      "learnedWorkIncludingValueInvestment": 495937683,
+      "netWork": 2802584,
+      "baseWallMs": 52884145.01104449,
+      "learnedWallMsIncludingDiscovery": 175200.7940034064,
+      "netWall": 52708944.21704108
+    },
+    {
+      "tasks": 13200,
+      "baseWork": 43708288,
+      "learnedWorkIncludingDiscovery": 40816002,
+      "learnedWorkIncludingValueInvestment": 496173071,
+      "netWork": 2892286,
+      "baseWallMs": 52885458.760375455,
+      "learnedWallMsIncludingDiscovery": 176164.9319624322,
+      "netWall": 52709293.828413025
+    },
+    {
+      "tasks": 13300,
+      "baseWork": 44022265,
+      "learnedWorkIncludingDiscovery": 41088087,
+      "learnedWorkIncludingValueInvestment": 496445156,
+      "netWork": 2934178,
+      "baseWallMs": 52886732.84800147,
+      "learnedWallMsIncludingDiscovery": 177316.68829540335,
+      "netWall": 52709416.15970607
+    },
+    {
+      "tasks": 13400,
+      "baseWork": 44336061,
+      "learnedWorkIncludingDiscovery": 41315355,
+      "learnedWorkIncludingValueInvestment": 496672424,
+      "netWork": 3020706,
+      "baseWallMs": 52888023.622000456,
+      "learnedWallMsIncludingDiscovery": 178283.68233845555,
+      "netWall": 52709739.939662
+    },
+    {
+      "tasks": 13500,
+      "baseWork": 44655684,
+      "learnedWorkIncludingDiscovery": 41581371,
+      "learnedWorkIncludingValueInvestment": 496938440,
+      "netWork": 3074313,
+      "baseWallMs": 52889304.10358147,
+      "learnedWallMsIncludingDiscovery": 179414.91921750628,
+      "netWall": 52709889.18436397
+    },
+    {
+      "tasks": 13600,
+      "baseWork": 44976371,
+      "learnedWorkIncludingDiscovery": 41826462,
+      "learnedWorkIncludingValueInvestment": 497183531,
+      "netWork": 3149909,
+      "baseWallMs": 52890671.518582486,
+      "learnedWallMsIncludingDiscovery": 180487.05509748482,
+      "netWall": 52710184.463485
+    },
+    {
+      "tasks": 13700,
+      "baseWork": 45287651,
+      "learnedWorkIncludingDiscovery": 42082978,
+      "learnedWorkIncludingValueInvestment": 497440047,
+      "netWork": 3204673,
+      "baseWallMs": 52891932.45279155,
+      "learnedWallMsIncludingDiscovery": 181559.49888847195,
+      "netWall": 52710372.95390308
+    },
+    {
+      "tasks": 13800,
+      "baseWork": 45632230,
+      "learnedWorkIncludingDiscovery": 42348866,
+      "learnedWorkIncludingValueInvestment": 497705935,
+      "netWork": 3283364,
+      "baseWallMs": 52893377.61471058,
+      "learnedWallMsIncludingDiscovery": 182720.05125845395,
+      "netWall": 52710657.563452125
+    },
+    {
+      "tasks": 13900,
+      "baseWork": 45961197,
+      "learnedWorkIncludingDiscovery": 42594760,
+      "learnedWorkIncludingValueInvestment": 497951829,
+      "netWork": 3366437,
+      "baseWallMs": 52894726.5133796,
+      "learnedWallMsIncludingDiscovery": 183755.08092446797,
+      "netWall": 52710971.43245514
+    },
+    {
+      "tasks": 14000,
+      "baseWork": 46300135,
+      "learnedWorkIncludingDiscovery": 42854080,
+      "learnedWorkIncludingValueInvestment": 498211149,
+      "netWork": 3446055,
+      "baseWallMs": 52896118.697546616,
+      "learnedWallMsIncludingDiscovery": 184839.5133354979,
+      "netWall": 52711279.18421112
+    },
+    {
+      "tasks": 14100,
+      "baseWork": 46647680,
+      "learnedWorkIncludingDiscovery": 43138278,
+      "learnedWorkIncludingValueInvestment": 498495347,
+      "netWork": 3509402,
+      "baseWallMs": 52897524.01729864,
+      "learnedWallMsIncludingDiscovery": 186057.23050148212,
+      "netWall": 52711466.78679716
+    },
+    {
+      "tasks": 14200,
+      "baseWork": 46967227,
+      "learnedWorkIncludingDiscovery": 43396613,
+      "learnedWorkIncludingValueInvestment": 498753682,
+      "netWork": 3570614,
+      "baseWallMs": 52898808.36892758,
+      "learnedWallMsIncludingDiscovery": 187148.01887248628,
+      "netWall": 52711660.3500551
+    },
+    {
+      "tasks": 14300,
+      "baseWork": 47300263,
+      "learnedWorkIncludingDiscovery": 43667715,
+      "learnedWorkIncludingValueInvestment": 499024784,
+      "netWork": 3632548,
+      "baseWallMs": 52900164.00076164,
+      "learnedWallMsIncludingDiscovery": 188298.80232845419,
+      "netWall": 52711865.19843319
+    },
+    {
+      "tasks": 14400,
+      "baseWork": 47605982,
+      "learnedWorkIncludingDiscovery": 43914546,
+      "learnedWorkIncludingValueInvestment": 499271615,
+      "netWork": 3691436,
+      "baseWallMs": 52901462.48559065,
+      "learnedWallMsIncludingDiscovery": 189396.7949544283,
+      "netWall": 52712065.690636225
+    },
+    {
+      "tasks": 14500,
+      "baseWork": 47937293,
+      "learnedWorkIncludingDiscovery": 44180251,
+      "learnedWorkIncludingValueInvestment": 499537320,
+      "netWork": 3757042,
+      "baseWallMs": 52902778.36362556,
+      "learnedWallMsIncludingDiscovery": 190511.0720823797,
+      "netWall": 52712267.291543186
+    },
+    {
+      "tasks": 14600,
+      "baseWork": 48281145,
+      "learnedWorkIncludingDiscovery": 44431079,
+      "learnedWorkIncludingValueInvestment": 499788148,
+      "netWork": 3850066,
+      "baseWallMs": 52904157.85962752,
+      "learnedWallMsIncludingDiscovery": 191556.35403838925,
+      "netWall": 52712601.505589135
+    },
+    {
+      "tasks": 14700,
+      "baseWork": 48590705,
+      "learnedWorkIncludingDiscovery": 44679205,
+      "learnedWorkIncludingValueInvestment": 500036274,
+      "netWork": 3911500,
+      "baseWallMs": 52905457.54441552,
+      "learnedWallMsIncludingDiscovery": 192641.62732639335,
+      "netWall": 52712815.91708913
+    },
+    {
+      "tasks": 14800,
+      "baseWork": 48942712,
+      "learnedWorkIncludingDiscovery": 44964980,
+      "learnedWorkIncludingValueInvestment": 500322049,
+      "netWork": 3977732,
+      "baseWallMs": 52906931.6662485,
+      "learnedWallMsIncludingDiscovery": 193915.00891044163,
+      "netWall": 52713016.65733806
+    },
+    {
+      "tasks": 14900,
+      "baseWork": 49264044,
+      "learnedWorkIncludingDiscovery": 45209744,
+      "learnedWorkIncludingValueInvestment": 500566813,
+      "netWork": 4054300,
+      "baseWallMs": 52908265.06370345,
+      "learnedWallMsIncludingDiscovery": 194969.32945443116,
+      "netWall": 52713295.73424902
+    },
+    {
+      "tasks": 15000,
+      "baseWork": 49582969,
+      "learnedWorkIncludingDiscovery": 45456441,
+      "learnedWorkIncludingValueInvestment": 500813510,
+      "netWork": 4126528,
+      "baseWallMs": 52909576.225578465,
+      "learnedWallMsIncludingDiscovery": 196030.10933346473,
+      "netWall": 52713546.116245
+    },
+    {
+      "tasks": 15100,
+      "baseWork": 49906959,
+      "learnedWorkIncludingDiscovery": 45711211,
+      "learnedWorkIncludingValueInvestment": 501068280,
+      "netWork": 4195748,
+      "baseWallMs": 52910887.45665844,
+      "learnedWallMsIncludingDiscovery": 197126.3225834834,
+      "netWall": 52713761.134074956
+    },
+    {
+      "tasks": 15200,
+      "baseWork": 50256118,
+      "learnedWorkIncludingDiscovery": 45998698,
+      "learnedWorkIncludingValueInvestment": 501355767,
+      "netWork": 4257420,
+      "baseWallMs": 52912316.93169846,
+      "learnedWallMsIncludingDiscovery": 198356.4350314232,
+      "netWall": 52713960.496667035
+    },
+    {
+      "tasks": 15300,
+      "baseWork": 50587779,
+      "learnedWorkIncludingDiscovery": 46271023,
+      "learnedWorkIncludingValueInvestment": 501628092,
+      "netWork": 4316756,
+      "baseWallMs": 52913675.77599145,
+      "learnedWallMsIncludingDiscovery": 199527.80798840694,
+      "netWall": 52714147.96800304
+    },
+    {
+      "tasks": 15400,
+      "baseWork": 50900848,
+      "learnedWorkIncludingDiscovery": 46517823,
+      "learnedWorkIncludingValueInvestment": 501874892,
+      "netWork": 4383025,
+      "baseWallMs": 52914987.54019651,
+      "learnedWallMsIncludingDiscovery": 200604.28278145366,
+      "netWall": 52714383.257415056
+    },
+    {
+      "tasks": 15500,
+      "baseWork": 51248662,
+      "learnedWorkIncludingDiscovery": 46810381,
+      "learnedWorkIncludingValueInvestment": 502167450,
+      "netWork": 4438281,
+      "baseWallMs": 52916425.131903514,
+      "learnedWallMsIncludingDiscovery": 201846.9935354384,
+      "netWall": 52714578.13836808
+    },
+    {
+      "tasks": 15600,
+      "baseWork": 51563197,
+      "learnedWorkIncludingDiscovery": 47058999,
+      "learnedWorkIncludingValueInvestment": 502416068,
+      "netWork": 4504198,
+      "baseWallMs": 52917741.46432352,
+      "learnedWallMsIncludingDiscovery": 202921.4155284705,
+      "netWall": 52714820.04879505
+    },
+    {
+      "tasks": 15700,
+      "baseWork": 51899338,
+      "learnedWorkIncludingDiscovery": 47333908,
+      "learnedWorkIncludingValueInvestment": 502690977,
+      "netWork": 4565430,
+      "baseWallMs": 52919162.35732853,
+      "learnedWallMsIncludingDiscovery": 204139.67318950765,
+      "netWall": 52715022.68413902
+    },
+    {
+      "tasks": 15800,
+      "baseWork": 52241242,
+      "learnedWorkIncludingDiscovery": 47604051,
+      "learnedWorkIncludingValueInvestment": 502961120,
+      "netWork": 4637191,
+      "baseWallMs": 52920580.619410515,
+      "learnedWallMsIncludingDiscovery": 205335.74294154518,
+      "netWall": 52715244.87646897
+    },
+    {
+      "tasks": 15900,
+      "baseWork": 52572498,
+      "learnedWorkIncludingDiscovery": 47876718,
+      "learnedWorkIncludingValueInvestment": 503233787,
+      "netWork": 4695780,
+      "baseWallMs": 52922063.1337055,
+      "learnedWallMsIncludingDiscovery": 206613.99110856824,
+      "netWall": 52715449.14259693
+    },
+    {
+      "tasks": 16000,
+      "baseWork": 52913434,
+      "learnedWorkIncludingDiscovery": 48162970,
+      "learnedWorkIncludingValueInvestment": 503520039,
+      "netWork": 4750464,
+      "baseWallMs": 52923497.2700855,
+      "learnedWallMsIncludingDiscovery": 207835.8533525484,
+      "netWall": 52715661.41673295
+    },
+    {
+      "tasks": 16100,
+      "baseWork": 53234592,
+      "learnedWorkIncludingDiscovery": 48425913,
+      "learnedWorkIncludingValueInvestment": 503782982,
+      "netWork": 4808679,
+      "baseWallMs": 52924809.56325252,
+      "learnedWallMsIncludingDiscovery": 208936.65060352706,
+      "netWall": 52715872.912649
+    },
+    {
+      "tasks": 16200,
+      "baseWork": 53578300,
+      "learnedWorkIncludingDiscovery": 48707341,
+      "learnedWorkIncludingValueInvestment": 504064410,
+      "netWork": 4870959,
+      "baseWallMs": 52926209.72295954,
+      "learnedWallMsIncludingDiscovery": 210115.79926648163,
+      "netWall": 52716093.92369306
+    },
+    {
+      "tasks": 16300,
+      "baseWork": 53890848,
+      "learnedWorkIncludingDiscovery": 48957107,
+      "learnedWorkIncludingValueInvestment": 504314176,
+      "netWork": 4933741,
+      "baseWallMs": 52927476.67008451,
+      "learnedWallMsIncludingDiscovery": 211143.18776752971,
+      "netWall": 52716333.482316986
+    },
+    {
+      "tasks": 16400,
+      "baseWork": 54226596,
+      "learnedWorkIncludingDiscovery": 49189945,
+      "learnedWorkIncludingValueInvestment": 504547014,
+      "netWork": 5036651,
+      "baseWallMs": 52928849.98991556,
+      "learnedWallMsIncludingDiscovery": 212117.25055948817,
+      "netWall": 52716732.73935607
+    },
+    {
+      "tasks": 16500,
+      "baseWork": 54570525,
+      "learnedWorkIncludingDiscovery": 49459020,
+      "learnedWorkIncludingValueInvestment": 504816089,
+      "netWork": 5111505,
+      "baseWallMs": 52930261.23649757,
+      "learnedWallMsIncludingDiscovery": 213281.7827215063,
+      "netWall": 52716979.45377607
+    },
+    {
+      "tasks": 16600,
+      "baseWork": 54896303,
+      "learnedWorkIncludingDiscovery": 49723160,
+      "learnedWorkIncludingValueInvestment": 505080229,
+      "netWork": 5173143,
+      "baseWallMs": 52931574.897246584,
+      "learnedWallMsIncludingDiscovery": 214378.50451255016,
+      "netWall": 52717196.392734036
+    },
+    {
+      "tasks": 16700,
+      "baseWork": 55233868,
+      "learnedWorkIncludingDiscovery": 49990553,
+      "learnedWorkIncludingValueInvestment": 505347622,
+      "netWork": 5243315,
+      "baseWallMs": 52932969.65628258,
+      "learnedWallMsIncludingDiscovery": 215522.0920525732,
+      "netWall": 52717447.56423001
+    },
+    {
+      "tasks": 16800,
+      "baseWork": 55575311,
+      "learnedWorkIncludingDiscovery": 50263359,
+      "learnedWorkIncludingValueInvestment": 505620428,
+      "netWork": 5311952,
+      "baseWallMs": 52934328.793029584,
+      "learnedWallMsIncludingDiscovery": 216634.057930583,
+      "netWall": 52717694.735099
+    },
+    {
+      "tasks": 16900,
+      "baseWork": 55891422,
+      "learnedWorkIncludingDiscovery": 50515539,
+      "learnedWorkIncludingValueInvestment": 505872608,
+      "netWork": 5375883,
+      "baseWallMs": 52935616.392536566,
+      "learnedWallMsIncludingDiscovery": 217697.99734559827,
+      "netWall": 52717918.39519097
+    },
+    {
+      "tasks": 17000,
+      "baseWork": 56234151,
+      "learnedWorkIncludingDiscovery": 50792532,
+      "learnedWorkIncludingValueInvestment": 506149601,
+      "netWork": 5441619,
+      "baseWallMs": 52937024.03590258,
+      "learnedWallMsIncludingDiscovery": 218839.45121960514,
+      "netWall": 52718184.58468298
+    },
+    {
+      "tasks": 17100,
+      "baseWork": 56569322,
+      "learnedWorkIncludingDiscovery": 51074692,
+      "learnedWorkIncludingValueInvestment": 506431761,
+      "netWork": 5494630,
+      "baseWallMs": 52938368.20082156,
+      "learnedWallMsIncludingDiscovery": 220011.62779761277,
+      "netWall": 52718356.57302395
+    },
+    {
+      "tasks": 17200,
+      "baseWork": 56882557,
+      "learnedWorkIncludingDiscovery": 51306843,
+      "learnedWorkIncludingValueInvestment": 506663912,
+      "netWork": 5575714,
+      "baseWallMs": 52939659.929321565,
+      "learnedWallMsIncludingDiscovery": 220984.4702146145,
+      "netWall": 52718675.45910695
+    },
+    {
+      "tasks": 17300,
+      "baseWork": 57231162,
+      "learnedWorkIncludingDiscovery": 51576287,
+      "learnedWorkIncludingValueInvestment": 506933356,
+      "netWork": 5654875,
+      "baseWallMs": 52941103.23781455,
+      "learnedWallMsIncludingDiscovery": 222122.54554663025,
+      "netWall": 52718980.692267925
+    },
+    {
+      "tasks": 17400,
+      "baseWork": 57580637,
+      "learnedWorkIncludingDiscovery": 51861943,
+      "learnedWorkIncludingValueInvestment": 507219012,
+      "netWork": 5718694,
+      "baseWallMs": 52942528.18160754,
+      "learnedWallMsIncludingDiscovery": 223333.96342564546,
+      "netWall": 52719194.21818189
+    },
+    {
+      "tasks": 17500,
+      "baseWork": 57905920,
+      "learnedWorkIncludingDiscovery": 52111305,
+      "learnedWorkIncludingValueInvestment": 507468374,
+      "netWork": 5794615,
+      "baseWallMs": 52943838.588440485,
+      "learnedWallMsIncludingDiscovery": 224371.99021763526,
+      "netWall": 52719466.59822285
+    },
+    {
+      "tasks": 17600,
+      "baseWork": 58251560,
+      "learnedWorkIncludingDiscovery": 52376319,
+      "learnedWorkIncludingValueInvestment": 507733388,
+      "netWork": 5875241,
+      "baseWallMs": 52945237.50794149,
+      "learnedWallMsIncludingDiscovery": 225505.32463368945,
+      "netWall": 52719732.183307804
+    },
+    {
+      "tasks": 17700,
+      "baseWork": 58592000,
+      "learnedWorkIncludingDiscovery": 52661019,
+      "learnedWorkIncludingValueInvestment": 508018088,
+      "netWork": 5930981,
+      "baseWallMs": 52946687.53069151,
+      "learnedWallMsIncludingDiscovery": 226769.8965047019,
+      "netWall": 52719917.63418681
+    },
+    {
+      "tasks": 17800,
+      "baseWork": 58909561,
+      "learnedWorkIncludingDiscovery": 52911748,
+      "learnedWorkIncludingValueInvestment": 508268817,
+      "netWork": 5997813,
+      "baseWallMs": 52947966.61514349,
+      "learnedWallMsIncludingDiscovery": 227820.35316574745,
+      "netWall": 52720146.26197775
+    },
+    {
+      "tasks": 17900,
+      "baseWork": 59266780,
+      "learnedWorkIncludingDiscovery": 53187511,
+      "learnedWorkIncludingValueInvestment": 508544580,
+      "netWork": 6079269,
+      "baseWallMs": 52949471.73797749,
+      "learnedWallMsIncludingDiscovery": 229026.47528983824,
+      "netWall": 52720445.26268765
+    },
+    {
+      "tasks": 18000,
+      "baseWork": 59597463,
+      "learnedWorkIncludingDiscovery": 53443057,
+      "learnedWorkIncludingValueInvestment": 508800126,
+      "netWork": 6154406,
+      "baseWallMs": 52950860.28631452,
+      "learnedWallMsIncludingDiscovery": 230133.698079774,
+      "netWall": 52720726.588234745
+    },
+    {
+      "tasks": 18100,
+      "baseWork": 59927153,
+      "learnedWorkIncludingDiscovery": 53708305,
+      "learnedWorkIncludingValueInvestment": 509065374,
+      "netWork": 6218848,
+      "baseWallMs": 52952214.845359504,
+      "learnedWallMsIncludingDiscovery": 231254.7478747832,
+      "netWall": 52720960.09748472
+    },
+    {
+      "tasks": 18200,
+      "baseWork": 60288494,
+      "learnedWorkIncludingDiscovery": 53990160,
+      "learnedWorkIncludingValueInvestment": 509347229,
+      "netWork": 6298334,
+      "baseWallMs": 52953690.2484005,
+      "learnedWallMsIncludingDiscovery": 232412.85125678204,
+      "netWall": 52721277.39714372
+    },
+    {
+      "tasks": 18300,
+      "baseWork": 60612541,
+      "learnedWorkIncludingDiscovery": 54261250,
+      "learnedWorkIncludingValueInvestment": 509618319,
+      "netWork": 6351291,
+      "baseWallMs": 52955082.98510954,
+      "learnedWallMsIncludingDiscovery": 233613.51016978346,
+      "netWall": 52721469.474939756
+    },
+    {
+      "tasks": 18400,
+      "baseWork": 60930451,
+      "learnedWorkIncludingDiscovery": 54523129,
+      "learnedWorkIncludingValueInvestment": 509880198,
+      "netWork": 6407322,
+      "baseWallMs": 52956390.04351857,
+      "learnedWallMsIncludingDiscovery": 234745.10292075746,
+      "netWall": 52721644.94059782
+    },
+    {
+      "tasks": 18500,
+      "baseWork": 61269346,
+      "learnedWorkIncludingDiscovery": 54795081,
+      "learnedWorkIncludingValueInvestment": 510152150,
+      "netWork": 6474265,
+      "baseWallMs": 52957694.97238856,
+      "learnedWallMsIncludingDiscovery": 235824.58842077278,
+      "netWall": 52721870.38396779
+    },
+    {
+      "tasks": 18600,
+      "baseWork": 61615633,
+      "learnedWorkIncludingDiscovery": 55093943,
+      "learnedWorkIncludingValueInvestment": 510451012,
+      "netWork": 6521690,
+      "baseWallMs": 52959095.44180355,
+      "learnedWallMsIncludingDiscovery": 237111.1432978081,
+      "netWall": 52721984.298505746
+    },
+    {
+      "tasks": 18700,
+      "baseWork": 61940502,
+      "learnedWorkIncludingDiscovery": 55360137,
+      "learnedWorkIncludingValueInvestment": 510717206,
+      "netWork": 6580365,
+      "baseWallMs": 52960411.53230456,
+      "learnedWallMsIncludingDiscovery": 238220.30092783444,
+      "netWall": 52722191.23137673
+    },
+    {
+      "tasks": 18800,
+      "baseWork": 62274369,
+      "learnedWorkIncludingDiscovery": 55653143,
+      "learnedWorkIncludingValueInvestment": 511010212,
+      "netWork": 6621226,
+      "baseWallMs": 52961746.998680525,
+      "learnedWallMsIncludingDiscovery": 239443.69280485236,
+      "netWall": 52722303.305875674
+    },
+    {
+      "tasks": 18900,
+      "baseWork": 62606118,
+      "learnedWorkIncludingDiscovery": 55903649,
+      "learnedWorkIncludingValueInvestment": 511260718,
+      "netWork": 6702469,
+      "baseWallMs": 52963109.30739352,
+      "learnedWallMsIncludingDiscovery": 240526.03776387297,
+      "netWall": 52722583.26962965
+    },
+    {
+      "tasks": 19000,
+      "baseWork": 62930526,
+      "learnedWorkIncludingDiscovery": 56151686,
+      "learnedWorkIncludingValueInvestment": 511508755,
+      "netWork": 6778840,
+      "baseWallMs": 52965483.400263555,
+      "learnedWallMsIncludingDiscovery": 242736.0906418579,
+      "netWall": 52722747.3096217
+    },
+    {
+      "tasks": 19100,
+      "baseWork": 63290565,
+      "learnedWorkIncludingDiscovery": 56435865,
+      "learnedWorkIncludingValueInvestment": 511792934,
+      "netWork": 6854700,
+      "baseWallMs": 52967382.96009557,
+      "learnedWallMsIncludingDiscovery": 244298.09063987606,
+      "netWall": 52723084.869455695
+    },
+    {
+      "tasks": 19200,
+      "baseWork": 63637919,
+      "learnedWorkIncludingDiscovery": 56722758,
+      "learnedWorkIncludingValueInvestment": 512079827,
+      "netWork": 6915161,
+      "baseWallMs": 52968890.88218357,
+      "learnedWallMsIncludingDiscovery": 245608.44568483703,
+      "netWall": 52723282.43649873
+    },
+    {
+      "tasks": 19300,
+      "baseWork": 63963081,
+      "learnedWorkIncludingDiscovery": 57002590,
+      "learnedWorkIncludingValueInvestment": 512359659,
+      "netWork": 6960491,
+      "baseWallMs": 52970425.557187535,
+      "learnedWallMsIncludingDiscovery": 246970.86227379166,
+      "netWall": 52723454.694913745
+    },
+    {
+      "tasks": 19400,
+      "baseWork": 64287780,
+      "learnedWorkIncludingDiscovery": 57257011,
+      "learnedWorkIncludingValueInvestment": 512614080,
+      "netWork": 7030769,
+      "baseWallMs": 52971880.20789857,
+      "learnedWallMsIncludingDiscovery": 248116.73361476682,
+      "netWall": 52723763.47428381
+    },
+    {
+      "tasks": 19500,
+      "baseWork": 64609264,
+      "learnedWorkIncludingDiscovery": 57519666,
+      "learnedWorkIncludingValueInvestment": 512876735,
+      "netWork": 7089598,
+      "baseWallMs": 52973247.32606958,
+      "learnedWallMsIncludingDiscovery": 249285.03115578913,
+      "netWall": 52723962.29491379
+    },
+    {
+      "tasks": 19600,
+      "baseWork": 64929773,
+      "learnedWorkIncludingDiscovery": 57764821,
+      "learnedWorkIncludingValueInvestment": 513121890,
+      "netWork": 7164952,
+      "baseWallMs": 52974609.06165457,
+      "learnedWallMsIncludingDiscovery": 250343.73023681514,
+      "netWall": 52724265.331417754
+    },
+    {
+      "tasks": 19700,
+      "baseWork": 65263895,
+      "learnedWorkIncludingDiscovery": 58030757,
+      "learnedWorkIncludingValueInvestment": 513387826,
+      "netWork": 7233138,
+      "baseWallMs": 52975975.90691156,
+      "learnedWallMsIncludingDiscovery": 251467.43602486872,
+      "netWall": 52724508.47088669
+    },
+    {
+      "tasks": 19800,
+      "baseWork": 65586300,
+      "learnedWorkIncludingDiscovery": 58308745,
+      "learnedWorkIncludingValueInvestment": 513665814,
+      "netWork": 7277555,
+      "baseWallMs": 52977306.94399854,
+      "learnedWallMsIncludingDiscovery": 252640.5952308344,
+      "netWall": 52724666.348767705
+    },
+    {
+      "tasks": 19900,
+      "baseWork": 65924409,
+      "learnedWorkIncludingDiscovery": 58581851,
+      "learnedWorkIncludingValueInvestment": 513938920,
+      "netWork": 7342558,
+      "baseWallMs": 52978791.17095552,
+      "learnedWallMsIncludingDiscovery": 253880.5958927887,
+      "netWall": 52724910.57506273
+    },
+    {
+      "tasks": 20000,
+      "baseWork": 66258403,
+      "learnedWorkIncludingDiscovery": 58815672,
+      "learnedWorkIncludingValueInvestment": 514172741,
+      "netWork": 7442731,
+      "baseWallMs": 52980194.671834536,
+      "learnedWallMsIncludingDiscovery": 254882.43897783183,
+      "netWall": 52725312.232856706
+    }
+  ],
+  "note": "One preselected frozen language, 20,000 sealed empirically distinct functions, fixed horizon. Observed incremental payback is conditional on the pretrained value model already existing. It does not repay all historical research or shared model costs. A first crossing may be transient: inspect end balance and full curve. Program proposals, structural operations, point comparisons and wall are distinct metrics; no claim of fewer proposals follows from lower aggregate work. Raw wall measurements are retained, including an unexplained >52M-ms elapsed-time jump on one base trial. Wall payback is unassessable from this run; no rows are discarded or winsorized to manufacture a timing result. Some later batches also share the host with independent confirmation work."
+}
