@@ -19,8 +19,17 @@ import {
 } from "./policy";
 import { canonical } from "./canonical";
 import type { SearchResult } from "./search";
+import {
+  type Box,
+  type Domain,
+  domainAt,
+  contains,
+  boxFrom,
+  intersect,
+  linearPieces,
+  inversePieces,
+} from "./domains";
 
-type Box = { low: number[]; high: number[] };
 type Fragment = { tree: Expr; values: number[]; error: number; size: number };
 export type InverseResult = SearchResult & {
   linearFits: number;
@@ -54,7 +63,13 @@ const plane = (coeff: number[]): Expr => {
   });
 };
 const boxKey = (b: Box) =>
-  b.low.map((v, i) => `${v.toFixed(7)}:${b.high[i].toFixed(7)}`).join("|");
+  b.ranges
+    ? b.ranges
+        .map((ds) =>
+          ds.map(([l, h]) => `${l.toFixed(7)}:${h.toFixed(7)}`).join(";"),
+        )
+        .join("|")
+    : b.low.map((v, i) => `${v.toFixed(7)}:${b.high[i].toFixed(7)}`).join("|");
 
 // Invert an actual base production with one known argument. The result is an
 // interval specification for the missing child, not a guessed target program.
@@ -63,6 +78,19 @@ export function inverseBox(
   target: Box,
   known?: number[],
 ): Box | null {
+  if (target.ranges)
+    return boxFrom(
+      target.ranges.map((ds, i) =>
+        ds.flatMap(([l, h]) => {
+          const b = inverseBox(
+            op,
+            { low: [l], high: [h] },
+            known ? [known[i]] : undefined,
+          );
+          return b ? [[b.low[0], b.high[0]] as [number, number]] : [];
+        }),
+      ),
+    );
   const low: number[] = [],
     high: number[] = [];
   for (let i = 0; i < target.low.length; i++) {
@@ -117,6 +145,11 @@ export function inverseSearch(
     affineFits?: number;
     depth?: number;
     beam?: number;
+    relational?: boolean;
+    diverseBeam?: boolean;
+    affineDifferences?: number;
+    maxNodes?: number;
+    semanticRank?: number;
   } = {},
 ): InverseResult {
   if (!Number.isInteger(budget) || budget < 1)
@@ -124,6 +157,7 @@ export function inverseSearch(
   const start = performance.now(),
     rng = new Random(seed),
     limit = options.workBudget ?? budget * 8;
+  const maxNodes = options.maxNodes ?? 31;
   let evaluations = 0,
     expansions = 0,
     linearFits = 0,
@@ -135,6 +169,12 @@ export function inverseSearch(
   const bank: Fragment[] = [],
     syntax = new Map<string, Fragment>(),
     behavior = new Set<string>();
+  const fittedPlanes = new Map<string, number[]>();
+  const relations = new Map(
+    macros
+      .filter((m) => m.arity === 1 && options.relational)
+      .map((m) => [m.name, linearPieces(m.body)]),
+  );
   const charge = () => {
     if (expansions >= limit) return false;
     expansions++;
@@ -142,7 +182,8 @@ export function inverseSearch(
   };
   const evaluate = (tree: Expr, add = true): Fragment | undefined => {
     if (evaluations >= budget || (add && expansions >= limit)) return;
-    if (exprSize(tree) > 31 || exprSize(expandExpr(tree, macros)) > 96) return;
+    if (exprSize(tree) > maxNodes || exprSize(expandExpr(tree, macros)) > 96)
+      return;
     evaluations++;
     const k = key(tree);
     if (syntax.has(k)) {
@@ -220,18 +261,44 @@ export function inverseSearch(
       bank.push(row);
       behavior.add(signature);
     }
+    if (support >= 4) fittedPlanes.set(coeff.join(","), coeff);
+  }
+  if (options.affineDifferences && !answer) {
+    const planes = [...fittedPlanes.values()],
+      differences = new Map<string, number[]>();
+    for (const x of planes)
+      for (const y of planes) {
+        if (!charge()) break;
+        const coeff = x.map((v, i) => v - y[i]);
+        if (coeff.some((v) => Math.abs(v) > 8) || (!coeff[0] && !coeff[1]))
+          continue;
+        differences.set(coeff.join(","), coeff);
+      }
+    const candidates = [...differences.values()]
+      .map((coeff) => ({
+        tree: plane(coeff),
+        cost: coeff.reduce((s, v) => s + Math.abs(v), 0),
+      }))
+      .filter((r) => !syntax.has(key(r.tree)))
+      .sort((a, b) => exprSize(a.tree) - exprSize(b.tree) || a.cost - b.cost);
+    for (const { tree } of candidates.slice(0, options.affineDifferences)) {
+      evaluate(tree);
+      if (answer) break;
+    }
   }
   // Unary productions are cheap forward links; definitions are arbitrary DSL bodies.
   const seeds = [...bank];
-  for (const op of [
+  const unaryOps = [
     "neg",
     ...macros.filter((m) => m.arity === 1).map((m) => m.name),
-  ])
-    for (const row of seeds) {
-      if (answer || evaluations >= Math.max(16, Math.floor(budget * 0.5)))
-        break;
-      evaluate({ op, args: [row.tree] });
-    }
+  ];
+  const links = options.affineDifferences
+    ? seeds.flatMap((row) => unaryOps.map((op) => ({ row, op })))
+    : unaryOps.flatMap((op) => seeds.map((row) => ({ row, op })));
+  for (const { row, op } of links) {
+    if (answer || evaluations >= Math.max(16, Math.floor(budget * 0.5))) break;
+    evaluate({ op, args: [row.tree] });
+  }
   bank.sort((x, y) => x.error - y.error || x.size - y.size);
   const active = bank.slice(0, 64),
     ps = productions(macros),
@@ -269,7 +336,9 @@ export function inverseSearch(
       const row = active[id];
       const yes = row.values.every((v, i) => {
         constraintPoints++;
-        return v >= b.low[i] - 1e-7 && v <= b.high[i] + 1e-7;
+        return b.ranges
+          ? contains(b, i, v)
+          : v >= b.low[i] - 1e-7 && v <= b.high[i] + 1e-7;
       });
       if (yes) return row;
     }
@@ -288,7 +357,9 @@ export function inverseSearch(
     const accepts = (row: Fragment) =>
       row.values.every((v, i) => {
         constraintPoints++;
-        return v >= spec.low[i] - 1e-7 && v <= spec.high[i] + 1e-7;
+        return spec.ranges
+          ? contains(spec, i, v)
+          : v >= spec.low[i] - 1e-7 && v <= spec.high[i] + 1e-7;
       });
     // Three independent equalities uniquely determine a plane. A failed
     // consistency check need not launch a coefficient grid search.
@@ -331,6 +402,29 @@ export function inverseSearch(
       for (const beta of grid) {
         if (!charge()) return;
         linearFits++;
+        if (spec.ranges) {
+          let intercepts: Domain = [[-8, 8]];
+          for (let i = 0; i < task.examples.length && intercepts.length; i++) {
+            constraintPoints++;
+            const [x, y] = task.examples[i].input,
+              v = alpha * x + beta * y;
+            intercepts = intersect(
+              intercepts,
+              domainAt(spec, i).map(([l, h]) => [l - v - 1e-7, h - v + 1e-7]),
+            );
+          }
+          for (const [low, high] of intercepts) {
+            const l = Math.ceil(low),
+              h = Math.floor(high);
+            if (l > h) continue;
+            const gamma =
+                l <= 0 && h >= 0 ? 0 : Math.abs(l) < Math.abs(h) ? l : h,
+              tree = plane([alpha, beta, gamma]);
+            const row = syntax.get(key(tree)) ?? evaluate(tree, false);
+            if (row && accepts(row)) return tree;
+          }
+          continue;
+        }
         let low = -8,
           high = 8;
         for (let i = 0; i < task.examples.length; i++) {
@@ -375,17 +469,23 @@ export function inverseSearch(
     const candidates: { tree: Expr; child: Box; cost: number; slot: number }[] =
       [];
     const ops = ps
-      .filter((p) =>
-        ["add", "sub", "mul", "min", "max", "neg"].includes(p.node.op),
+      .filter(
+        (p) =>
+          ["add", "sub", "mul", "min", "max", "neg"].includes(p.node.op) ||
+          !!relations.get(p.node.op),
       )
       .sort(
         (x, y) => probabilities[ps.indexOf(y)] - probabilities[ps.indexOf(x)],
       );
     for (const p of ops)
-      for (const row of p.node.op === "neg" ? [undefined] : active) {
+      for (const row of p.arity === 1 ? [undefined] : active) {
         if (!charge()) break;
         inverseSteps++;
-        const child = inverseBox(p.node.op, spec, row?.values);
+        const pieces = relations.get(p.node.op);
+        const child = pieces
+          ? inversePieces(pieces, spec)
+          : inverseBox(p.node.op, spec, row?.values);
+        if (pieces) constraintPoints += spec.low.length * pieces.length;
         if (!child || boxKey(child) === sk) continue;
         const tree: Expr = {
             op: p.node.op,
@@ -395,23 +495,55 @@ export function inverseSearch(
         const found = find(child);
         if (found) {
           const completed = replace(tree, [slot], found.tree);
-          if (exprSize(replace(partial, path, completed)) <= 31)
+          if (exprSize(replace(partial, path, completed)) <= maxNodes)
             return completed;
         }
         const cost =
           -Math.log(probabilities[ps.indexOf(p)]) +
           0.02 * (row?.size ?? 0) +
+          ((options.semanticRank ?? 0) *
+            child.low.reduce(
+              (s, l, i) =>
+                s + (l > 0 ? l : child.high[i] < 0 ? -child.high[i] : 0),
+              0,
+            )) /
+            Math.max(
+              1,
+              spec.low.reduce(
+                (s, l, i) =>
+                  s +
+                  (Number.isFinite(l)
+                    ? Math.abs(l)
+                    : Number.isFinite(spec.high[i])
+                      ? Math.abs(spec.high[i])
+                      : 0),
+                0,
+              ),
+            ) +
           rng.next() * 0.01;
         candidates.push({ tree, child, cost, slot });
       }
     candidates.sort((x, y) => x.cost - y.cost);
-    for (const candidate of candidates.slice(0, options.beam ?? 12)) {
+    let frontier = candidates.slice(0, options.beam ?? 12);
+    if (options.diverseBeam) {
+      const first = [
+        ...new Map(
+          [...candidates].reverse().map((c) => [c.tree.op, c]),
+        ).values(),
+      ].sort((a, b) => a.cost - b.cost);
+      frontier = [
+        ...first,
+        ...candidates.filter((c) => !first.includes(c)),
+      ].slice(0, options.beam ?? 12);
+    }
+    for (const candidate of frontier) {
       const next = replace(partial, path, candidate.tree),
         p = [...path, candidate.slot];
       const result = solve(candidate.child, depth - 1, next, p, history);
       if (result) {
         const completed = replace(candidate.tree, [candidate.slot], result);
-        if (exprSize(replace(partial, path, completed)) <= 31) return completed;
+        if (exprSize(replace(partial, path, completed)) <= maxNodes)
+          return completed;
       }
     }
   };

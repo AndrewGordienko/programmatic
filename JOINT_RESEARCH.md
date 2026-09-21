@@ -81,7 +81,7 @@ The next iteration isolates the inner synthesizer. Generator seed 31092026 suppl
 
 The new policy is trained from 23 solved bootstrap programs plus 5,000 executed random/corpus-mutated programs. No oracle concept ASTs enter training. This yields 63,571 construction decisions; PyTorch training makes 3,440,640 decision updates, selecting weights on held-out **dream programs**, not final tasks. Dream validation next-production accuracy rises from about 6.5% to 31.2%. Models of widths 12 and 32 are also retained as calibration candidates. Exported weights are used by the same TypeScript interpreter; an independent PyTorch probability fixture checks inference parity. The original v1 search settings remain available by default.
 
-On the **40 previously unused development tasks × three seeds**, the larger policy gets **33/120 solves**, versus **16/120 uniform** and **17/120 legacy**. It uses 96,418 program evaluations versus 111,567 uniform, but takes 6.26 seconds versus 2.30 seconds uniform and 0.63 seconds legacy on this machine. Therefore this is not a wall-clock efficiency win or a final Gate 3 result. Task conditioning is cached without changing probabilities; inference and search overhead still matter. There has been no new expensive outer-language run or final test using this policy.
+On the **40 previously unused development tasks × three seeds**, the larger policy gets **33/120 solves**, versus **16/120 uniform** and **17/120 legacy**. It uses 96,418 program evaluations versus 111,567 uniform, but takes 6.26 seconds versus 2.30 seconds uniform and 0.63 seconds legacy on this machine. Therefore this is not a wall-clock efficiency win or a final Gate 3 result. **A later semantic exposure audit found 14/40 functions also occurred in executed neural-training dreams.** These tasks were unused for calibration, but were not all functionally unseen. Task conditioning is cached without changing probabilities; inference and search overhead still matter.
 
 The interval experiment has a separate bound-check counter and charges checks to the partial-work cap. It is preserved, not enabled by default. Case-wise parent selection retains distinct error behavior among up to 64 candidates instead of keeping only the best mean-error variants.
 
@@ -101,15 +101,15 @@ Every proposed complete expression, including support screening and duplicates, 
 
 With a cap of 512 program proposals and 4,096 structural operations, v3 training-only calibration obtains 87/180 guided solves, 80/180 uniform solves, and 41/180 with the affine heuristic removed. The subsequent **fresh 40-task inner-validation batch × three optimizer seeds** gives:
 
-| Solver | Solved / 120 | Program proposals | Structural operations | Wall time |
-| --- | ---: | ---: | ---: | ---: |
-| Legacy genetic | 11 | 58,988 | — | 0.32 s |
-| Previous joint solver | 34 | 48,457 | 225,853 | 3.32 s |
-| Inverse, uniform | 52 | 9,501 | 302,027 | 0.58 s |
-| Inverse, frozen joint policy | 61 | 8,631 | 224,977 | 0.45 s |
-| Inverse, affine heuristic removed | 26 | 1,706 | 405,156 | 0.78 s |
+| Solver                            | Solved / 120 | Program proposals | Structural operations | Wall time |
+| --------------------------------- | -----------: | ----------------: | --------------------: | --------: |
+| Legacy genetic                    |           11 |            58,988 |                     — |    0.32 s |
+| Previous joint solver             |           34 |            48,457 |               225,853 |    3.32 s |
+| Inverse, uniform                  |           52 |             9,501 |               302,027 |    0.58 s |
+| Inverse, frozen joint policy      |           61 |             8,631 |               224,977 |    0.45 s |
+| Inverse, affine heuristic removed |           26 |             1,706 |               405,156 |    0.78 s |
 
-The guided inverse solver gets 57/96 related, 4/12 nested and 0/12 longer-expression solves. These are 40 task instances, not 120 independent tasks or independently trained policies. All arms have the same program cap; heterogeneous work and CPU overhead still differ. The three optimizer seeds share one previously trained policy. This is a meaningful inner-search improvement, not a final multi-meta-seed language-learning result.
+The guided inverse solver gets 57/96 related, 4/12 nested and 0/12 longer-expression solves. These are 40 task instances, not 120 independent tasks or independently trained policies. **The later exposure audit found 12/40 functions also occurred in neural-training dreams.** The batch was not previously used for tuning, but should not be described as entirely unseen by the policy. All arms have the same program cap; heterogeneous work and CPU overhead still differ. The three optimizer seeds share one previously trained policy. This is an inner-search diagnostic, not a final multi-meta-seed language-learning result.
 
 That solver produces correct programs for **90/160 training tasks** across three searches each (264/480 successful trials). Equality-aware abstraction replaces all occurrences of the same computation with one shared argument. A commutative pattern-matching fix prevents equivalent min/max operand orders from hiding compression. The resulting 94 proposed definitions include:
 
@@ -122,3 +122,39 @@ fn_2597717659(a) = min(1, max(a,0)) support: 22 training tasks
 These were mined from synthesized programs; oracle names enter only the subsequent diagnostic. They are **proposals, not accepted language improvements**. No fresh downstream selection, structural-transfer advantage or discovery amortization has yet been established for them. The inverse engine currently uses arbitrary unary macros as forward fragments; general macro inversion remains unimplemented.
 
 Artifacts: `inverse-calibration-v3.json`, `inverse-validation-v3.json`, `inverse-corpus-v4.json`. The corpus took 36,914 program proposals, 877,042 structural operations and about 2.23 seconds including abstraction mining on this machine, excluding earlier neural-data generation/training and research calibration. Report those additional costs before claiming total amortization. Tests cover inverse-constraint soundness, out-of-sample execution, check-output isolation, budget caps, shared arguments and commutative rewriting.
+
+## Strict-exposure language pilots
+
+The next pilots exclude every function in the recorded neural corpus/dream set and the preceding calibration suite, using the same 97-probe empirical signatures as the task generator. Pilot v2 additionally excludes every v1 selection, confirmation and test function. This is a stricter distribution, with many easy functions removed; its solve rates are not directly comparable with the preceding inner calibration. It is still finite-probe disjointness, not a proof of mathematical inequivalence or global novelty across every historical experiment.
+
+Both pilots use the automatically mined corpus and a **restricted unary library** population: 128 candidate languages with up to four definitions, including singletons, pairs and multi-additions. Twelve development tasks screen the population; 24 fresh development tasks × three optimizer seeds select one candidate. The library and shared policy freeze before 48 confirmation tasks and 100 final tasks × three seeds. Each final task has a 512-proposal cap and 4,096 structural-operation cap in all four arms. No surrogate savings are claimed by these pilots.
+
+V1 accepts a language on confirmation, but its final guided result is only 49/300 versus 44/300. The task-clustered solve-rate interval includes zero, with no nested/longer gain and no search-cost saving.
+
+V2 uses a production-diverse beam and up to 32 differences between observed affine fragments to expose components of compound outputs. Both arms permit **96 active and 96 expanded nodes**, preventing macros from winning solely by bypassing the earlier 31-node active cap. It autonomously selects:
+
+```
+fn_2352281741(a) = max(a, -a)
+fn_715306984(a) = max(a, 0)
+```
+
+| V2 final arm                 | Solved / 300 | Work-curve AUC | Search work | Wall time |
+| ---------------------------- | -----------: | -------------: | ----------: | --------: |
+| Base, uniform                |           29 |          6.97% |   1,040,339 |    1.83 s |
+| Learned library, uniform     |           79 |         22.82% |     885,647 |    1.62 s |
+| Base, shared frozen policy   |           51 |         13.61% |     898,809 |    1.63 s |
+| Learned library, same policy |           80 |         22.74% |     813,755 |    1.50 s |
+
+The guided comparison gains **9.67 percentage points** in solve rate, with a descriptive paired task-bootstrap 95% interval **[5.0, 15.0] pp**. Work-curve AUC gains **9.14 pp [4.66, 14.03]**. Fifty-seven of the 80 successful learned-library trials use an invented function. The base/shared-policy arm is the remove-all-macros ablation with identical tasks, seeds, weights and search settings. Complete-program proposals actually increase by about 12.7 per task on average; the saving is in structural search and recorded wall time, not fewer complete proposals.
+
+**Structural transfer is not established:** related solves improve 23→51 out of 180, nested changes 28→27 out of 60, and longer changes 0→2 out of 60. The latter gain is too small and uncertain. These pilots share one policy and one library-training corpus; three optimizer seeds do not establish robustness across independent meta-training runs.
+
+Search-work savings extrapolate to roughly **27,102 future tasks** to repay the counted corpus/selection/prior-bootstrap work. A wall-time projection is at least **47,984 future tasks**, using only available training/discovery timing. This is **not observed amortization**; earlier bootstrap wall time, research calibration and some runner overhead are not fully available, so the total wall cost is a lower bound. Structural work counts combine heterogeneous operations and must not be interpreted as CPU equivalents. The benchmark's finite support also limits extrapolation to large streams of distinct future functions.
+
+`inverse-language-analysis.json` reports paired task-cluster uncertainty, common-solved-task metrics and these limitations. Results are an encouraging restricted language-learning pilot, not Gates 3–5 across seeds or general DSL invention.
+
+### Continuing inner-search diagnostics
+
+`domains.ts` derives exact piecewise-affine unary semantics from arbitrary base-language definitions and inverts them into unions of intervals. It preserves both branches of non-monotone functions; nonlinear multiplication remains unsupported for inverse execution. Property checks verify forward/inverse agreement and reject points between disjoint solution branches. Initial calibration of this feature regressed, so it is **not enabled** in the v2 pilot.
+
+`semantic-rank-calibration-v1.json` tests residual-magnitude ranking on the original training batch plus an explicitly development-only structural sample. With the v2 library it improves 194→210 solves out of 330; the matched base solver improves 179→189. Longer solves remain only 3/30 and nested 9/30, so deeper synthesis remains the bottleneck. These adaptive diagnostics are not new final evidence.

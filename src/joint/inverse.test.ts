@@ -12,6 +12,7 @@ import {
 import { inverseBox, inverseSearch } from "./inverse";
 import { sharedAbstractions } from "./inventions";
 import { abstraction } from "./genome";
+import { linearPieces, inversePieces, contains } from "./domains";
 
 const task = (f: (x: number, y: number) => number) => ({
   examples: inputs(301, 25, 3).map((input) => ({ input, output: f(...input) })),
@@ -137,4 +138,46 @@ test("abstraction preserves repeated computations and commutative rewriting pres
   assert.ok(exprSize(compressed) < exprSize(source));
   for (const input of inputs(7321, 100, 10))
     assert.equal(evalExpr(source, input), evalExpr(compressed, input, [clip]));
+});
+
+test("invented unary semantics invert disjoint branches without admitting values in the gap", () => {
+  const a = { op: "arg", value: 0, args: [] },
+    c = (value: number) => ({ op: "const", value, args: [] });
+  const magnitude = { op: "max", args: [a, { op: "neg", args: [a] }] };
+  const pieces = linearPieces(magnitude)!;
+  const domain = inversePieces(pieces, { low: [2], high: [2] })!;
+  assert.equal(contains(domain, 0, -2), true);
+  assert.equal(contains(domain, 0, 2), true);
+  assert.equal(contains(domain, 0, 0), false);
+  assert.equal(linearPieces({ op: "mul", args: [a, a] }), null);
+  const rng = new Random(93012);
+  const random = (depth: number): typeof a => {
+    if (!depth) return rng.next() < 0.7 ? a : c(rng.int(7) - 3);
+    const op = rng.pick(["add", "sub", "mul", "min", "max"]);
+    return {
+      op,
+      args: [
+        random(depth - 1),
+        op === "mul" ? c(rng.int(7) - 3) : random(depth - 1),
+      ],
+    } as typeof a;
+  };
+  for (let n = 0; n < 100; n++) {
+    const e = random(3),
+      ps = linearPieces(e);
+    assert.ok(ps);
+    for (let i = 0; i < 30; i++) {
+      const x = rng.next() * 40 - 20,
+        y = evalExpr(e, [x]),
+        p = ps.find((p) => x >= p.lo && x <= p.hi);
+      assert.ok(p);
+      assert.ok(Math.abs(y - (p.a * x + p.b)) < 1e-7);
+      const b = inversePieces(ps, { low: [y - 0.01], high: [y + 0.01] });
+      assert.ok(b);
+      assert.ok(contains(b, 0, x));
+      const z = rng.next() * 40 - 20;
+      if (contains(b, 0, z))
+        assert.ok(Math.abs(evalExpr(e, [z]) - y) < 0.010001);
+    }
+  }
 });
