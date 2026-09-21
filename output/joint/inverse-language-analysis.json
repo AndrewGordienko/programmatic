@@ -337,6 +337,7 @@
       "cost": {
         "selectionWork": 6178777,
         "corpusWork": 913956,
+        "stagesIncludingParents": 1,
         "additionalPriorBootstrapEvaluations": 126086,
         "priorTrainingUpdates": 3440640,
         "wallCostLowerBoundMs": 18948.775156041997
@@ -683,6 +684,7 @@
       "cost": {
         "selectionWork": 6643540,
         "corpusWork": 913956,
+        "stagesIncludingParents": 1,
         "additionalPriorBootstrapEvaluations": 126086,
         "priorTrainingUpdates": 3440640,
         "wallCostLowerBoundMs": 20478.420248041977
@@ -691,6 +693,353 @@
         "note": "Extrapolation from task-clustered means, not an observed future stream. Heterogeneous structural units are not CPU equivalents. Wall cost is a lower bound: earlier bootstrap wall time, calibration/development research and runner overhead are not fully available. No robust finite break-even if saving interval includes zero.",
         "searchWorkBreakEven": 27102,
         "wallBreakEvenLowerBound": 47984,
+        "workSavingsRobust": true,
+        "wallSavingsRobust": true
+      }
+    },
+    {
+      "version": 3,
+      "accepted": true,
+      "definitions": [
+        "fn_2352281741(a) = max(a, (-a))",
+        "fn_715306984(a) = max(a, 0)"
+      ],
+      "comparisons": {
+        "guided": {
+          "all": {
+            "solveGain": {
+              "mean": 0.15666666666666665,
+              "lower": 0.09333333333333334,
+              "upper": 0.22333333333333338,
+              "tasks": 100
+            },
+            "workAucGain": {
+              "mean": 0.12004340277777778,
+              "lower": 0.0727387152777778,
+              "upper": 0.17126229745370367,
+              "tasks": 100
+            },
+            "programAucGain": {
+              "mean": 0.10787760416666671,
+              "lower": 0.05345052083333334,
+              "upper": 0.16642578125000004,
+              "tasks": 100
+            },
+            "workSaving": {
+              "mean": 471.6166666666666,
+              "lower": 281.44666666666666,
+              "upper": 676.7933333333333,
+              "tasks": 100
+            },
+            "wallSavingMs": {
+              "mean": 0.6145999799998271,
+              "lower": 0.23483540666643715,
+              "upper": 1.0150449966664628,
+              "tasks": 100
+            },
+            "programProposalSaving": {
+              "mean": -39.58666666666667,
+              "lower": -43.93666666666666,
+              "upper": -35.28666666666665,
+              "tasks": 100
+            }
+          },
+          "Related compositions": {
+            "solveGain": {
+              "mean": 0.23888888888888887,
+              "lower": 0.14444444444444443,
+              "upper": 0.3388888888888889,
+              "tasks": 60
+            },
+            "workAucGain": {
+              "mean": 0.17963083526234566,
+              "lower": 0.10778718171296298,
+              "upper": 0.2564392843364197,
+              "tasks": 60
+            },
+            "programAucGain": {
+              "mean": 0.17608506944444446,
+              "lower": 0.0936740451388889,
+              "upper": 0.26435546875000004,
+              "tasks": 60
+            },
+            "workSaving": {
+              "mean": 723.9055555555556,
+              "lower": 442.1888888888889,
+              "upper": 1028.0555555555554,
+              "tasks": 60
+            },
+            "wallSavingMs": {
+              "mean": 1.0972453277776368,
+              "lower": 0.5621131611109175,
+              "upper": 1.6800120611109783,
+              "tasks": 60
+            },
+            "programProposalSaving": {
+              "mean": -39.761111111111106,
+              "lower": -45.71666666666666,
+              "upper": -33.922222222222224,
+              "tasks": 60
+            }
+          },
+          "Nested compositions": {
+            "solveGain": {
+              "mean": 0.01666666666666667,
+              "lower": 0,
+              "upper": 0.05,
+              "tasks": 20
+            },
+            "workAucGain": {
+              "mean": 0.04861834490740739,
+              "lower": 0.013972077546296285,
+              "upper": 0.0929398148148148,
+              "tasks": 20
+            },
+            "programAucGain": {
+              "mean": -0.020377604166666667,
+              "lower": -0.051953125,
+              "upper": 0.01376953125,
+              "tasks": 20
+            },
+            "workSaving": {
+              "mean": 190.84999999999997,
+              "lower": 23.26666666666664,
+              "upper": 395.9666666666667,
+              "tasks": 20
+            },
+            "wallSavingMs": {
+              "mean": 0.1355547499996344,
+              "lower": -0.3352077166669307,
+              "upper": 0.6782499166661485,
+              "tasks": 20
+            },
+            "programProposalSaving": {
+              "mean": -31.75,
+              "lower": -40.86666666666667,
+              "upper": -23.599999999999994,
+              "tasks": 20
+            }
+          },
+          "Longer expressions": {
+            "solveGain": {
+              "mean": 0.05,
+              "lower": 0,
+              "upper": 0.15,
+              "tasks": 20
+            },
+            "workAucGain": {
+              "mean": 0.012706163194444444,
+              "lower": -0.03743489583333333,
+              "upper": 0.08319227430555556,
+              "tasks": 20
+            },
+            "programAucGain": {
+              "mean": 0.031510416666666666,
+              "lower": -0.01806640625000001,
+              "upper": 0.1162109375,
+              "tasks": 20
+            },
+            "workSaving": {
+              "mean": -4.483333333333303,
+              "lower": -213.9499999999999,
+              "upper": 280.6166666666667,
+              "tasks": 20
+            },
+            "wallSavingMs": {
+              "mean": -0.3542908333334103,
+              "lower": -0.8560769000002137,
+              "upper": 0.27557108333294295,
+              "tasks": 20
+            },
+            "programProposalSaving": {
+              "mean": -46.9,
+              "lower": -53.93333333333332,
+              "upper": -39.91666666666666,
+              "tasks": 20
+            }
+          }
+        },
+        "uniform": {
+          "all": {
+            "solveGain": {
+              "mean": 0.24,
+              "lower": 0.15333333333333335,
+              "upper": 0.32666666666666666,
+              "tasks": 100
+            },
+            "workAucGain": {
+              "mean": 0.18303674768518519,
+              "lower": 0.12165436921296297,
+              "upper": 0.24505353009259254,
+              "tasks": 100
+            },
+            "programAucGain": {
+              "mean": 0.1842643229166666,
+              "lower": 0.11359375,
+              "upper": 0.2564973958333333,
+              "tasks": 100
+            },
+            "workSaving": {
+              "mean": 695.7866666666665,
+              "lower": 448.75999999999976,
+              "upper": 949.3766666666664,
+              "tasks": 100
+            },
+            "wallSavingMs": {
+              "mean": 0.4336072199998793,
+              "lower": 0.013525553333323255,
+              "upper": 0.8684230166664322,
+              "tasks": 100
+            },
+            "programProposalSaving": {
+              "mean": -42.52333333333332,
+              "lower": -46.90666666666666,
+              "upper": -38.33333333333335,
+              "tasks": 100
+            }
+          },
+          "Related compositions": {
+            "solveGain": {
+              "mean": 0.3611111111111111,
+              "lower": 0.2277777777777778,
+              "upper": 0.48888888888888893,
+              "tasks": 60
+            },
+            "workAucGain": {
+              "mean": 0.285399787808642,
+              "lower": 0.19203559027777775,
+              "upper": 0.37943793402777765,
+              "tasks": 60
+            },
+            "programAucGain": {
+              "mean": 0.2812282986111111,
+              "lower": 0.17013888888888887,
+              "upper": 0.3892469618055557,
+              "tasks": 60
+            },
+            "workSaving": {
+              "mean": 1104.0444444444445,
+              "lower": 740.7,
+              "upper": 1475.2944444444445,
+              "tasks": 60
+            },
+            "wallSavingMs": {
+              "mean": 1.0735780444442047,
+              "lower": 0.43584051666663687,
+              "upper": 1.6889801277775205,
+              "tasks": 60
+            },
+            "programProposalSaving": {
+              "mean": -43.01666666666665,
+              "lower": -48.92777777777779,
+              "upper": -37.18888888888889,
+              "tasks": 60
+            }
+          },
+          "Nested compositions": {
+            "solveGain": {
+              "mean": 0.06666666666666667,
+              "lower": 0,
+              "upper": 0.18333333333333332,
+              "tasks": 20
+            },
+            "workAucGain": {
+              "mean": 0.0373951099537037,
+              "lower": 0.001595052083333326,
+              "upper": 0.10147569444444444,
+              "tasks": 20
+            },
+            "programAucGain": {
+              "mean": 0.037695312499999994,
+              "lower": -0.02174479166666668,
+              "upper": 0.13199869791666669,
+              "tasks": 20
+            },
+            "workSaving": {
+              "mean": 138.60000000000005,
+              "lower": -183.13333333333335,
+              "upper": 501.1000000000001,
+              "tasks": 20
+            },
+            "wallSavingMs": {
+              "mean": -0.4709097166660892,
+              "lower": -1.0921555499997946,
+              "upper": 0.2262632833339011,
+              "tasks": 20
+            },
+            "programProposalSaving": {
+              "mean": -32.733333333333334,
+              "lower": -42.53333333333333,
+              "upper": -24.116666666666667,
+              "tasks": 20
+            }
+          },
+          "Longer expressions": {
+            "solveGain": {
+              "mean": 0.05,
+              "lower": 0,
+              "upper": 0.15,
+              "tasks": 20
+            },
+            "workAucGain": {
+              "mean": 0.0215892650462963,
+              "lower": 0,
+              "upper": 0.06476779513888889,
+              "tasks": 20
+            },
+            "programAucGain": {
+              "mean": 0.03994140625,
+              "lower": 0,
+              "upper": 0.11982421875,
+              "tasks": 20
+            },
+            "workSaving": {
+              "mean": 28.199999999999886,
+              "lower": -55.31666666666665,
+              "upper": 189.29999999999993,
+              "tasks": 20
+            },
+            "wallSavingMs": {
+              "mean": -0.5817883166671283,
+              "lower": -0.8961071166670684,
+              "upper": -0.24054603333340002,
+              "tasks": 20
+            },
+            "programProposalSaving": {
+              "mean": -50.833333333333336,
+              "lower": -56.466666666666676,
+              "upper": -45.4,
+              "tasks": 20
+            }
+          }
+        }
+      },
+      "jointSolved": {
+        "base-guided": {
+          "tasks": 24,
+          "medianProgramProposals": 51,
+          "medianWork": 1164,
+          "medianWallMs": 2.0441250000003492
+        },
+        "candidate-guided": {
+          "tasks": 24,
+          "medianProgramProposals": 82,
+          "medianWork": 849,
+          "medianWallMs": 1.5980839999974705
+        }
+      },
+      "cost": {
+        "selectionWork": 15407444,
+        "corpusWork": 2250821,
+        "stagesIncludingParents": 2,
+        "additionalPriorBootstrapEvaluations": 126086,
+        "priorTrainingUpdates": 3440640,
+        "wallCostLowerBoundMs": 41794.23486704204
+      },
+      "amortization": {
+        "note": "Extrapolation from task-clustered means, not an observed future stream. Heterogeneous structural units are not CPU equivalents. Wall cost is a lower bound: earlier bootstrap wall time, calibration/development research and runner overhead are not fully available. No robust finite break-even if saving interval includes zero.",
+        "searchWorkBreakEven": 37710,
+        "wallBreakEvenLowerBound": 68003,
         "workSavingsRobust": true,
         "wallSavingsRobust": true
       }

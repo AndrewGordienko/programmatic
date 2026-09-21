@@ -2,11 +2,13 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { makeTasks } from "../src/dsl/tasks";
 import { inverseSearch } from "../src/joint/inverse";
 import { inventions } from "../src/joint/inventions";
-import { evalExpr, exprSize } from "../src/dsl/expressions";
+import { evalExpr, exprSize, expandExpr } from "../src/dsl/expressions";
 import { Random } from "../src/engine/random";
 import type { JointPolicy } from "../src/joint/policy";
 import type { CorpusEntry } from "../src/dsl/types";
-const out = "output/joint/inverse-corpus-v4.json";
+const wake = process.argv.includes("--wake"),
+  version = wake ? "inverse-corpus-v5" : "inverse-corpus-v4";
+const out = `output/joint/${version}.json`;
 if (existsSync(out)) throw new Error("Preserve corpus");
 const policy: JointPolicy = JSON.parse(
   readFileSync("output/joint/neural/policy.json", "utf8"),
@@ -16,11 +18,36 @@ const suite = makeTasks(
   { seed: 31092026, prefix: "semantic-calibration" },
 );
 const start = performance.now();
+const parent = wake
+  ? JSON.parse(
+      readFileSync("output/joint/inverse-language-pilot-v2.json", "utf8"),
+    )
+  : undefined;
+const library = parent?.candidate.macros ?? [];
+const searchOptions = wake
+  ? {
+      affineFits: 512,
+      fitDedup: true,
+      primitiveDifferences: true,
+      diverseBeam: true,
+      affineDifferences: 32,
+      maxNodes: 96,
+      semanticRank: 2,
+    }
+  : {};
+const budget = wake ? 2048 : 512;
 const rows = suite.training.flatMap((task, i) =>
   [0, 7, 42].map((seed) => ({
     task: task.id,
     seed,
-    result: inverseSearch(task, [], policy, seed + i * 97, 512),
+    result: inverseSearch(
+      task,
+      library,
+      policy,
+      seed + i * 97,
+      budget,
+      searchOptions,
+    ),
   })),
 );
 const corpus: CorpusEntry[] = [];
@@ -28,7 +55,7 @@ for (const task of suite.training) {
   const best = rows
     .filter((r) => r.task === task.id && r.result.solved)
     .sort((a, b) => exprSize(a.result.tree) - exprSize(b.result.tree))[0];
-  if (best) corpus.push({ task, tree: best.result.tree });
+  if (best) corpus.push({ task, tree: expandExpr(best.result.tree, library) });
 }
 const proposed = inventions(corpus);
 const discoveryMs = performance.now() - start;
@@ -84,7 +111,11 @@ const summary = {
 writeFileSync(
   out,
   JSON.stringify({
-    version: "inverse-corpus-v4",
+    version,
+    searchOptions,
+    budget,
+    parentLibrary: library,
+    parentFrozenHash: parent?.frozenHash,
     note: "Training-only corpus and proposal diagnostic, not evidence of fresh search utility. Ground-truth names used only for post-hoc recall report.",
     summary,
     corpus,

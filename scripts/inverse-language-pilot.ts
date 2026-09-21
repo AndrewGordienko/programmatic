@@ -9,8 +9,13 @@ import { genome, type Genome } from "../src/joint/genome";
 import type { JointPolicy } from "../src/joint/policy";
 import { Random } from "../src/engine/random";
 
-const v2 = process.argv.includes("--v2"),
-  version = v2 ? "inverse-language-pilot-v2" : "inverse-language-pilot-v1";
+const v3 = process.argv.includes("--v3"),
+  v2 = v3 || process.argv.includes("--v2"),
+  version = v3
+    ? "inverse-language-pilot-v3"
+    : v2
+      ? "inverse-language-pilot-v2"
+      : "inverse-language-pilot-v1";
 const out = `output/joint/${version}.json`;
 if (existsSync(out)) throw new Error("Preserve completed pilot");
 const start = performance.now(),
@@ -21,7 +26,12 @@ const priorData: { programs: { tree: Expr }[] } = JSON.parse(
   gunzipSync(readFileSync("output/joint/neural/data.json.gz")).toString(),
 );
 const corpus = JSON.parse(
-  readFileSync("output/joint/inverse-corpus-v4.json", "utf8"),
+  readFileSync(
+    v3
+      ? "output/joint/inverse-corpus-v5.json"
+      : "output/joint/inverse-corpus-v4.json",
+    "utf8",
+  ),
 );
 const xs = inputs(903141, 97, 7),
   priorSignatures = new Set(
@@ -57,15 +67,27 @@ if (v2) {
   for (const sig of Object.values(old.splitSignatures).flat() as string[])
     exclude.add(sig);
 }
+if (v3) {
+  const old = JSON.parse(
+    readFileSync("output/joint/inverse-language-pilot-v2.json", "utf8"),
+  );
+  for (const sig of Object.values(old.splitSignatures).flat() as string[])
+    exclude.add(sig);
+  const diagnostic = makeTasks(
+    { training: 10, development: 10, confirmation: 10, testing: 50 },
+    { seed: 59377215 },
+  );
+  for (const t of Object.values(diagnostic).flat()) exclude.add(t.signature);
+}
 const suite = makeTasks(
   { training: 1, development: 36, confirmation: 48, testing: 100 },
-  { seed: v2 ? 53092127 : 53092126, exclude, prefix: version },
+  { seed: v3 ? 53092128 : v2 ? 53092127 : 53092126, exclude, prefix: version },
 );
 // Restricted unary-library experiment: the current inverse solver only supports
 // unary invented productions in its forward fragment stage. No oracle concepts.
 const pool: Macro[] = corpus.proposed
   .map((r: { macro: Macro }) => r.macro)
-  .filter((m: Macro) => m.arity === 1);
+  .filter((m: Macro) => v3 || m.arity === 1);
 const base = genome([]),
   languages = new Map([[base.id, base]]),
   rng = new Random(815721);
@@ -78,16 +100,32 @@ for (let i = 0; i < 8; i++)
     const g = genome([pool[i], pool[j]], "pair");
     languages.set(g.id, g);
   }
-while (languages.size < 128) {
+if (v3) {
+  const parent = genome(corpus.parentLibrary, "retained-parent");
+  languages.set(parent.id, parent);
+}
+while (languages.size < (v3 ? 192 : 128)) {
   const g = genome(
     Array.from({ length: 1 + rng.int(4) }, () => rng.pick(pool)),
     "multi-add",
   );
   languages.set(g.id, g);
 }
-const searchOptions = v2
-  ? { diverseBeam: true, affineDifferences: 32, maxNodes: 96 }
-  : {};
+const searchOptions = v3
+  ? {
+      diverseBeam: true,
+      affineDifferences: 32,
+      maxNodes: 96,
+      semanticRank: 2,
+      affineFits: 512,
+      fitDedup: true,
+      primitiveDifferences: true,
+      macroForward: 48,
+      macroBindings: 8,
+    }
+  : v2
+    ? { diverseBeam: true, affineDifferences: 32, maxNodes: 96 }
+    : {};
 const trial = (
   t: Task,
   g: Genome,
@@ -123,7 +161,7 @@ const race = (g: Genome, tasks: Task[], budget: number, reps: number) => {
   };
 };
 console.log(
-  `Screening ${languages.size} unary-library genomes; ${exclude.size} training/calibration signatures excluded.`,
+  `Screening ${languages.size} library genomes; ${exclude.size} training/calibration signatures excluded.`,
 );
 const screen = [...languages.values()].map((g) =>
   race(g, suite.development.slice(0, 12), 256, 1),
@@ -227,6 +265,11 @@ const summary = Object.fromEntries(
 );
 const races = [...screen, ...medium, ...confirmation],
   cost = {
+    parentCost: v3
+      ? JSON.parse(
+          readFileSync("output/joint/inverse-language-pilot-v2.json", "utf8"),
+        ).cost
+      : undefined,
     corpus: corpus.summary,
     selectionEvaluations: races.reduce(
       (s, r) => s + r.rows.reduce((n, t) => n + t.result.evaluations, 0),
@@ -253,7 +296,7 @@ writeFileSync(
   JSON.stringify({
     version,
     searchOptions,
-    note: "Restricted unary library pilot. Shared fixed prior. Novel relative to recorded prior/dream/calibration functions by 97-probe signatures, not formal equivalence. 128 languages -> 16 fresh-stage finalists -> one frozen candidate -> 48 confirmation tasks -> 100 tests. Candidate evaluated even when rejected. No oracle labels in selection. No surrogate savings claimed. Structural work units heterogeneous; wall time separately reported. V2 also excludes all v1 task functions and uses equal 96-node expanded/active limits.",
+    note: `Shared fixed prior. Novel relative to recorded prior/dream/calibration functions by 97-probe signatures, not formal equivalence. ${languages.size} languages -> 16 fresh-stage finalists plus base -> one frozen candidate -> 48 confirmation tasks -> 100 tests. Candidate evaluated even when rejected. No oracle labels in selection. No surrogate savings claimed. Structural work units heterogeneous; wall time separately reported. V1/V2 restrict to unary libraries. V2 excludes all v1 tasks and uses equal 96-node expanded/active limits. V3 supports arity 1–3, re-solves training with the v2 learned library, records parent discovery costs, excludes v1/v2 and structural calibration tasks, and uses generic partial-application inverse semantics.`,
     exposure,
     excludedSignatures: exclude.size,
     splitSignatures: Object.fromEntries(

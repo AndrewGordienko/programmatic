@@ -17,10 +17,14 @@ export function dreamDataset(
   macros: Macro[],
   seed: number,
   count = 3000,
+  options: { commutative?: boolean; lowerIntegerLiterals?: boolean } = {},
 ) {
   const rng = new Random(seed),
     ps = productions(macros),
     probeInputs = inputs(301, 25, 3);
+  let programProposals = 0,
+    programExecutions = 0,
+    exampleExecutions = 0;
   const random = (depth: number): Expr => {
     const terminal = depth <= 0 || rng.next() < 0.3;
     const p = rng.pick(ps.filter((p) => (terminal ? !p.arity : p.arity > 0)));
@@ -43,7 +47,41 @@ export function dreamDataset(
     if (e.op === "mul" && b.op === "const" && b.value === 1) return a;
     return { ...e, args };
   };
-  const sources = corpus.map((c) => ({ ...c, tree: rewrite(c.tree, macros) }));
+  const sources = corpus.map((c) => ({
+    ...c,
+    tree: rewrite(c.tree, macros, { commutative: options.commutative }),
+  }));
+  const lower = (e: Expr): Expr => {
+    if (
+      e.op === "const" &&
+      !ps.some((p) => p.node.op === "const" && p.node.value === e.value)
+    ) {
+      const n = e.value!;
+      if (!Number.isInteger(n) || Math.abs(n) > 1000)
+        throw new Error("Teacher literal outside bounded integer grammar");
+      if (n < 0)
+        return {
+          op: "neg",
+          args: [lower({ op: "const", value: -n, args: [] })],
+        };
+      return n % 2 === 0
+        ? {
+            op: "mul",
+            args: [
+              { op: "const", value: 2, args: [] },
+              lower({ op: "const", value: n / 2, args: [] }),
+            ],
+          }
+        : {
+            op: "add",
+            args: [
+              { op: "const", value: 1, args: [] },
+              lower({ op: "const", value: n - 1, args: [] }),
+            ],
+          };
+    }
+    return { ...e, args: e.args.map(lower) };
+  };
   const unique = new Map<
     string,
     {
@@ -53,8 +91,13 @@ export function dreamDataset(
     }
   >();
   const add = (source: Expr, origin: "corpus" | "dream") => {
-    const tree = simplify(source);
+    programProposals++;
+    const tree = simplify(
+      options.lowerIntegerLiterals ? lower(source) : source,
+    );
     if (exprSize(tree) > 25) return;
+    programExecutions++;
+    exampleExecutions += probeInputs.length;
     const f = compile(tree, macros),
       outputs = probeInputs.map((input) => f(...input));
     if (
@@ -116,7 +159,18 @@ export function dreamDataset(
     }
   });
   return {
-    version: "semantic-dream-data-v1",
+    version:
+      options.commutative || options.lowerIntegerLiterals
+        ? "semantic-dream-data-v2"
+        : "semantic-dream-data-v1",
+    library: macros,
+    accounting: {
+      programProposals,
+      programExecutions,
+      exampleExecutions,
+      partialFeatureProbes: decisions.length * 6,
+      teacherDecisions: decisions.length,
+    },
     seed,
     requested: count,
     semantics: ps.map((p) => [...p.semantic, 1]),

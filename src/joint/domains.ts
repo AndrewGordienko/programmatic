@@ -117,3 +117,31 @@ export function inversePieces(pieces: Segment[], target: Box): Box | null {
     ),
   );
 }
+
+/** Partially apply observed arguments, leaving the final parameter symbolic.
+ * Each example has its own known values. The caller charges every derivation.
+ */
+export function inverseApplied(
+  body: Expr,
+  known: number[][],
+  target: Box,
+  charge: () => boolean,
+): Box | null {
+  const domains: Domain[] = [];
+  for (let i = 0; i < target.low.length; i++) {
+    if (!charge()) return null;
+    const bind = (e: Expr): Expr =>
+      e.op === "arg"
+        ? e.value === known.length
+          ? { op: "arg", value: 0, args: [] }
+          : { op: "const", value: known[e.value!][i], args: [] }
+        : { ...e, args: e.args.map(bind) };
+    const pieces = linearPieces(bind(body));
+    if (!pieces) return null;
+    const one = boxFrom([domainAt(target, i)])!,
+      inverse = inversePieces(pieces, one);
+    if (!inverse) return null;
+    domains.push(domainAt(inverse, 0));
+  }
+  return boxFrom(domains);
+}

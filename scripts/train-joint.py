@@ -10,14 +10,16 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--width', type=int, default=64)
+parser.add_argument('--folder', default='output/joint/neural')
+parser.add_argument('--seed', type=int, default=7721)
 options = parser.parse_args()
 if options.width < 1:
     raise ValueError('Positive width required')
 
-torch.manual_seed(7721)
+torch.manual_seed(options.seed)
 torch.set_num_threads(4)
 torch.use_deterministic_algorithms(True)
-folder = Path('output/joint/neural')
+folder = Path(options.folder)
 with gzip.open(folder / 'data.json.gz', 'rt') as source:
     data = json.load(source)
 rows = data['decisions']
@@ -71,4 +73,4 @@ for epoch in range(61):
 
 model = dict(version='joint-semantic-v1', contextWeights=best[0], operatorWeights=best[1], bias=best[2], decisions=updates, loss=best_loss)
 (destination / 'policy.json').write_text(json.dumps(model))
-(destination / 'training.json').write_text(json.dumps(dict(torchVersion=torch.__version__, seed=7721, device='cpu', threads=4, width=width, updates=updates, elapsedMs=(time.perf_counter()-started)*1000, history=history), indent=2))
+(destination / 'training.json').write_text(json.dumps(dict(torchVersion=torch.__version__, seed=options.seed, device='cpu', threads=4, width=width, updates=updates, elapsedMs=(time.perf_counter()-started)*1000, history=history), indent=2))

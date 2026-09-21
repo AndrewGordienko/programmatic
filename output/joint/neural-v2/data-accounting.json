@@ -1,0 +1,17 @@
+{
+  "artifactSha256": "b07a12049c9444b369e965c039b6cab59105a780a18ec4bb7237e8b2f8aa1ef1",
+  "verifiedFields": [
+    "programs",
+    "decisions",
+    "semantics"
+  ],
+  "accounting": {
+    "programProposals": 50124,
+    "programExecutions": 49509,
+    "exampleExecutions": 1237725,
+    "partialFeatureProbes": 776748,
+    "teacherDecisions": 129458
+  },
+  "auditReplayMs": 2093.0247090000003,
+  "note": "Deterministic replay adds counters to the existing dataset without changing examples, decisions, weights or its artifact bytes. These heterogeneous probe/training operations are separate from synthesis evaluations."
+}

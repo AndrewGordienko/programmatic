@@ -2,17 +2,16 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { makeTasks } from "../src/dsl/tasks";
 import { inverseSearch } from "../src/joint/inverse";
 import type { JointPolicy } from "../src/joint/policy";
-const dense = process.argv.includes("--dense");
-const version = dense
-  ? "semantic-rank-calibration-v2"
-  : "semantic-rank-calibration-v1";
-const out = `output/joint/${version}.json`;
+const out = "output/joint/refresh-calibration-v1.json";
 if (existsSync(out)) throw new Error("Preserve calibration");
-const policy: JointPolicy = JSON.parse(
+const old: JointPolicy = JSON.parse(
   readFileSync("output/joint/neural/policy.json", "utf8"),
 );
+const fresh: JointPolicy = JSON.parse(
+  readFileSync("output/joint/neural-v2/policy.json", "utf8"),
+);
 const library = JSON.parse(
-  readFileSync("output/joint/inverse-language-pilot-v2.json", "utf8"),
+  readFileSync("output/joint/inverse-language-pilot-v3.json", "utf8"),
 ).candidate.macros;
 const suite = makeTasks(
   { training: 160, development: 40, confirmation: 20, testing: 20 },
@@ -27,36 +26,41 @@ const settings = {
   diverseBeam: true,
   affineDifferences: 32,
   maxNodes: 96,
-  ...(dense
-    ? { affineFits: 512, fitDedup: true, primitiveDifferences: true }
-    : {}),
+  affineFits: 512,
+  fitDedup: true,
+  primitiveDifferences: true,
+  semanticRank: 2,
 };
 const rows = tasks.flatMap((task, i) =>
   [0, 7, 42].map((seed) => ({
     task: task.id,
     group: task.group,
     seed,
-    base: inverseSearch(task, [], policy, seed + i * 97, 512, settings),
-    forward: inverseSearch(task, library, policy, seed + i * 97, 512, settings),
-    rankedBase: inverseSearch(task, [], policy, seed + i * 97, 512, {
-      ...settings,
-      semanticRank: 2,
-    }),
-    rankedLibrary: inverseSearch(task, library, policy, seed + i * 97, 512, {
-      ...settings,
-      semanticRank: 2,
-    }),
-    relational: inverseSearch(task, library, policy, seed + i * 97, 512, {
-      ...settings,
-      relational: true,
-      semanticRank: 2,
-    }),
+    oldBase: inverseSearch(task, [], old, seed + i * 97, 512, settings),
+    oldLibrary: inverseSearch(task, library, old, seed + i * 97, 512, settings),
+    freshBase: inverseSearch(task, [], fresh, seed + i * 97, 512, settings),
+    freshLibrary: inverseSearch(
+      task,
+      library,
+      fresh,
+      seed + i * 97,
+      512,
+      settings,
+    ),
+    uniformLibrary: inverseSearch(
+      task,
+      library,
+      undefined,
+      seed + i * 97,
+      512,
+      settings,
+    ),
   })),
 );
 const summary = Object.fromEntries(
-  ["base", "forward", "rankedBase", "rankedLibrary", "relational"].map(
+  ["oldBase", "oldLibrary", "freshBase", "freshLibrary", "uniformLibrary"].map(
     (arm) => {
-      const rs = rows.map((r) => r[arm as "base"]);
+      const rs = rows.map((r) => r[arm as "oldBase"]);
       return [
         arm,
         {
@@ -68,7 +72,7 @@ const summary = Object.fromEntries(
           groups: Object.fromEntries(
             [...new Set(rows.map((r) => r.group))].map((g) => [
               g,
-              rows.filter((r) => r.group === g && r[arm as "base"].solved)
+              rows.filter((r) => r.group === g && r[arm as "oldBase"].solved)
                 .length,
             ]),
           ),
@@ -80,9 +84,8 @@ const summary = Object.fromEntries(
 writeFileSync(
   out,
   JSON.stringify({
-    version,
-    settings,
-    note: "Adaptive calibration only, including an explicitly development-only structural task sample. No final evidence. Shared library from pilot v2; paired search seeds. Semantic rank prefers lower residual magnitude after inverse constraints, weighted by 2. Dense variant samples 512 affine fits, reuses cached semantics before proposing repeated fragments, and proposes primitive integer directions of plane differences; all fits still charge structural work.",
+    version: "refresh-calibration-v1",
+    note: "Adaptive calibration only. Updated model trained from training-corpus refactoring and 10,000 executed dreams, never final target programs. Macro removal preserves weights; old base model retained to detect unfair degradation of the fixed-language baseline.",
     summary,
     rows,
   }),

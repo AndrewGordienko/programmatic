@@ -1,0 +1,11 @@
+{
+  "seed": 88121,
+  "sourceCorpus": "inverse-corpus-v5",
+  "parentLanguageHash": "2f39a4ebcfcb56958d6dd901e0d2c10caabd2e34619612a441a9fc03694cb998",
+  "corpus": 133,
+  "programs": 10000,
+  "decisions": 129458,
+  "corpusPrograms": 132,
+  "generationMs": 2707.7167080000004,
+  "note": "Training tasks only plus executed dreams; no final target programs. Prior and language now trained jointly through refactored corpus. Folded integer constants are lowered to available base arithmetic before teacher decisions. New exposure audit required before final testing."
+}

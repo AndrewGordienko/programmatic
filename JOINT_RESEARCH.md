@@ -158,3 +158,30 @@ Search-work savings extrapolate to roughly **27,102 future tasks** to repay the 
 `domains.ts` derives exact piecewise-affine unary semantics from arbitrary base-language definitions and inverts them into unions of intervals. It preserves both branches of non-monotone functions; nonlinear multiplication remains unsupported for inverse execution. Property checks verify forward/inverse agreement and reject points between disjoint solution branches. Initial calibration of this feature regressed, so it is **not enabled** in the v2 pilot.
 
 `semantic-rank-calibration-v1.json` tests residual-magnitude ranking on the original training batch plus an explicitly development-only structural sample. With the v2 library it improves 194→210 solves out of 330; the matched base solver improves 179→189. Longer solves remain only 3/30 and nested 9/30, so deeper synthesis remains the bottleneck. These adaptive diagnostics are not new final evidence.
+
+## A second wake round and third fresh pilot
+
+Re-solving the original 160 training tasks with the accepted v2 language and a larger, charged 2,048-proposal training budget produces correct programs for **133/160 tasks** (381/480 trials). It costs 32,046 proposals and 1,304,819 structural operations. The stronger solver uses 512 affine fits, reuses cached fragment semantics, normalizes integer directions of affine differences, and ranks inverse branches by residual magnitude. This coverage increase cannot be attributed to the DSL alone because the training budget and search settings also changed.
+
+Equality-aware mining of that corpus proposes compound functions, including positive-part of one argument plus magnitude of another. Pilot v3 evaluates 192 libraries allowing arities 1–3; forward tuple proposals and charged, partially applied inverse semantics make multi-argument definitions executable during search. It retains the previous language as a candidate. V3 excludes all v1/v2 functions and the structural calibration sample before generating new selection, confirmation and final tasks. It again selects the **same two unary magnitude/positive-part definitions**; larger proposed functions do not win selection.
+
+| V3 final arm                 | Solved / 300 | Work-curve AUC | Search work | Wall time |
+| ---------------------------- | -----------: | -------------: | ----------: | --------: |
+| Base, uniform                |           39 |          8.41% |   1,062,282 |    1.66 s |
+| Learned library, uniform     |          111 |         26.71% |     853,546 |    1.53 s |
+| Base, shared frozen policy   |           74 |         17.60% |     902,824 |    1.61 s |
+| Learned library, same policy |          121 |         29.60% |     761,339 |    1.42 s |
+
+The guided solve-rate gain is **15.67 pp [9.33, 22.33]**, and work-AUC gain **12.00 pp [7.27, 17.13]**, using the same descriptive task bootstrap. Invented functions appear in 115/121 successful learned-library trials. Related solves improve 48→91/180, nested 20→21/60, and longer 6→9/60. The two structural-group improvement intervals include zero. This is another fresh task cohort, **not independent meta-training replication**.
+
+The cost report recursively includes the parent v2 corpus and language-selection stages, counting shared prior training once. It projects roughly **37,710 tasks** to repay recorded search work and a lower-bound **68,003 tasks** for available wall costs. Neither is observed amortization; the earlier caveats still apply. Complete proposal count increases while structural work decreases. Parameter inference is an explicit scalar-domain search heuristic, and symbolic constant folding may produce integer literals outside the neural sampler's small terminal vocabulary.
+
+### Rejected extensions and policy refresh
+
+`join-calibration-v1.json` tests indexed inverse search over additive prefixes with one remaining hole. Every prefix/query/static-analysis operation is charged, and a found complete program must pass the full example evaluator. It does not improve the structural calibration. `join-calibration-v2.json` adds affine envelope proposals inferred from one-sided I/O constraints and also regresses. Both are disabled in the successful pilots. Keeping these failures prevents confusing additional machinery with progress.
+
+The policy-refresh experiment refactors the richer training corpus into the learned language and generates **10,000 executed dream programs / 129,458 construction decisions**. Integer constants folded by the solver are lowered to available base arithmetic before producing teacher decisions. The new 64-unit model reaches about **45.5% held-out dream production accuracy**, but the downstream calibration regresses: learned-library solves **216/330**, versus **222/330** with the old policy; base-language solves also regress 193→180. Longer calibration solves rise only 3→5/30. The new model is retained under `output/joint/neural-v2/`, **not promoted**.
+
+Dream-generation counters now include discarded/duplicate proposals, actual program and example executions, and partial-program feature probes. A deterministic replay audit verifies the existing v2 dataset's program, decision and semantic arrays before adding accounting; it does not alter its trained examples or weights. Neural teacher accuracy alone is not the optimization objective. The next policy experiment should expose the actual residual/inverse specification at the hole and evaluate downstream search, rather than just scaling imitation of whole-program construction.
+
+Nested/longer generator classes are withheld from language selection in the successful pilots. Executed random dreams can contain similar structural patterns; these results are not a claim that the neural policy has never encountered any nested syntax. The final function-exposure audit and uniform-prior ablation remain necessary.

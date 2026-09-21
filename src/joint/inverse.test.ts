@@ -12,7 +12,217 @@ import {
 import { inverseBox, inverseSearch } from "./inverse";
 import { sharedAbstractions } from "./inventions";
 import { abstraction } from "./genome";
-import { linearPieces, inversePieces, contains } from "./domains";
+import {
+  linearPieces,
+  inversePieces,
+  contains,
+  inverseApplied,
+} from "./domains";
+import { additiveJoin } from "./joins";
+import { dreamDataset } from "./dreams";
+import { paths, at } from "../dsl/expressions";
+
+test("refactored dream teachers lower synthesized integer literals into available productions", () => {
+  const t = {
+    ...task((x, y) => 4 * x + y + 3),
+    id: "literal-task",
+    signature: "literal-task",
+    group: "training",
+  };
+  const tree = {
+    op: "add",
+    args: [
+      {
+        op: "add",
+        args: [
+          {
+            op: "mul",
+            args: [
+              { op: "const", value: 4, args: [] },
+              { op: "arg", value: 0, args: [] },
+            ],
+          },
+          { op: "arg", value: 1, args: [] },
+        ],
+      },
+      { op: "const", value: 3, args: [] },
+    ],
+  };
+  const data = dreamDataset([{ task: t, tree }], [], 19, 32, {
+    lowerIntegerLiterals: true,
+    commutative: true,
+  });
+  const teacher = data.programs.find((p) => p.source === "corpus");
+  assert.ok(teacher);
+  assert.ok(
+    paths(teacher.tree).every((p) => {
+      const e = at(teacher.tree, p);
+      return e.op !== "const" || [-2, -1, 0, 1, 2].includes(e.value!);
+    }),
+  );
+  for (const e of t.checks)
+    assert.equal(evalExpr(teacher.tree, e.input), e.output);
+  assert.ok(data.accounting.programExecutions >= data.programs.length);
+  assert.equal(
+    data.accounting.exampleExecutions,
+    data.accounting.programExecutions * 25,
+  );
+  assert.ok(
+    data.decisions.every((d) => d.y >= 0 && d.y < data.semantics.length),
+  );
+});
+
+test("additive inverse joins charge partial work and validate complete candidates on every example", () => {
+  const x = { op: "arg", value: 0, args: [] },
+    y = { op: "arg", value: 1, args: [] };
+  const magnitude = abstraction({
+    op: "max",
+    args: [x, { op: "neg", args: [x] }],
+  })!;
+  const positive = abstraction({
+    op: "max",
+    args: [x, { op: "const", value: 0, args: [] }],
+  })!;
+  const macros = [magnitude, positive],
+    t = task((x, y) => Math.abs(x) + Math.max(0, y) + Math.abs(x - y));
+  const trees = [
+    x,
+    y,
+    { op: "const", value: 0, args: [] },
+    { op: magnitude.name, args: [x] },
+    { op: positive.name, args: [y] },
+    { op: magnitude.name, args: [{ op: "sub", args: [x, y] }] },
+  ];
+  const fragments = trees.map((tree) => ({
+    tree,
+    size: exprSize(tree),
+    values: t.examples.map((e) => evalExpr(tree, e.input, macros)),
+  }));
+  let steps = 0,
+    probes = 0,
+    evaluations = 0;
+  const result = additiveJoin(
+    fragments,
+    t.examples,
+    macros,
+    4096,
+    () => {
+      steps++;
+      return true;
+    },
+    (n) => {
+      probes += n;
+    },
+    (tree) => {
+      evaluations++;
+      return t.examples.every(
+        (e) => Math.abs(evalExpr(tree, e.input, macros) - e.output) < 1e-8,
+      );
+    },
+  );
+  assert.ok(result);
+  assert.ok(steps <= 4096);
+  assert.ok(probes > 0 && evaluations > 0);
+  assert.ok(
+    t.checks.every(
+      (e) => Math.abs(evalExpr(result, e.input, macros) - e.output) < 1e-8,
+    ),
+  );
+  let limited = 0;
+  assert.equal(
+    additiveJoin(
+      fragments,
+      t.examples,
+      macros,
+      4096,
+      () => {
+        if (limited >= 3) return false;
+        limited++;
+        return true;
+      },
+      () => {},
+      () => false,
+    ),
+    undefined,
+  );
+  assert.equal(limited, 3);
+  let executed = 0;
+  const impossible = task((x) => Math.abs(x));
+  assert.equal(
+    additiveJoin(
+      fragments.slice(0, 3),
+      impossible.examples,
+      [],
+      4096,
+      () => true,
+      () => {},
+      () => {
+        executed++;
+        return false;
+      },
+    ),
+    undefined,
+  );
+  assert.equal(executed, 0);
+});
+
+test("partially applied multi-argument definitions invert the correct operand and charge derivations", () => {
+  const arg = (value: number) => ({ op: "arg", value, args: [] });
+  const body = {
+    op: "add",
+    args: [
+      { op: "max", args: [arg(0), { op: "const", value: 0, args: [] }] },
+      { op: "max", args: [arg(1), { op: "neg", args: [arg(1)] }] },
+    ],
+  };
+  const known = [[-3, 2, 5]],
+    unknown = [-2, 4, -7],
+    outputs = unknown.map((x, i) => evalExpr(body, [known[0][i], x]));
+  let charges = 0;
+  const inverse = inverseApplied(
+    body,
+    known,
+    { low: outputs, high: outputs },
+    () => {
+      charges++;
+      return true;
+    },
+  );
+  assert.ok(inverse);
+  assert.equal(charges, 3);
+  unknown.forEach((v, i) => {
+    assert.ok(contains(inverse, i, v));
+    assert.ok(contains(inverse, i, -v));
+    assert.equal(contains(inverse, i, 0), false);
+  });
+  assert.equal(
+    inverseApplied(body, known, { low: outputs, high: outputs }, () => false),
+    null,
+  );
+  const macro = abstraction(body)!;
+  const t = task((x, y) => Math.max(0, x) + Math.abs(y));
+  const options = {
+    macroBindings: 8,
+    macroForward: 32,
+    relational: true,
+    diverseBeam: true,
+    maxNodes: 96,
+    semanticRank: 2,
+  };
+  const r = inverseSearch(t, [macro], undefined, 13, 512, options);
+  assert.ok(r.solved);
+  assert.ok(r.evaluations <= 512 && r.expansions <= 4096);
+  const hostile = inverseSearch(
+    { ...t, checks: t.checks.map((e) => ({ ...e, output: e.output + 1 })) },
+    [macro],
+    undefined,
+    13,
+    512,
+    options,
+  );
+  assert.deepEqual(hostile.tree, r.tree);
+  assert.equal(hostile.solved, false);
+});
 
 const task = (f: (x: number, y: number) => number) => ({
   examples: inputs(301, 25, 3).map((input) => ({ input, output: f(...input) })),

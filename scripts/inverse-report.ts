@@ -20,7 +20,7 @@ const intervals = (xs: number[], seed: number) => {
     tasks: xs.length,
   };
 };
-const reports = [1, 2].map((version) => {
+const reports = [1, 2, 3].map((version) => {
   const r = JSON.parse(
     readFileSync(
       `output/joint/inverse-language-pilot-v${version}.json`,
@@ -101,13 +101,22 @@ const reports = [1, 2].map((version) => {
       ];
     }),
   );
-  const selectionWork =
-      r.cost.selectionEvaluations + r.cost.selectionExpansions,
-    corpusWork = r.cost.corpus.evaluations + r.cost.corpus.expansions;
+  let selectionWork = 0,
+    corpusWork = 0,
+    selectionMs = 0,
+    corpusMs = 0,
+    parentStages = 0;
+  for (let cost = r.cost; cost; cost = cost.parentCost) {
+    selectionWork += cost.selectionEvaluations + cost.selectionExpansions;
+    corpusWork += cost.corpus.evaluations + cost.corpus.expansions;
+    selectionMs += cost.selectionSearchMs;
+    corpusMs += cost.corpus.discoveryMs;
+    parentStages++;
+  }
   const perTask = comparisons.guided.all,
     wallCostLowerBound =
-      r.cost.selectionSearchMs +
-      r.cost.corpus.discoveryMs +
+      selectionMs +
+      corpusMs +
       r.cost.priorData.generationMs +
       r.cost.priorTraining.elapsedMs;
   return {
@@ -121,6 +130,7 @@ const reports = [1, 2].map((version) => {
     cost: {
       selectionWork,
       corpusWork,
+      stagesIncludingParents: parentStages,
       additionalPriorBootstrapEvaluations:
         r.cost.priorData.bootstrapEvaluations,
       priorTrainingUpdates: r.cost.priorTraining.updates,
