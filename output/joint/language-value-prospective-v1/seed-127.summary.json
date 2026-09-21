@@ -1,0 +1,489 @@
+{
+  "protocolHash": "bdedef9cc1451ab22d911ef93962cf4ad8bc579fbd850f42a3ccbbc838944fb8",
+  "seed": 127,
+  "corpus": 89,
+  "strategies": [
+    {
+      "name": "value",
+      "candidate": {
+        "id": "L715306984",
+        "macros": [
+          {
+            "name": "fn_715306984",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "const",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 55,
+            "sourceTasks": [
+              "value-127-train-001",
+              "value-127-train-006",
+              "value-127-train-007",
+              "value-127-train-008",
+              "value-127-train-009",
+              "value-127-train-010",
+              "value-127-train-021",
+              "value-127-train-023",
+              "value-127-train-024",
+              "value-127-train-025",
+              "value-127-train-026",
+              "value-127-train-027",
+              "value-127-train-029",
+              "value-127-train-030",
+              "value-127-train-031",
+              "value-127-train-032",
+              "value-127-train-033",
+              "value-127-train-036",
+              "value-127-train-045",
+              "value-127-train-046",
+              "value-127-train-048",
+              "value-127-train-051",
+              "value-127-train-056",
+              "value-127-train-058",
+              "value-127-train-060",
+              "value-127-train-061",
+              "value-127-train-065",
+              "value-127-train-070",
+              "value-127-train-073",
+              "value-127-train-074",
+              "value-127-train-075",
+              "value-127-train-076",
+              "value-127-train-078",
+              "value-127-train-079",
+              "value-127-train-081",
+              "value-127-train-089",
+              "value-127-train-090",
+              "value-127-train-091",
+              "value-127-train-092",
+              "value-127-train-096",
+              "value-127-train-097",
+              "value-127-train-099",
+              "value-127-train-100",
+              "value-127-train-102",
+              "value-127-train-103",
+              "value-127-train-104",
+              "value-127-train-107",
+              "value-127-train-109",
+              "value-127-train-113",
+              "value-127-train-114",
+              "value-127-train-116",
+              "value-127-train-118",
+              "value-127-train-119",
+              "value-127-train-123",
+              "value-127-train-127"
+            ],
+            "size": 3,
+            "definition": "fn_715306984(a) = max(a, 0)"
+          }
+        ],
+        "edit": "incumbent-add",
+        "parents": [
+          "L2166136261"
+        ],
+        "features": [
+          1,
+          3,
+          1,
+          55,
+          55,
+          89,
+          3,
+          1
+        ]
+      },
+      "queries": 17,
+      "screenRegret": 0.0005489004629629507,
+      "confirmationUtility": 0.19309895833333338,
+      "confirmationLower": 0.12212286827584481,
+      "solved": 87,
+      "baseSolved": 46,
+      "trials": 160,
+      "screeningEvaluations": 19324,
+      "screeningWork": 431497,
+      "screeningWallMs": 1631.8015450000676
+    },
+    {
+      "name": "compression",
+      "candidate": {
+        "id": "L4281090172",
+        "macros": [
+          {
+            "name": "fn_1246664068",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    },
+                    {
+                      "op": "arg",
+                      "value": 1,
+                      "args": []
+                    }
+                  ]
+                },
+                {
+                  "op": "arg",
+                  "value": 2,
+                  "args": []
+                }
+              ]
+            },
+            "arity": 3,
+            "support": 6,
+            "sourceTasks": [
+              "value-127-train-014",
+              "value-127-train-018",
+              "value-127-train-050",
+              "value-127-train-069",
+              "value-127-train-081",
+              "value-127-train-125"
+            ],
+            "size": 5,
+            "definition": "fn_1246664068(a, b, c) = max((a + b), c)"
+          },
+          {
+            "name": "fn_3549247544",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "const",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 26,
+            "sourceTasks": [
+              "value-127-train-001",
+              "value-127-train-007",
+              "value-127-train-010",
+              "value-127-train-021",
+              "value-127-train-024",
+              "value-127-train-025",
+              "value-127-train-032",
+              "value-127-train-033",
+              "value-127-train-044",
+              "value-127-train-045",
+              "value-127-train-051",
+              "value-127-train-057",
+              "value-127-train-061",
+              "value-127-train-070",
+              "value-127-train-075",
+              "value-127-train-076",
+              "value-127-train-089",
+              "value-127-train-090",
+              "value-127-train-091",
+              "value-127-train-092",
+              "value-127-train-102",
+              "value-127-train-103",
+              "value-127-train-104",
+              "value-127-train-109",
+              "value-127-train-113",
+              "value-127-train-118"
+            ],
+            "size": 4,
+            "definition": "fn_3549247544(a) = max(0, (-a))"
+          },
+          {
+            "name": "fn_551612164",
+            "body": {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "const",
+                      "value": -2,
+                      "args": []
+                    },
+                    {
+                      "op": "sub",
+                      "args": [
+                        {
+                          "op": "arg",
+                          "value": 0,
+                          "args": []
+                        },
+                        {
+                          "op": "arg",
+                          "value": 1,
+                          "args": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 2,
+            "support": 5,
+            "sourceTasks": [
+              "value-127-train-041",
+              "value-127-train-045",
+              "value-127-train-085",
+              "value-127-train-086",
+              "value-127-train-089"
+            ],
+            "size": 6,
+            "definition": "fn_551612164(a, b) = (-(-2 + (a - b)))"
+          }
+        ],
+        "edit": "explore",
+        "parents": [
+          "L2166136261",
+          "L2166136261"
+        ],
+        "features": [
+          3,
+          15,
+          2,
+          37,
+          26,
+          89,
+          6,
+          6
+        ]
+      },
+      "queries": 17,
+      "screenRegret": 0.02043778935185185,
+      "confirmationUtility": 0.036295572916666664,
+      "confirmationLower": -0.039268302044361963,
+      "solved": 54,
+      "baseSolved": 46,
+      "trials": 160,
+      "screeningEvaluations": 25570,
+      "screeningWork": 421116,
+      "screeningWallMs": 1533.8325010000408
+    },
+    {
+      "name": "random",
+      "candidate": {
+        "id": "L715306984",
+        "macros": [
+          {
+            "name": "fn_715306984",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "const",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 55,
+            "sourceTasks": [
+              "value-127-train-001",
+              "value-127-train-006",
+              "value-127-train-007",
+              "value-127-train-008",
+              "value-127-train-009",
+              "value-127-train-010",
+              "value-127-train-021",
+              "value-127-train-023",
+              "value-127-train-024",
+              "value-127-train-025",
+              "value-127-train-026",
+              "value-127-train-027",
+              "value-127-train-029",
+              "value-127-train-030",
+              "value-127-train-031",
+              "value-127-train-032",
+              "value-127-train-033",
+              "value-127-train-036",
+              "value-127-train-045",
+              "value-127-train-046",
+              "value-127-train-048",
+              "value-127-train-051",
+              "value-127-train-056",
+              "value-127-train-058",
+              "value-127-train-060",
+              "value-127-train-061",
+              "value-127-train-065",
+              "value-127-train-070",
+              "value-127-train-073",
+              "value-127-train-074",
+              "value-127-train-075",
+              "value-127-train-076",
+              "value-127-train-078",
+              "value-127-train-079",
+              "value-127-train-081",
+              "value-127-train-089",
+              "value-127-train-090",
+              "value-127-train-091",
+              "value-127-train-092",
+              "value-127-train-096",
+              "value-127-train-097",
+              "value-127-train-099",
+              "value-127-train-100",
+              "value-127-train-102",
+              "value-127-train-103",
+              "value-127-train-104",
+              "value-127-train-107",
+              "value-127-train-109",
+              "value-127-train-113",
+              "value-127-train-114",
+              "value-127-train-116",
+              "value-127-train-118",
+              "value-127-train-119",
+              "value-127-train-123",
+              "value-127-train-127"
+            ],
+            "size": 3,
+            "definition": "fn_715306984(a) = max(a, 0)"
+          }
+        ],
+        "edit": "incumbent-add",
+        "parents": [
+          "L2166136261"
+        ],
+        "features": [
+          1,
+          3,
+          1,
+          55,
+          55,
+          89,
+          3,
+          1
+        ]
+      },
+      "queries": 17,
+      "screenRegret": 0.0005489004629629507,
+      "confirmationUtility": 0.19309895833333338,
+      "confirmationLower": 0.12212286827584481,
+      "solved": 87,
+      "baseSolved": 46,
+      "trials": 160,
+      "screeningEvaluations": 21688,
+      "screeningWork": 430205,
+      "screeningWallMs": 1537.805211000028
+    },
+    {
+      "name": "full-reference",
+      "candidate": {
+        "id": "L3549247544",
+        "macros": [
+          {
+            "name": "fn_3549247544",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "const",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 26,
+            "sourceTasks": [
+              "value-127-train-001",
+              "value-127-train-007",
+              "value-127-train-010",
+              "value-127-train-021",
+              "value-127-train-024",
+              "value-127-train-025",
+              "value-127-train-032",
+              "value-127-train-033",
+              "value-127-train-044",
+              "value-127-train-045",
+              "value-127-train-051",
+              "value-127-train-057",
+              "value-127-train-061",
+              "value-127-train-070",
+              "value-127-train-075",
+              "value-127-train-076",
+              "value-127-train-089",
+              "value-127-train-090",
+              "value-127-train-091",
+              "value-127-train-092",
+              "value-127-train-102",
+              "value-127-train-103",
+              "value-127-train-104",
+              "value-127-train-109",
+              "value-127-train-113",
+              "value-127-train-118"
+            ],
+            "size": 4,
+            "definition": "fn_3549247544(a) = max(0, (-a))"
+          }
+        ],
+        "edit": "incumbent-add",
+        "parents": [
+          "L2166136261"
+        ],
+        "features": [
+          1,
+          4,
+          1,
+          26,
+          26,
+          89,
+          4,
+          2
+        ]
+      },
+      "queries": 256,
+      "screenRegret": 0,
+      "confirmationUtility": 0.18752305772569447,
+      "confirmationLower": 0.11621563517663466,
+      "solved": 84,
+      "baseSolved": 46,
+      "trials": 160,
+      "screeningEvaluations": 327707,
+      "screeningWork": 6526916,
+      "screeningWallMs": 23566.915962000072
+    }
+  ],
+  "elapsedMs": 34447.02416599999
+}

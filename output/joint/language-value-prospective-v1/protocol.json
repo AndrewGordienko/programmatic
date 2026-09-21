@@ -1,0 +1,59 @@
+{
+  "version": "prospective-library-value-v1",
+  "config": {
+    "seeds": [
+      101,
+      107,
+      113,
+      127,
+      131,
+      139,
+      149,
+      157
+    ],
+    "training": 128,
+    "population": 256,
+    "selected": 16,
+    "screen": 12,
+    "screenBudget": 256,
+    "confirmation": 80,
+    "confirmationBudget": 512,
+    "reps": 2,
+    "search": {
+      "diverseBeam": true,
+      "affineDifferences": 32,
+      "maxNodes": 96,
+      "semanticRank": 2,
+      "affineFits": 512,
+      "fitDedup": true,
+      "primitiveDifferences": true,
+      "macroForward": 48,
+      "macroBindings": 8
+    },
+    "additionalExamples": {
+      "count": 50,
+      "range": 5
+    }
+  },
+  "modelHash": "b96f89e556e580ee41c5ce160f6d51a9e737fd25ca6dea770443508ea821ec74",
+  "policyHash": "5dcdaf2a32ca0f78f9922da075043626e9a03f9747ccd289a4e24d628069a8ad",
+  "sources": {
+    "scripts/language-value-prospective.ts": "7557468a324bf6973a5963622d97bb924e4637957eda39e4d8278964f8a33b16",
+    "src/joint/inverse.ts": "20d8f8d4a5037819efa91fe36de1a7bb58fd7097fd873974b94a8ad4bdf4fa89",
+    "src/joint/domains.ts": "b5127aece94b9b3a49fb9f9cd0cdb80f8b6e4f6d1de3dcb4612fca77217672dd",
+    "src/joint/joins.ts": "f3e3642f3d77bd8f7be702bb5f825506b2de1a41a8e2b0d636da38f9af261d66",
+    "src/joint/policy.ts": "2dea9130311c22381920d3edce5d4d90ce829a18cd1faaf5aada4729dabb9a51",
+    "src/joint/inventions.ts": "1296e00cd47566359728821ed929af602b2f3cc57f7a21562d7ddf39179a02be",
+    "src/joint/population.ts": "8295396f9cc8f9c4cd8ee4d5e22ee9c11af0d5505387b7985575c5266b196fee",
+    "src/joint/genome.ts": "34fba25bc1621ae4017ad49b19087d4f6425d40bbcdc8be8fd9091a2841d1927",
+    "src/joint/canonical.ts": "247c02c4b7979fb02ad325cf215cc67c5d1733be1db60ce21314661d276a04b0",
+    "src/joint/semantics.ts": "1a58306384ebd7ff44ed15af593382df6a0faea944edb3d1eab7c78729887094",
+    "src/dsl/expressions.ts": "c447d71a8c7f0d01808ac2d86ce1d1fbf035ae99206c08820701eb312260ec6b",
+    "src/dsl/tasks.ts": "19b7a3a90e0a82afa05e48eba7bba371768ac5604ae26e6c15ddf32d1337a25c",
+    "src/engine/language.ts": "9b527053bacc4b9b46371b4f918de1a81ef2209151248cce75b18e757dc1888d",
+    "src/engine/random.ts": "3eff3b1c6ff5cd3ed0aa413ed2bd2f7d1b4e9dc3d4c0c244daaccb12317f475d",
+    "src/joint/language-value.ts": "ad2107cbee9ce79d8637eefe7563fc01661fb37a64e779dda370588ffc3fcf88"
+  },
+  "note": "Predeclared eight fresh language-training states. Freeze value/compression/random rankings before candidate synthesis. Evaluate their selected subsets, then remaining population solely as a full-reference research audit. Reference oracle is the best measured screening utility, not an oracle over future tasks. Winner confirmation uses fresh functions. Report actual total research cost, each strategy's query/work cost and shared training costs separately; retrospective pretraining labels and the full audit are not free. No test/confirmation labels train the frozen value model.",
+  "protocolHash": "bdedef9cc1451ab22d911ef93962cf4ad8bc579fbd850f42a3ccbbc838944fb8"
+}

@@ -265,3 +265,20 @@ Across all 20 independent discoveries, cost is **21,954,267 complete proposals +
 The completed replication supplies **16,256 development-race labels** for the separately frozen outer value-model experiment. Meta-seeds 0–11 train, 12–15 validate, and 16–18/42 test ranking. Neither confirmation nor final outcomes become value labels. A separate prospective protocol commits shortlist rankings before measuring candidate synthesis; exhaustive reference auditing is charged as research cost.
 
 The trained 64-unit semantic value model has 9,757 training rows, 3,251 validation rows and 3,248 held-out rows. On the twelve held-out **full screening pools**, top-five mean regret is 0.0180 versus 0.0286 for the compression proxy and 0.1205 for random selection. At top ten, compression is better (0.0114 versus the model's 0.0140); at top 32 it is also better. Thus the model helps very small shortlists but does not dominate the cheap heuristic. These are reused exhaustive labels and establish no compute saving. `language-value-prospective.ts` predeclares eight fresh corpus/population states and freezes model/compression/random shortlists before measuring them, with a separately charged exhaustive reference audit and fresh winner confirmation.
+
+## Prospective outer-value selection: eight fresh populations
+
+The frozen value model is now tested **before candidate labels exist** on eight predeclared fresh training states (101, 107, 113, 127, 131, 139, 149, 157). Each synthesizes a fresh 128-task corpus, proposes 256 languages, seals all model/compression/random rankings, evaluates sixteen candidates plus the base language, and selects by measured screening utility. The exhaustive reference evaluates all 256 on the same screening tasks. Winners freeze before 80 new confirmation functions × two optimizer seeds. Neither rankings nor winners update from confirmation.
+
+| Selection policy     | Screening queries, total | Screening work | Confirmation passes / 8 | Confirmation solves / 1,280 |
+| -------------------- | -----------------------: | -------------: | ----------------------: | --------------------------: |
+| Frozen value model   |                      136 |      3,206,900 |                       7 |                         568 |
+| Compression proxy    |                      136 |      3,265,452 |                       2 |                         476 |
+| Random               |                      136 |      3,326,545 |                       4 |                         445 |
+| Exhaustive reference |                    2,048 |     50,450,668 |                       7 |                         575 |
+
+The same base language solves 356/1,280. Model selection improves fresh utility by **11.75 pp [8.82, 14.83]** over base and by **6.43 pp [3.01, 10.14]** over compression. Against exhaustive selection, its difference is **+0.22 pp [−0.37, 0.99]**. These are descriptive meta-seed bootstrap intervals; no noninferiority margin was predeclared, so the result does not formally prove equal quality.
+
+Screening uses **15.1× fewer language queries** and **15.7× less recorded screening work** for the model strategy. This is a measured strategy comparison, not an end-to-end savings claim: the study actually executed the complete reference audit, all common corpus synthesis and winner confirmation, and previously paid for 16,256 value labels. The report separately records the complete experiment cost and the conservative 455.4M-work source-discovery investment. Shared inner-policy training and earlier R&D are also additional costs. Global amortization remains unobserved.
+
+This is the first prospective evidence here that a learned selector can reduce expensive language evaluations while retaining useful candidates. It covers **one generation** with a small eight-state sample, conditional on one frozen model and prior. The next test must run the full multi-generation learner with selective evaluation and compare its complete discovery cost and frozen final performance. Raw rankings, frozen winners, all labels and audited analysis are in `output/joint/language-value-prospective-v1/`.
