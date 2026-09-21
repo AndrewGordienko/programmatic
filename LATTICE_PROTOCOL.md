@@ -1,0 +1,19 @@
+# Stronger inner search inside language evolution
+
+This is a new eight-run study. It preserves the previous 20-run finding and its negative nested-transfer result. The solver was selected on `inner-fresh-development-v1` and independently confirmed on `inner-fresh-confirmation-v1` before this protocol.
+
+Run `npx tsx scripts/lattice-language-evolution.ts`. Optional `--seed N` runs one predeclared seed; `--prepare-only` freezes hashes without synthesis. All eight seeds **307, 311, 313, 317, 331, 337, 347, 349** must be retained, including failures. Results are conditional on one shared pretrained neural policy.
+
+Each run starts with an empty library, 160 newly sampled related training tasks, and three wake/selection generations. Inner synthesis uses 75 observations and the previous settings plus **six-neighbor affine regression and min/max lattice composition**. These are explicit scalar-domain search heuristics available identically to fixed and learned languages. They are not invented primitives. No hand-written concept library or oracle AST is supplied.
+
+Each generation proposes 256 whole languages, fully screens them, retains 12 screening winners plus incumbent/base languages for fresh medium races, and keeps four parents. Screening stages use 8/8/12 tasks at 128/256/256 complete-proposal caps; medium stages use 16/16/36 fresh tasks at 512 with 2/2/3 optimizer repetitions. Wake synthesis uses 1,024 proposals. Structural caps remain eight times the proposal cap. Fitness is solve/work-AUC minus 0.0005 per definition node. The outer value model is deliberately absent: this study tests whether stronger inner synthesis improves language learning, not another surrogate comparison.
+
+Freeze the candidate and neural weights before 80 new confirmation functions × three optimizer seeds. Keep the unchanged acceptance condition: paired mean utility minus two standard errors, minus definition complexity, must exceed zero. Rejected candidates still receive final evaluation and are clearly labeled. The accepted deployment arm falls back to base if confirmation fails.
+
+Final evaluation uses 200 new functions × three search seeds × four arms: base/uniform, base/frozen prior, candidate/uniform, candidate/same prior. Sixty percent are related compositions, twenty percent nested, twenty percent longer. Historical task functions, prior roots/subtrees, the inner development/confirmation functions, critic exposures and all 20,000 downstream-stream functions are empirically excluded from selection/confirmation/final. Own training functions are also excluded. Nested/longer families have been inspected during algorithm development, but they do not participate in this study's language selection; final functions are fresh. Empirical signatures are not formal equivalence proofs.
+
+Report overall solve rate and work-AUC, each structural group, prior ablations, macro usage/removal, accepted/rejected languages, cross-run function overlap, and uncertainty across meta-seeds. A broad structural-transfer claim requires positive uncertainty bounds for both nested and longer language gains. An overall gain alone cannot turn that gate green. Do not stop or alter the protocol because early seeds look favorable or unfavorable.
+
+Charge all wake, selection and confirmation search. Preserve complete proposals, structural operations, point arithmetic, and process CPU time separately. Also retain wall time, but do not use elapsed-time pauses as compute evidence. Shared inner-policy pretraining and historical R&D are additional costs; no outer-value pretraining is required by this experiment. Any payback estimate from the final cohort is a projection, separate from the already observed original-solver downstream stream.
+
+Source and policy hashes are frozen in `output/joint/lattice-evolution-v1/protocol.json`. Resume only completed matching artifacts; changing the algorithm requires a new protocol version.
