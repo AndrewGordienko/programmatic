@@ -1,0 +1,435 @@
+{
+  "protocolHash": "bdedef9cc1451ab22d911ef93962cf4ad8bc579fbd850f42a3ccbbc838944fb8",
+  "seed": 157,
+  "corpus": 98,
+  "strategies": [
+    {
+      "name": "value",
+      "candidate": {
+        "id": "L2352281741",
+        "macros": [
+          {
+            "name": "fn_2352281741",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 28,
+            "sourceTasks": [
+              "value-157-train-006",
+              "value-157-train-009",
+              "value-157-train-010",
+              "value-157-train-012",
+              "value-157-train-019",
+              "value-157-train-021",
+              "value-157-train-022",
+              "value-157-train-025",
+              "value-157-train-031",
+              "value-157-train-032",
+              "value-157-train-033",
+              "value-157-train-050",
+              "value-157-train-053",
+              "value-157-train-054",
+              "value-157-train-057",
+              "value-157-train-071",
+              "value-157-train-073",
+              "value-157-train-076",
+              "value-157-train-080",
+              "value-157-train-083",
+              "value-157-train-086",
+              "value-157-train-094",
+              "value-157-train-100",
+              "value-157-train-103",
+              "value-157-train-121",
+              "value-157-train-123",
+              "value-157-train-124",
+              "value-157-train-125"
+            ],
+            "size": 4,
+            "definition": "fn_2352281741(a) = max(a, (-a))"
+          }
+        ],
+        "edit": "incumbent-add",
+        "parents": [
+          "L2166136261"
+        ],
+        "features": [
+          1,
+          4,
+          1,
+          28,
+          28,
+          98,
+          3,
+          2
+        ]
+      },
+      "queries": 17,
+      "screenRegret": 0,
+      "confirmationUtility": 0.10730116102430554,
+      "confirmationLower": 0.04769653729811461,
+      "solved": 79,
+      "baseSolved": 56,
+      "trials": 160,
+      "screeningEvaluations": 23537,
+      "screeningWork": 403720,
+      "screeningWallMs": 1612.6257060000498
+    },
+    {
+      "name": "compression",
+      "candidate": {
+        "id": "L318515943",
+        "macros": [
+          {
+            "name": "fn_3313778047",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "const",
+                      "value": -2,
+                      "args": []
+                    },
+                    {
+                      "op": "mul",
+                      "args": [
+                        {
+                          "op": "arg",
+                          "value": 0,
+                          "args": []
+                        },
+                        {
+                          "op": "const",
+                          "value": 2,
+                          "args": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "op": "const",
+                          "value": -2,
+                          "args": []
+                        },
+                        {
+                          "op": "mul",
+                          "args": [
+                            {
+                              "op": "arg",
+                              "value": 0,
+                              "args": []
+                            },
+                            {
+                              "op": "const",
+                              "value": 2,
+                              "args": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 2,
+            "sourceTasks": [
+              "value-157-train-053",
+              "value-157-train-124"
+            ],
+            "size": 12,
+            "definition": "fn_3313778047(a) = max((-2 + (a * 2)), (-(-2 + (a * 2))))"
+          },
+          {
+            "name": "fn_3518208291",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "const",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "min",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    },
+                    {
+                      "op": "const",
+                      "value": 1,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 22,
+            "sourceTasks": [
+              "value-157-train-005",
+              "value-157-train-007",
+              "value-157-train-023",
+              "value-157-train-027",
+              "value-157-train-028",
+              "value-157-train-038",
+              "value-157-train-043",
+              "value-157-train-045",
+              "value-157-train-047",
+              "value-157-train-049",
+              "value-157-train-056",
+              "value-157-train-062",
+              "value-157-train-067",
+              "value-157-train-072",
+              "value-157-train-082",
+              "value-157-train-088",
+              "value-157-train-091",
+              "value-157-train-099",
+              "value-157-train-106",
+              "value-157-train-107",
+              "value-157-train-112",
+              "value-157-train-113"
+            ],
+            "size": 5,
+            "definition": "fn_3518208291(a) = max(0, min(a, 1))"
+          }
+        ],
+        "edit": "multi-add",
+        "parents": [
+          "L2166136261",
+          "L2166136261"
+        ],
+        "features": [
+          2,
+          17,
+          1,
+          24,
+          22,
+          98,
+          7,
+          13
+        ]
+      },
+      "queries": 17,
+      "screenRegret": 0.00042361111111113847,
+      "confirmationUtility": -0.015942382812499996,
+      "confirmationLower": -0.06964812574744617,
+      "solved": 59,
+      "baseSolved": 56,
+      "trials": 160,
+      "screeningEvaluations": 28873,
+      "screeningWork": 409738,
+      "screeningWallMs": 1518.3418719999318
+    },
+    {
+      "name": "random",
+      "candidate": {
+        "id": "L2352281741",
+        "macros": [
+          {
+            "name": "fn_2352281741",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 28,
+            "sourceTasks": [
+              "value-157-train-006",
+              "value-157-train-009",
+              "value-157-train-010",
+              "value-157-train-012",
+              "value-157-train-019",
+              "value-157-train-021",
+              "value-157-train-022",
+              "value-157-train-025",
+              "value-157-train-031",
+              "value-157-train-032",
+              "value-157-train-033",
+              "value-157-train-050",
+              "value-157-train-053",
+              "value-157-train-054",
+              "value-157-train-057",
+              "value-157-train-071",
+              "value-157-train-073",
+              "value-157-train-076",
+              "value-157-train-080",
+              "value-157-train-083",
+              "value-157-train-086",
+              "value-157-train-094",
+              "value-157-train-100",
+              "value-157-train-103",
+              "value-157-train-121",
+              "value-157-train-123",
+              "value-157-train-124",
+              "value-157-train-125"
+            ],
+            "size": 4,
+            "definition": "fn_2352281741(a) = max(a, (-a))"
+          }
+        ],
+        "edit": "incumbent-add",
+        "parents": [
+          "L2166136261"
+        ],
+        "features": [
+          1,
+          4,
+          1,
+          28,
+          28,
+          98,
+          3,
+          2
+        ]
+      },
+      "queries": 17,
+      "screenRegret": 0,
+      "confirmationUtility": 0.10730116102430554,
+      "confirmationLower": 0.04769653729811461,
+      "solved": 79,
+      "baseSolved": 56,
+      "trials": 160,
+      "screeningEvaluations": 22811,
+      "screeningWork": 414808,
+      "screeningWallMs": 1627.155875999917
+    },
+    {
+      "name": "full-reference",
+      "candidate": {
+        "id": "L2352281741",
+        "macros": [
+          {
+            "name": "fn_2352281741",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 28,
+            "sourceTasks": [
+              "value-157-train-006",
+              "value-157-train-009",
+              "value-157-train-010",
+              "value-157-train-012",
+              "value-157-train-019",
+              "value-157-train-021",
+              "value-157-train-022",
+              "value-157-train-025",
+              "value-157-train-031",
+              "value-157-train-032",
+              "value-157-train-033",
+              "value-157-train-050",
+              "value-157-train-053",
+              "value-157-train-054",
+              "value-157-train-057",
+              "value-157-train-071",
+              "value-157-train-073",
+              "value-157-train-076",
+              "value-157-train-080",
+              "value-157-train-083",
+              "value-157-train-086",
+              "value-157-train-094",
+              "value-157-train-100",
+              "value-157-train-103",
+              "value-157-train-121",
+              "value-157-train-123",
+              "value-157-train-124",
+              "value-157-train-125"
+            ],
+            "size": 4,
+            "definition": "fn_2352281741(a) = max(a, (-a))"
+          }
+        ],
+        "edit": "incumbent-add",
+        "parents": [
+          "L2166136261"
+        ],
+        "features": [
+          1,
+          4,
+          1,
+          28,
+          28,
+          98,
+          3,
+          2
+        ]
+      },
+      "queries": 256,
+      "screenRegret": 0,
+      "confirmationUtility": 0.10730116102430554,
+      "confirmationLower": 0.04769653729811461,
+      "solved": 79,
+      "baseSolved": 56,
+      "trials": 160,
+      "screeningEvaluations": 368336,
+      "screeningWork": 6291497,
+      "screeningWallMs": 24294.30274100037
+    }
+  ],
+  "elapsedMs": 33496.91620899999
+}

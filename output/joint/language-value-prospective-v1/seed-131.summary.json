@@ -1,0 +1,590 @@
+{
+  "protocolHash": "bdedef9cc1451ab22d911ef93962cf4ad8bc579fbd850f42a3ccbbc838944fb8",
+  "seed": 131,
+  "corpus": 100,
+  "strategies": [
+    {
+      "name": "value",
+      "candidate": {
+        "id": "L715306984",
+        "macros": [
+          {
+            "name": "fn_715306984",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "const",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 57,
+            "sourceTasks": [
+              "value-131-train-002",
+              "value-131-train-006",
+              "value-131-train-007",
+              "value-131-train-008",
+              "value-131-train-012",
+              "value-131-train-013",
+              "value-131-train-014",
+              "value-131-train-016",
+              "value-131-train-017",
+              "value-131-train-020",
+              "value-131-train-022",
+              "value-131-train-025",
+              "value-131-train-027",
+              "value-131-train-031",
+              "value-131-train-034",
+              "value-131-train-036",
+              "value-131-train-040",
+              "value-131-train-041",
+              "value-131-train-042",
+              "value-131-train-044",
+              "value-131-train-045",
+              "value-131-train-046",
+              "value-131-train-049",
+              "value-131-train-050",
+              "value-131-train-051",
+              "value-131-train-053",
+              "value-131-train-054",
+              "value-131-train-056",
+              "value-131-train-057",
+              "value-131-train-059",
+              "value-131-train-061",
+              "value-131-train-067",
+              "value-131-train-068",
+              "value-131-train-069",
+              "value-131-train-070",
+              "value-131-train-074",
+              "value-131-train-075",
+              "value-131-train-076",
+              "value-131-train-077",
+              "value-131-train-079",
+              "value-131-train-081",
+              "value-131-train-082",
+              "value-131-train-084",
+              "value-131-train-088",
+              "value-131-train-093",
+              "value-131-train-095",
+              "value-131-train-099",
+              "value-131-train-102",
+              "value-131-train-103",
+              "value-131-train-104",
+              "value-131-train-105",
+              "value-131-train-112",
+              "value-131-train-113",
+              "value-131-train-116",
+              "value-131-train-117",
+              "value-131-train-121",
+              "value-131-train-122"
+            ],
+            "size": 3,
+            "definition": "fn_715306984(a) = max(a, 0)"
+          }
+        ],
+        "edit": "incumbent-add",
+        "parents": [
+          "L2166136261"
+        ],
+        "features": [
+          1,
+          3,
+          1,
+          57,
+          57,
+          100,
+          3,
+          1
+        ]
+      },
+      "queries": 17,
+      "screenRegret": 0.014293113425925902,
+      "confirmationUtility": 0.07853054470486112,
+      "confirmationLower": 0.027664628069732848,
+      "solved": 52,
+      "baseSolved": 36,
+      "trials": 160,
+      "screeningEvaluations": 21334,
+      "screeningWork": 392298,
+      "screeningWallMs": 1515.093920000014
+    },
+    {
+      "name": "compression",
+      "candidate": {
+        "id": "L1344206036",
+        "macros": [
+          {
+            "name": "fn_1061683512",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "mul",
+                      "args": [
+                        {
+                          "op": "arg",
+                          "value": 1,
+                          "args": []
+                        },
+                        {
+                          "op": "const",
+                          "value": 2,
+                          "args": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 2,
+            "support": 2,
+            "sourceTasks": [
+              "value-131-train-063",
+              "value-131-train-071"
+            ],
+            "size": 6,
+            "definition": "fn_1061683512(a, b) = max(a, (-(b * 2)))"
+          },
+          {
+            "name": "fn_223452215",
+            "body": {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "op": "arg",
+                          "value": 0,
+                          "args": []
+                        },
+                        {
+                          "op": "arg",
+                          "value": 1,
+                          "args": []
+                        }
+                      ]
+                    },
+                    {
+                      "op": "const",
+                      "value": -2,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 2,
+            "support": 5,
+            "sourceTasks": [
+              "value-131-train-007",
+              "value-131-train-043",
+              "value-131-train-060",
+              "value-131-train-076",
+              "value-131-train-128"
+            ],
+            "size": 6,
+            "definition": "fn_223452215(a, b) = (-((a + b) + -2))"
+          },
+          {
+            "name": "fn_3549247544",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "const",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 23,
+            "sourceTasks": [
+              "value-131-train-007",
+              "value-131-train-012",
+              "value-131-train-013",
+              "value-131-train-019",
+              "value-131-train-022",
+              "value-131-train-040",
+              "value-131-train-054",
+              "value-131-train-059",
+              "value-131-train-068",
+              "value-131-train-070",
+              "value-131-train-076",
+              "value-131-train-082",
+              "value-131-train-084",
+              "value-131-train-086",
+              "value-131-train-088",
+              "value-131-train-091",
+              "value-131-train-100",
+              "value-131-train-112",
+              "value-131-train-116",
+              "value-131-train-121",
+              "value-131-train-122",
+              "value-131-train-126",
+              "value-131-train-127"
+            ],
+            "size": 4,
+            "definition": "fn_3549247544(a) = max(0, (-a))"
+          },
+          {
+            "name": "fn_908123984",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "const",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "min",
+                  "args": [
+                    {
+                      "op": "const",
+                      "value": 1,
+                      "args": []
+                    },
+                    {
+                      "op": "neg",
+                      "args": [
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "op": "arg",
+                              "value": 0,
+                              "args": []
+                            },
+                            {
+                              "op": "arg",
+                              "value": 1,
+                              "args": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 2,
+            "support": 2,
+            "sourceTasks": [
+              "value-131-train-056",
+              "value-131-train-093"
+            ],
+            "size": 8,
+            "definition": "fn_908123984(a, b) = max(0, min(1, (-(a + b))))"
+          }
+        ],
+        "edit": "explore",
+        "parents": [
+          "L2166136261",
+          "L2166136261"
+        ],
+        "features": [
+          4,
+          24,
+          1.75,
+          32,
+          23,
+          100,
+          7,
+          13
+        ]
+      },
+      "queries": 17,
+      "screenRegret": 0.08656973379629629,
+      "confirmationUtility": 0.019186740451388885,
+      "confirmationLower": -0.06345215329897907,
+      "solved": 36,
+      "baseSolved": 36,
+      "trials": 160,
+      "screeningEvaluations": 26242,
+      "screeningWork": 406618,
+      "screeningWallMs": 1515.4784180000424
+    },
+    {
+      "name": "random",
+      "candidate": {
+        "id": "L1201836107",
+        "macros": [
+          {
+            "name": "fn_1911160958",
+            "body": {
+              "op": "add",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    },
+                    {
+                      "op": "mul",
+                      "args": [
+                        {
+                          "op": "arg",
+                          "value": 1,
+                          "args": []
+                        },
+                        {
+                          "op": "const",
+                          "value": 2,
+                          "args": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "const",
+                  "value": 2,
+                  "args": []
+                }
+              ]
+            },
+            "arity": 2,
+            "support": 3,
+            "sourceTasks": [
+              "value-131-train-069",
+              "value-131-train-094",
+              "value-131-train-127"
+            ],
+            "size": 7,
+            "definition": "fn_1911160958(a, b) = ((a + (b * 2)) + 2)"
+          },
+          {
+            "name": "fn_2728098300",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "max",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    },
+                    {
+                      "op": "arg",
+                      "value": 1,
+                      "args": []
+                    }
+                  ]
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 1,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 2,
+            "support": 6,
+            "sourceTasks": [
+              "value-131-train-001",
+              "value-131-train-043",
+              "value-131-train-047",
+              "value-131-train-055",
+              "value-131-train-060",
+              "value-131-train-071"
+            ],
+            "size": 6,
+            "definition": "fn_2728098300(a, b) = max(max(a, b), (-b))"
+          },
+          {
+            "name": "fn_3659002987",
+            "body": {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    },
+                    {
+                      "op": "arg",
+                      "value": 1,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 2,
+            "support": 10,
+            "sourceTasks": [
+              "value-131-train-005",
+              "value-131-train-012",
+              "value-131-train-018",
+              "value-131-train-043",
+              "value-131-train-048",
+              "value-131-train-056",
+              "value-131-train-093",
+              "value-131-train-106",
+              "value-131-train-108",
+              "value-131-train-121"
+            ],
+            "size": 4,
+            "definition": "fn_3659002987(a, b) = (-(a + b))"
+          }
+        ],
+        "edit": "explore",
+        "parents": [
+          "L2166136261",
+          "L2166136261"
+        ],
+        "features": [
+          3,
+          17,
+          2,
+          19,
+          10,
+          100,
+          6,
+          8
+        ]
+      },
+      "queries": 17,
+      "screenRegret": 0.0920396412037037,
+      "confirmationUtility": -0.08327094184027779,
+      "confirmationLower": -0.15059467692947548,
+      "solved": 13,
+      "baseSolved": 36,
+      "trials": 160,
+      "screeningEvaluations": 23362,
+      "screeningWork": 413852,
+      "screeningWallMs": 1537.021458000061
+    },
+    {
+      "name": "full-reference",
+      "candidate": {
+        "id": "L3549247544",
+        "macros": [
+          {
+            "name": "fn_3549247544",
+            "body": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "const",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "arity": 1,
+            "support": 23,
+            "sourceTasks": [
+              "value-131-train-007",
+              "value-131-train-012",
+              "value-131-train-013",
+              "value-131-train-019",
+              "value-131-train-022",
+              "value-131-train-040",
+              "value-131-train-054",
+              "value-131-train-059",
+              "value-131-train-068",
+              "value-131-train-070",
+              "value-131-train-076",
+              "value-131-train-082",
+              "value-131-train-084",
+              "value-131-train-086",
+              "value-131-train-088",
+              "value-131-train-091",
+              "value-131-train-100",
+              "value-131-train-112",
+              "value-131-train-116",
+              "value-131-train-121",
+              "value-131-train-122",
+              "value-131-train-126",
+              "value-131-train-127"
+            ],
+            "size": 4,
+            "definition": "fn_3549247544(a) = max(0, (-a))"
+          }
+        ],
+        "edit": "incumbent-add",
+        "parents": [
+          "L2166136261"
+        ],
+        "features": [
+          1,
+          4,
+          1,
+          23,
+          23,
+          100,
+          4,
+          2
+        ]
+      },
+      "queries": 256,
+      "screenRegret": 0,
+      "confirmationUtility": 0.08597276475694444,
+      "confirmationLower": 0.027839103091230902,
+      "solved": 56,
+      "baseSolved": 36,
+      "trials": 160,
+      "screeningEvaluations": 336268,
+      "screeningWork": 6162868,
+      "screeningWallMs": 23308.340417000116
+    }
+  ],
+  "elapsedMs": 37053.447041999985
+}

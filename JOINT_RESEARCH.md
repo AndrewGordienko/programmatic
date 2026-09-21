@@ -231,9 +231,9 @@ Transfer is mixed: related solves improve 123→228/360; nested declines **78→
 
 Complete proposals again increase (about 83 per task) while structural work and measured time decrease. The cumulative accounting projects **76,937 future tasks** for search-work payback and a lower-bound **70,802 tasks** for recorded wall costs; neither is observed amortization. These conservative projections include shared prior costs, even in the comparison where both arms use that same prior. A future accounting should separate shared pretraining from incremental language-discovery costs, while still displaying both. Earlier research/calibration overhead is not fully charged by these estimates. No surrogate compute savings or off-road transfer have been demonstrated.
 
-## Replication and search-cost models in progress
+## Replication and search-cost models
 
-`REPLICATION_PROTOCOL.md` predeclares 20 language-training runs starting from empty libraries, conditional on the same frozen pretrained policy. The runner was committed before evaluation; `protocol.json` recorded the policy and source hashes before the first run. Each run re-solves training tasks and evolves the library over three generations. The live report under `output/joint/replication-v1/analysis.json` is explicitly partial until all seeds finish; it must not be described as a completed 20-seed result. Completed compressed reports and frozen candidates are retained. Some later wall measurements share the 15-logical-CPU host with separate model experiments; `host-load-events.json` records that. Evaluation/work budgets and result trajectories remain unchanged by host load, and wall times are observational rather than controlled CPU benchmarks.
+`REPLICATION_PROTOCOL.md` predeclares 20 language-training runs starting from empty libraries, conditional on the same frozen pretrained policy. The runner was committed before evaluation; `protocol.json` recorded the policy and source hashes before the first run. Each run re-solves training tasks and evolves the library over three generations. All 20 predeclared runs have now finished; `output/joint/replication-v1/analysis.json` verifies the frozen protocol, budgets and splits before aggregating them. Completed compressed reports and frozen candidates are retained. Some later wall measurements share the 15-logical-CPU host with separate model experiments; `host-load-events.json` records that. Evaluation/work budgets and result trajectories remain unchanged by host load, and wall times are observational rather than controlled CPU benchmarks.
 
 A prepared outer value-model pipeline uses only development-race utility differences against the paired base library. Its inputs are name-free pooled operator semantics, structural costs, training-corpus support and budget metadata. Seeds 0–11 train, 12–15 validate, and 16–18/42 test ranking. No confirmation or final-test outcomes become labels. The scripts refuse to build the dataset before every predeclared run finishes. This is initially an offline ranking test, with **zero claimed saved compute**; prospective selection must follow separately.
 
@@ -242,6 +242,62 @@ The next inner-search experiment targets operand selection rather than only prod
 The executed-fragment classifier trains on 79,762 task/subprogram examples derived from synthesized programs and executed dreams, with random and output-close negatives. It sees all 75 observation positions and aggregate behavior. Whole-function empirical signatures group validation; exported inference matches independent PyTorch fixtures. Its held-out teacher accuracy reaches roughly 92–93%, but labels describe one sampled decomposition, not every possible useful subprogram. It is a soft ranking heuristic, never a sound pruning rule.
 
 The isolated `research/fragment-ranking` worktree tests that classifier without changing the running replication. On the adaptive 330-trial calibration with the v4 library, original search solves 241; pure learned ranking solves 257; balanced ranking plus operand guidance solves 258. The latter's wall time increases from about 2.68 to 3.05 seconds. Nested solves stay 17/30 and longer regress 3→0/30. Thus the classifier improves related-task coverage but does **not** solve the structural bottleneck and is **not promoted**. The base-language result stays 209/330. The first artifact records neural overhead through wall time; subsequent instrumentation separately counts fragment predictions, feature pairs and matrix multiplications, which must not be treated as free structural operations.
+
+## Completed 20-run replication
+
+Every run starts with an empty symbolic library and independently drawn language-training tasks and optimizer seeds. All 20 pass the unchanged fresh confirmation rule and improve final work-AUC. They share **one frozen pretrained neural policy**; this is conditional language-learning replication, not independent neural pretraining or a new domain.
+
+| Final arm                    | Solved / 12,000 | Recorded search work | Complete proposals |
+| ---------------------------- | --------------: | -------------------: | -----------------: |
+| Base, uniform                |           1,860 |           45,697,503 |            568,892 |
+| Learned library, uniform     |           5,217 |           34,520,746 |          1,353,341 |
+| Base, frozen policy          |           3,736 |           39,165,607 |            644,451 |
+| Learned library, same policy |           6,254 |           31,251,746 |          1,371,977 |
+
+Across meta-seeds, the matched-policy solve gain is **20.98 pp [19.81, 22.04]**, and work-AUC gain **17.10 pp [15.80, 18.26]**. The neural prior itself improves base solve rate by **15.63 pp [14.72, 16.53]**. Invented primitives appear in **5,946/6,254** successful learned-language trials. The base/shared-policy comparison removes all macros while retaining the same weights; the uniform arms independently support a language benefit.
+
+The held-out distribution contains 4,000 task instances and **3,879 empirically distinct functions**; 113 functions recur across independently drawn runs. Each task has three optimizer repetitions. Intervals bootstrap meta-seed means and are conditional on this task distribution, shared policy and empirical exposure exclusions. They do not establish formal functional disjointness or universality.
+
+Structural transfer remains mixed. Longer solves improve **7.83 pp [6.04, 9.62]**, while nested solves change **−0.58 pp [−1.71, 0.50]**. Consequently, the predeclared broad structural gate fails. The result supports useful scalar abstraction discovery and longer-composition transfer, not every remaining gate.
+
+Across all 20 independent discoveries, cost is **21,954,267 complete proposals + 433,402,802 structural operations**, with 1,899.8 seconds of recorded incremental discovery time. These are heterogeneous counters, not interchangeable CPU instructions. Mean per-task search work falls by 659.5 units, but complete proposals rise by 60.6. Median per-run incremental payback extrapolates to **32,821 future searches** (range 26,458–56,672), or about 37,003 using observational wall means. No downstream stream has yet repaid discovery cost. Historical R&D and shared neural pretraining remain additional costs; the latter cancels only in a matched-prior comparison.
+
+The completed replication supplies **16,256 development-race labels** for the separately frozen outer value-model experiment. Meta-seeds 0–11 train, 12–15 validate, and 16–18/42 test ranking. Neither confirmation nor final outcomes become value labels. A separate prospective protocol commits shortlist rankings before measuring candidate synthesis; exhaustive reference auditing is charged as research cost.
+
+The trained 64-unit semantic value model has 9,757 training rows, 3,251 validation rows and 3,248 held-out rows. On the twelve held-out **full screening pools**, top-five mean regret is 0.0180 versus 0.0286 for the compression proxy and 0.1205 for random selection. At top ten, compression is better (0.0114 versus the model's 0.0140); at top 32 it is also better. Thus the model helps very small shortlists but does not dominate the cheap heuristic. These are reused exhaustive labels and establish no compute saving. `language-value-prospective.ts` predeclares eight fresh corpus/population states and freezes model/compression/random shortlists before measuring them, with a separately charged exhaustive reference audit and fresh winner confirmation.
+
+## Prospective outer-value selection: eight fresh populations
+
+The frozen value model is now tested **before candidate labels exist** on eight predeclared fresh training states (101, 107, 113, 127, 131, 139, 149, 157). Each synthesizes a fresh 128-task corpus, proposes 256 languages, seals all model/compression/random rankings, evaluates sixteen candidates plus the base language, and selects by measured screening utility. The exhaustive reference evaluates all 256 on the same screening tasks. Winners freeze before 80 new confirmation functions × two optimizer seeds. Neither rankings nor winners update from confirmation.
+
+| Selection policy     | Screening queries, total | Screening work | Confirmation passes / 8 | Confirmation solves / 1,280 |
+| -------------------- | -----------------------: | -------------: | ----------------------: | --------------------------: |
+| Frozen value model   |                      136 |      3,206,900 |                       7 |                         568 |
+| Compression proxy    |                      136 |      3,265,452 |                       2 |                         476 |
+| Random               |                      136 |      3,326,545 |                       4 |                         445 |
+| Exhaustive reference |                    2,048 |     50,450,668 |                       7 |                         575 |
+
+The same base language solves 356/1,280. Model selection improves fresh utility by **11.75 pp [8.82, 14.83]** over base and by **6.43 pp [3.01, 10.14]** over compression. Against exhaustive selection, its difference is **+0.22 pp [−0.37, 0.99]**. These are descriptive meta-seed bootstrap intervals; no noninferiority margin was predeclared, so the result does not formally prove equal quality.
+
+Screening uses **15.1× fewer language queries** and **15.7× less recorded screening work** for the model strategy. This is a measured strategy comparison, not an end-to-end savings claim: the study actually executed the complete reference audit, all common corpus synthesis and winner confirmation, and previously paid for 16,256 value labels. The report separately records the complete experiment cost and the conservative 455.4M-work source-discovery investment. Shared inner-policy training and earlier R&D are also additional costs. Global amortization remains unobserved.
+
+This is the first prospective evidence here that a learned selector can reduce expensive language evaluations while retaining useful candidates. It covers **one generation** with a small eight-state sample, conditional on one frozen model and prior. The next test must run the full multi-generation learner with selective evaluation and compare its complete discovery cost and frozen final performance. Raw rankings, frozen winners, all labels and audited analysis are in `output/joint/language-value-prospective-v1/`.
+
+## Full selective evolution: four paired meta-seeds
+
+The predeclared `SELECTIVE_PROTOCOL.md` experiment completes all twelve runs: full, compression and value selection on four identical task/seed suites. Every run starts empty, alternates wake synthesis with language selection for three generations, and freezes before confirmation and four-arm final testing. All twelve candidates pass confirmation. An audit verifies that baseline program trajectories are identical across selectors, excluding elapsed time; subsequent learned languages/corpora are allowed to diverge.
+
+| Outer selector     | Final learned/prior solves / 2,400 | Complete incremental discovery work | Recorded discovery time |
+| ------------------ | ---------------------------------: | ----------------------------------: | ----------------------: |
+| Full population    |                              1,200 |                          76,865,098 |                 310.7 s |
+| Frozen value model |                              1,245 |                          28,752,543 |                 124.7 s |
+| Compression proxy  |                                969 |                          33,551,897 |                 139.7 s |
+
+Value selection uses **2.68× less discovery work on average across paired seeds [2.55, 2.89]**, now including corpus synthesis, all selection stages and confirmation. Its final solve-rate difference against full selection is **+1.88 pp [0, 3.75]**, while work-AUC differs by **+1.13 pp [−0.41, 3.82]**. These four-seed descriptive intervals do not prove equal utility or broad robustness. The pre-existing 20-seed result establishes the restricted language benefit; this smaller experiment studies the cost of selecting it.
+
+The value arm's projected incremental language payback is 9,385–13,505 future searches (median 10,427), versus 24,821–44,956 for full selection. Those projections assume the already-trained value model exists. Its conservative **455.4M-work source-label investment**, model fitting and shared inner-policy training remain additional costs. The observed discovery-work saving would project repayment of that source investment after roughly 38 comparable language-learning runs; this is also an extrapolation. Neither language nor value-model payback has been observed in a downstream stream.
+
+Nested transfer still fails the broad gate: the value arm's aggregate nested count is one solve below its base arm across 480 trials, while longer improves. This pipeline is therefore useful bounded library learning with promising selective evaluation, not a complete solution to general language discovery. `output/joint/selective-evolution-v1/analysis.json` contains paired quality/cost differences, each frozen library and group, raw rejected-policy handling, and all accounting. Some timings shared the host with independent neural-policy experiments; `host-load-events.json` records that.
 
 ### Post-search component audit and broader construction (experimental branch)
 

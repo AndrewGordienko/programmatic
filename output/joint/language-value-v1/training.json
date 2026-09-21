@@ -1,0 +1,177 @@
+{
+  "seed": 909017,
+  "trainingRows": 9757,
+  "validationRows": 3251,
+  "selectedEpoch": 35,
+  "validationMse": 0.003481433028355241,
+  "updates": 4020,
+  "elapsedMs": 1610.983541002497,
+  "history": [
+    {
+      "epoch": 0,
+      "validationMse": 0.008233437314629555
+    },
+    {
+      "epoch": 5,
+      "validationMse": 0.0038906980771571398
+    },
+    {
+      "epoch": 10,
+      "validationMse": 0.0037752646021544933
+    },
+    {
+      "epoch": 15,
+      "validationMse": 0.0037357951514422894
+    },
+    {
+      "epoch": 20,
+      "validationMse": 0.0039873612113296986
+    },
+    {
+      "epoch": 25,
+      "validationMse": 0.004602407570928335
+    },
+    {
+      "epoch": 30,
+      "validationMse": 0.0037360915448516607
+    },
+    {
+      "epoch": 35,
+      "validationMse": 0.003481433028355241
+    },
+    {
+      "epoch": 40,
+      "validationMse": 0.0036702898796647787
+    },
+    {
+      "epoch": 45,
+      "validationMse": 0.0037653548642992973
+    },
+    {
+      "epoch": 50,
+      "validationMse": 0.0038526253774762154
+    },
+    {
+      "epoch": 55,
+      "validationMse": 0.0037867471110075712
+    },
+    {
+      "epoch": 60,
+      "validationMse": 0.0037932104896754026
+    },
+    {
+      "epoch": 65,
+      "validationMse": 0.0036297286860644817
+    },
+    {
+      "epoch": 70,
+      "validationMse": 0.0039756400510668755
+    },
+    {
+      "epoch": 75,
+      "validationMse": 0.0037304896395653486
+    },
+    {
+      "epoch": 80,
+      "validationMse": 0.003876851173117757
+    },
+    {
+      "epoch": 85,
+      "validationMse": 0.0040429020300507545
+    },
+    {
+      "epoch": 90,
+      "validationMse": 0.003543263301253319
+    },
+    {
+      "epoch": 95,
+      "validationMse": 0.003634815337136388
+    },
+    {
+      "epoch": 100,
+      "validationMse": 0.00372448842972517
+    },
+    {
+      "epoch": 105,
+      "validationMse": 0.0036808131262660027
+    },
+    {
+      "epoch": 110,
+      "validationMse": 0.0036855062935501337
+    },
+    {
+      "epoch": 115,
+      "validationMse": 0.00393365602940321
+    },
+    {
+      "epoch": 120,
+      "validationMse": 0.0037218935322016478
+    },
+    {
+      "epoch": 125,
+      "validationMse": 0.00372250284999609
+    },
+    {
+      "epoch": 130,
+      "validationMse": 0.003727279370650649
+    },
+    {
+      "epoch": 135,
+      "validationMse": 0.0045627630315721035
+    },
+    {
+      "epoch": 140,
+      "validationMse": 0.003847571089863777
+    },
+    {
+      "epoch": 145,
+      "validationMse": 0.003922450356185436
+    },
+    {
+      "epoch": 150,
+      "validationMse": 0.003956699278205633
+    },
+    {
+      "epoch": 155,
+      "validationMse": 0.0040297480300068855
+    },
+    {
+      "epoch": 160,
+      "validationMse": 0.00377506366930902
+    },
+    {
+      "epoch": 165,
+      "validationMse": 0.003952798433601856
+    },
+    {
+      "epoch": 170,
+      "validationMse": 0.0037984445225447416
+    },
+    {
+      "epoch": 175,
+      "validationMse": 0.0038154812064021826
+    },
+    {
+      "epoch": 180,
+      "validationMse": 0.004054511897265911
+    },
+    {
+      "epoch": 185,
+      "validationMse": 0.003972016740590334
+    },
+    {
+      "epoch": 190,
+      "validationMse": 0.0039438968524336815
+    },
+    {
+      "epoch": 195,
+      "validationMse": 0.003972801845520735
+    },
+    {
+      "epoch": 200,
+      "validationMse": 0.004006717354059219
+    }
+  ],
+  "sourceProtocolHash": "b7f051048d60131292a955e094a204b47eee2a9a95d8db47ba8bcba847a55c88",
+  "note": "Model and checkpoint selection see only meta-seeds 0\u201315 development-race labels. No test-seed or confirmation/final outcome enters training. No compute-saving claim follows from retrospective labels."
+}
