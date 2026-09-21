@@ -27,6 +27,7 @@ import { canonical } from "./canonical";
 import type { SearchResult } from "./search";
 import { additiveJoin } from "./joins";
 import { sparseCompose } from "./sparse";
+import { latticeCompose } from "./lattice";
 import { specificationFeatures } from "./specification";
 import {
   fullObservationContext,
@@ -205,6 +206,11 @@ export function inverseSearch(
     holeValueWeight?: number;
     holeValueCandidates?: number;
     lazyHoleFeatures?: boolean;
+    specificationFragments?: number;
+    literalBindings?: boolean;
+    localAffineNeighbors?: number;
+    memoAffine?: boolean;
+    lattice?: boolean;
   } = {},
 ): InverseResult {
   if (!Number.isInteger(budget) || budget < 1)
@@ -233,6 +239,10 @@ export function inverseSearch(
   const fittedPlanes = new Map<string, number[]>();
   const appliedCache = new Map<string, Segment[] | null>();
   const traceStates: { spec: Box; x: number[] }[] = [];
+  const neighborhoods = new Map<
+    (typeof task.examples)[number],
+    typeof task.examples
+  >();
   const relations = new Map(
     macros
       .filter(
@@ -294,17 +304,40 @@ export function inverseSearch(
     if (answer) break;
   }
   // Parameter estimation is a search heuristic, not a new executable primitive.
+  if (options.localAffineNeighbors && !answer) {
+    for (const point of task.examples) {
+      if (!charge()) break;
+      const neighbors = task.examples
+        .filter((e) => e !== point)
+        .map((e) => {
+          constraintPoints++;
+          return {
+            e,
+            distance:
+              (e.input[0] - point.input[0]) ** 2 +
+              (e.input[1] - point.input[1]) ** 2,
+          };
+        })
+        .filter((r) => r.distance > 1e-12)
+        .sort((a, b) => a.distance - b.distance);
+      neighborhoods.set(
+        point,
+        neighbors.slice(0, options.localAffineNeighbors).map((r) => r.e),
+      );
+    }
+  }
   for (
     let fit = 0;
     !answer && fit < (options.affineFits ?? 128) && charge();
     fit++
   ) {
     linearFits++;
-    const es = [
-      rng.pick(task.examples),
-      rng.pick(task.examples),
-      rng.pick(task.examples),
-    ];
+    const first = rng.pick(task.examples);
+    const pool =
+      fit % 4 !== 0
+        ? (neighborhoods.get(first) ?? task.examples)
+        : task.examples;
+    const es = [first, rng.pick(pool), rng.pick(pool)];
     const [p, q, r] = es,
       [x, y] = p.input,
       dx = q.input[0] - x,
@@ -341,6 +374,20 @@ export function inverseSearch(
       behavior.add(signature);
     }
     if (support >= 4) fittedPlanes.set(coeff.join(","), coeff);
+  }
+  if (options.lattice && !answer) {
+    latticeCompose(
+      [...fittedPlanes.values()].flatMap((coeff) => {
+        const row = syntax.get(key(plane(coeff)));
+        return row ? [row] : [];
+      }),
+      task.examples.map((e) => e.output),
+      charge,
+      (n) => {
+        constraintPoints += n;
+      },
+      (tree) => evaluate(canonical(tree), false),
+    );
   }
   if (options.envelopePlanes && !answer) {
     const grid = Array.from({ length: 17 }, (_, i) => i - 8),
@@ -549,7 +596,7 @@ export function inverseSearch(
     low: task.examples.map((e) => e.output),
     high: task.examples.map((e) => e.output),
   };
-  const affine = (spec: Box): Expr | undefined => {
+  const inferAffine = (spec: Box): Expr | undefined => {
     if (options.affineFits === 0) return;
     const exact = spec.low
       .map((v, i) =>
@@ -648,6 +695,24 @@ export function inverseSearch(
         if (row && accepts(row)) return tree;
       }
   };
+  const affineCache = new Map<string, Expr | undefined>();
+  const affine = (spec: Box): Expr | undefined => {
+    if (!options.memoAffine) return inferAffine(spec);
+    const signature = JSON.stringify(
+      spec.low.map((_, i) =>
+        domainAt(spec, i).map(([l, h]) => [String(l), String(h)]),
+      ),
+    );
+    if (affineCache.has(signature)) {
+      if (!charge()) return;
+      return affineCache.get(signature);
+    }
+    const result = inferAffine(spec);
+    // A budget interruption is not evidence that no fitting affine exists.
+    if (result || (expansions < localLimit && evaluations < budget))
+      affineCache.set(signature, result);
+    return result;
+  };
   // Construct components against the current hole's output constraints rather
   // than only the whole task. This is an optional, charged search heuristic.
   const buildResidual = (spec: Box): Expr | undefined => {
@@ -739,6 +804,147 @@ export function inverseSearch(
         }
       }
   };
+  // A local fragment bank constructed from the actual hole specification.
+  // Finite endpoints supply regression proposals, including disjoint inverse
+  // branches. They are hypotheses, never assumed targets or proof of a fit.
+  const specificationFragments = (spec: Box): Expr | undefined => {
+    const states = task.examples
+      .map((e, i) => ({
+        input: e.input,
+        outputs: [...new Set(domainAt(spec, i).flat().filter(Number.isFinite))],
+      }))
+      .filter((e) => e.outputs.length);
+    if (states.length < 3) return;
+    const local = new Map<string, Fragment>();
+    const planes = new Map<string, number[]>();
+    const insert = (tree: Expr): Fragment | undefined => {
+      const row = syntax.get(key(tree)) ?? evaluate(tree, false);
+      if (row) local.set(key(tree), row);
+      return row;
+    };
+    const accepts = (row: Fragment): boolean =>
+      row.values.every((v, i) => {
+        constraintPoints++;
+        return contains(spec, i, v);
+      });
+    for (
+      let fit = 0;
+      fit < (options.specificationFragments ?? 0) && charge();
+      fit++
+    ) {
+      linearFits++;
+      const [p, q, r] = [rng.pick(states), rng.pick(states), rng.pick(states)];
+      const [x, y] = p.input;
+      const dx = q.input[0] - x,
+        dy = q.input[1] - y,
+        ex = r.input[0] - x,
+        ey = r.input[1] - y,
+        det = dx * ey - dy * ex;
+      if (Math.abs(det) < 1e-9) continue;
+      const z = rng.pick(p.outputs),
+        dz = rng.pick(q.outputs) - z,
+        ez = rng.pick(r.outputs) - z;
+      const alpha = (dz * ey - dy * ez) / det,
+        beta = (dx * ez - dz * ex) / det;
+      const raw = [alpha, beta, z - alpha * x - beta * y],
+        coeff = raw.map(Math.round);
+      if (
+        raw.some((v, i) => Math.abs(v - coeff[i]) > 1e-6) ||
+        coeff.some((v) => Math.abs(v) > 8)
+      )
+        continue;
+      const tree = plane(coeff),
+        row = syntax.get(key(tree)) ?? evaluate(tree, false);
+      if (!row) continue;
+      if (accepts(row)) return tree;
+      let support = 0;
+      row.values.forEach((v, i) => {
+        constraintPoints++;
+        if (
+          domainAt(spec, i).some(
+            ([l, h]) => Math.abs(v - l) < 1e-7 || Math.abs(v - h) < 1e-7,
+          )
+        )
+          support++;
+      });
+      if (support >= 4) {
+        local.set(key(tree), row);
+        planes.set(coeff.join(","), coeff);
+      }
+    }
+    const differences = new Map<string, number[]>();
+    for (const x of planes.values())
+      for (const y of planes.values()) {
+        if (!charge()) return;
+        const d = x.map((v, i) => v - y[i]);
+        if ((!d[0] && !d[1]) || d.some((v) => Math.abs(v) > 8)) continue;
+        const gcd = (a: number, b: number): number =>
+          b ? gcd(b, a % b) : Math.abs(a);
+        const divisor = d.reduce((a, b) => gcd(a, b), 0);
+        differences.set(d.join(","), d);
+        if (divisor > 1) {
+          const normalized = d.map((v) => v / divisor);
+          differences.set(normalized.join(","), normalized);
+        }
+      }
+    for (const coeff of [...differences.values()]
+      .sort(
+        (a, b) =>
+          a.reduce((s, v) => s + Math.abs(v), 0) -
+          b.reduce((s, v) => s + Math.abs(v), 0),
+      )
+      .slice(0, 16)) {
+      if (!charge()) return;
+      const row = insert(plane(coeff));
+      if (row && accepts(row)) return row.tree;
+    }
+    const seeds = [...local.values()].sort((a, b) => a.size - b.size);
+    const ops = [
+      "neg",
+      ...macros.filter((m) => m.arity === 1).map((m) => m.name),
+    ];
+    for (const row of seeds)
+      for (const op of ops) {
+        if (!charge() || evaluations >= budget) return;
+        const next = insert({ op, args: [row.tree] });
+        if (next && accepts(next)) return next.tree;
+      }
+    // One legal min/max application is also available to the base language.
+    for (const row of seeds)
+      for (const value of [0, 1, -1])
+        for (const op of ["max", "min"]) {
+          if (!charge() || evaluations >= budget) return;
+          const next = insert({ op, args: [row.tree, c(value)] });
+          if (next && accepts(next)) return next.tree;
+        }
+    const pool = [...local.values()];
+    // Complete with a known local fragment plus an inferred affine argument.
+    // Every inverse and parameter test uses the same structural allowance.
+    for (const left of pool)
+      for (const op of ["add", "sub", "max", "min"]) {
+        if (!charge() || evaluations >= budget) return;
+        inverseSteps++;
+        const child = inverseBox(op, spec, left.values);
+        if (!child) continue;
+        let right: Fragment | undefined;
+        for (const row of pool) {
+          if (!charge()) return;
+          constraintChecks++;
+          if (
+            row.values.every((v, i) => {
+              constraintPoints++;
+              return contains(child, i, v);
+            })
+          ) {
+            right = row;
+            break;
+          }
+        }
+        if (right) return { op, args: [left.tree, right.tree] };
+        const fitted = affine(child);
+        if (fitted) return { op, args: [left.tree, fitted] };
+      }
+  };
   const solve = (
     spec: Box,
     depth: number,
@@ -761,6 +967,10 @@ export function inverseSearch(
     if (fitted) return fitted;
     if (options.residualBuild && path.length > 0) {
       const built = buildResidual(spec);
+      if (built) return built;
+    }
+    if (options.specificationFragments && path.length > 0 && depth > 0) {
+      const built = specificationFragments(spec);
       if (built) return built;
     }
     if (depth <= 0) return;
@@ -835,15 +1045,23 @@ export function inverseSearch(
       );
     for (const p of ops) {
       const macro = macros.find((m) => m.name === p.node.op);
+      const bindingPool = options.literalBindings
+        ? [
+            ...bank.filter((r) => r.tree.op === "const"),
+            ...active.filter((r) => r.tree.op !== "const"),
+          ]
+        : active;
       const bindings: Fragment[][] =
         p.arity === 1
           ? [[]]
           : macro
-            ? active
+            ? bindingPool
                 .slice(0, options.macroBindings ?? 0)
                 .map((row, i) =>
                   Array.from({ length: p.arity - 1 }, (_, j) =>
-                    j === 0 ? row : active[(i * 7 + j * 3) % active.length],
+                    j === 0
+                      ? row
+                      : bindingPool[(i * 7 + j * 3) % bindingPool.length],
                   ),
                 )
             : active.map((row) => [row]);

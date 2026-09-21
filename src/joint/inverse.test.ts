@@ -37,6 +37,59 @@ import { languageValueFeatures } from "./language-value";
 import { fragmentFeatures, predictFragmentValue } from "./fragment-value";
 import { fullObservationContext, specificationFeature } from "./full-context";
 import { predictHoleValue, predictHoleTree } from "./hole-value";
+import { latticeCompose } from "./lattice";
+import type { Expr } from "../dsl/types";
+
+test("min/max cover executes its inferred expression and obeys construction limits", () => {
+  const xs = inputs(913718, 75, 5);
+  const x = { op: "arg", value: 0, args: [] },
+    y = { op: "arg", value: 1, args: [] };
+  const shifted = { op: "add", args: [x, { op: "const", value: 1, args: [] }] };
+  const pieces = [x, y, shifted].map((tree) => ({
+    tree,
+    size: exprSize(tree),
+    values: xs.map((v) => compile(tree, [])(...v)),
+  }));
+  const target = xs.map(([a, b]) => Math.max(a, Math.min(b, a + 1)));
+  let operations = 0,
+    pointOperations = 0,
+    evaluations = 0;
+  const execute = (tree: Expr) => {
+    evaluations++;
+    return {
+      tree,
+      size: exprSize(tree),
+      values: xs.map((v) => compile(tree, [])(...v)),
+    };
+  };
+  const tree = latticeCompose(
+    pieces,
+    target,
+    () => ++operations <= 4096,
+    (n) => {
+      pointOperations += n;
+    },
+    execute,
+  );
+  assert.ok(tree);
+  assert.ok(operations > 0 && pointOperations > 0 && evaluations > 0);
+  const f = compile(tree, []);
+  for (const [a, b] of inputs(730922, 120, 7))
+    assert.ok(Math.abs(f(a, b) - Math.max(a, Math.min(b, a + 1))) < 1e-8);
+  let capped = 0;
+  assert.equal(
+    latticeCompose(
+      pieces,
+      target,
+      () => ++capped <= 1,
+      () => {},
+      () => {
+        throw new Error("No execution allowance");
+      },
+    ),
+    undefined,
+  );
+});
 
 test("visited-state critics match independent exports and lazy disjoint-domain features", () => {
   const roots = ["neural-visited-v1", "neural-visited-v2"];
@@ -233,6 +286,13 @@ test("experimental composition heuristics preserve execution caps and keep check
     { residualBuild: 32 },
     { unaryFirst: 0.4 },
     { affineLattice: 32, forwardFraction: 0.7 },
+    {
+      specificationFragments: 16,
+      relational: true,
+      literalBindings: true,
+      compiledRelations: true,
+    },
+    { lattice: true, localAffineNeighbors: 6, memoAffine: true },
   ];
   for (const option of options) {
     const task = { examples, checks: examples };
