@@ -1,0 +1,289 @@
+{
+  "protocolHash": "b7f051048d60131292a955e094a204b47eee2a9a95d8db47ba8bcba847a55c88",
+  "seed": 15,
+  "frozenHash": "394e34bb76a1497bfa8170c0ffd0554c8877db7632f1d6a8da9651a8058bd37e",
+  "frozenAt": "2026-09-21T04:39:02.317Z",
+  "candidate": {
+    "id": "L3525212860",
+    "macros": [
+      {
+        "name": "fn_2352281741",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "arg",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 51,
+        "sourceTasks": [
+          "meta-15-train-004",
+          "meta-15-train-005",
+          "meta-15-train-013",
+          "meta-15-train-016",
+          "meta-15-train-023",
+          "meta-15-train-025",
+          "meta-15-train-026",
+          "meta-15-train-027",
+          "meta-15-train-031",
+          "meta-15-train-033",
+          "meta-15-train-034",
+          "meta-15-train-035",
+          "meta-15-train-036",
+          "meta-15-train-037",
+          "meta-15-train-043",
+          "meta-15-train-050",
+          "meta-15-train-054",
+          "meta-15-train-069",
+          "meta-15-train-070",
+          "meta-15-train-082",
+          "meta-15-train-083",
+          "meta-15-train-084",
+          "meta-15-train-090",
+          "meta-15-train-092",
+          "meta-15-train-095",
+          "meta-15-train-100",
+          "meta-15-train-102",
+          "meta-15-train-103",
+          "meta-15-train-119",
+          "meta-15-train-129",
+          "meta-15-train-130",
+          "meta-15-train-141",
+          "meta-15-train-142",
+          "meta-15-train-146",
+          "meta-15-train-154",
+          "meta-15-train-156",
+          "meta-15-train-159",
+          "meta-15-train-011",
+          "meta-15-train-059",
+          "meta-15-train-132",
+          "meta-15-train-140",
+          "meta-15-train-143",
+          "meta-15-train-148",
+          "meta-15-train-020",
+          "meta-15-train-030",
+          "meta-15-train-038",
+          "meta-15-train-039",
+          "meta-15-train-098",
+          "meta-15-train-118",
+          "meta-15-train-127",
+          "meta-15-train-135"
+        ],
+        "size": 4,
+        "definition": "fn_2352281741(a) = max(a, (-a))"
+      },
+      {
+        "name": "fn_3197264005",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "min",
+              "args": [
+                {
+                  "op": "const",
+                  "value": 1,
+                  "args": []
+                },
+                {
+                  "op": "neg",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 19,
+        "sourceTasks": [
+          "meta-15-train-009",
+          "meta-15-train-012",
+          "meta-15-train-021",
+          "meta-15-train-029",
+          "meta-15-train-032",
+          "meta-15-train-063",
+          "meta-15-train-068",
+          "meta-15-train-079",
+          "meta-15-train-087",
+          "meta-15-train-108",
+          "meta-15-train-155",
+          "meta-15-train-160",
+          "meta-15-train-046",
+          "meta-15-train-086",
+          "meta-15-train-132",
+          "meta-15-train-138",
+          "meta-15-train-148",
+          "meta-15-train-150",
+          "meta-15-train-127"
+        ],
+        "size": 6,
+        "definition": "fn_3197264005(a) = max(0, min(1, (-a)))"
+      },
+      {
+        "name": "fn_715306984",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "arg",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 102,
+        "sourceTasks": [
+          "meta-15-train-003",
+          "meta-15-train-006",
+          "meta-15-train-008",
+          "meta-15-train-009",
+          "meta-15-train-010",
+          "meta-15-train-012",
+          "meta-15-train-014",
+          "meta-15-train-015",
+          "meta-15-train-017",
+          "meta-15-train-019",
+          "meta-15-train-022",
+          "meta-15-train-028",
+          "meta-15-train-029",
+          "meta-15-train-033",
+          "meta-15-train-034",
+          "meta-15-train-040",
+          "meta-15-train-042",
+          "meta-15-train-047",
+          "meta-15-train-049",
+          "meta-15-train-051",
+          "meta-15-train-052",
+          "meta-15-train-053",
+          "meta-15-train-055",
+          "meta-15-train-056",
+          "meta-15-train-061",
+          "meta-15-train-062",
+          "meta-15-train-063",
+          "meta-15-train-068",
+          "meta-15-train-071",
+          "meta-15-train-072",
+          "meta-15-train-073",
+          "meta-15-train-074",
+          "meta-15-train-075",
+          "meta-15-train-076",
+          "meta-15-train-077",
+          "meta-15-train-078",
+          "meta-15-train-079",
+          "meta-15-train-081",
+          "meta-15-train-082",
+          "meta-15-train-085",
+          "meta-15-train-087",
+          "meta-15-train-089",
+          "meta-15-train-091",
+          "meta-15-train-097",
+          "meta-15-train-099",
+          "meta-15-train-102",
+          "meta-15-train-105",
+          "meta-15-train-106",
+          "meta-15-train-108",
+          "meta-15-train-109",
+          "meta-15-train-111",
+          "meta-15-train-112",
+          "meta-15-train-114",
+          "meta-15-train-117",
+          "meta-15-train-119",
+          "meta-15-train-120",
+          "meta-15-train-121",
+          "meta-15-train-122",
+          "meta-15-train-124",
+          "meta-15-train-125",
+          "meta-15-train-126",
+          "meta-15-train-128",
+          "meta-15-train-129",
+          "meta-15-train-130",
+          "meta-15-train-134",
+          "meta-15-train-137",
+          "meta-15-train-144",
+          "meta-15-train-145",
+          "meta-15-train-146",
+          "meta-15-train-147",
+          "meta-15-train-152",
+          "meta-15-train-155",
+          "meta-15-train-157",
+          "meta-15-train-160",
+          "meta-15-train-011",
+          "meta-15-train-044",
+          "meta-15-train-045",
+          "meta-15-train-046",
+          "meta-15-train-059",
+          "meta-15-train-060",
+          "meta-15-train-064",
+          "meta-15-train-086",
+          "meta-15-train-088",
+          "meta-15-train-094",
+          "meta-15-train-107",
+          "meta-15-train-113",
+          "meta-15-train-115",
+          "meta-15-train-116",
+          "meta-15-train-123",
+          "meta-15-train-131",
+          "meta-15-train-132",
+          "meta-15-train-138",
+          "meta-15-train-140",
+          "meta-15-train-143",
+          "meta-15-train-148",
+          "meta-15-train-150",
+          "meta-15-train-151",
+          "meta-15-train-153",
+          "meta-15-train-030",
+          "meta-15-train-039",
+          "meta-15-train-127",
+          "meta-15-train-135"
+        ],
+        "size": 3,
+        "definition": "fn_715306984(a) = max(a, 0)"
+      }
+    ],
+    "edit": "delete",
+    "parents": [
+      "L1983513952"
+    ],
+    "features": [
+      3,
+      13,
+      1,
+      172,
+      102,
+      145,
+      5,
+      7
+    ]
+  }
+}

@@ -33,8 +33,17 @@ import {
   instantiateAffine,
 } from "./parametric";
 import { parametricSearch } from "./parametric-search";
-import { languageValueFeatures } from "./language-value";
+import { languageValueFeatures, predictLanguageValue } from "./language-value";
 import { fragmentFeatures, predictFragmentValue } from "./fragment-value";
+
+test("outer semantic value model matches independent PyTorch inference", () => {
+  const folder = "output/joint/language-value-v1/";
+  const model = JSON.parse(readFileSync(folder + "model.json", "utf8"));
+  for (const row of JSON.parse(readFileSync(folder + "parity.json", "utf8")))
+    assert.ok(
+      Math.abs(predictLanguageValue(model, row.features) - row.value) < 1e-10,
+    );
+});
 
 test("fragment guide matches independent PyTorch inference and preserves later observation geometry", () => {
   const folder = "output/joint/fragment-value-v1/";

@@ -8,5 +8,9 @@
   {
     "time": "2026-09-21T04:27:07.127272+00:00",
     "event": "Fragment dataset generation and two-thread model training completed; separate count-budgeted calibration started in isolated worktree."
+  },
+  {
+    "time": "2026-09-21T04:46:57.604265+00:00",
+    "event": "Separate worktree post-search component audit and construction calibration completed. Main count-budgeted replication remained unchanged; host-load timing is observational."
   }
 ]
