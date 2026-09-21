@@ -1,0 +1,238 @@
+{
+  "protocolHash": "7ee83a84bd5a074f0372a3d5cff705decd04377219dc133210fa060ceb3759b8",
+  "seed": 227,
+  "frozenHash": "ca04b40c898caa48970eb4ff083826ac5d506474fee4b3a1b48b3ddf6815ae32",
+  "frozenAt": "2026-09-21T05:14:29.469Z",
+  "candidate": {
+    "id": "L3676341650",
+    "macros": [
+      {
+        "name": "fn_2352281741",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "arg",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 50,
+        "sourceTasks": [
+          "meta-227-train-001",
+          "meta-227-train-002",
+          "meta-227-train-003",
+          "meta-227-train-005",
+          "meta-227-train-009",
+          "meta-227-train-020",
+          "meta-227-train-025",
+          "meta-227-train-027",
+          "meta-227-train-032",
+          "meta-227-train-036",
+          "meta-227-train-041",
+          "meta-227-train-048",
+          "meta-227-train-054",
+          "meta-227-train-057",
+          "meta-227-train-058",
+          "meta-227-train-066",
+          "meta-227-train-069",
+          "meta-227-train-072",
+          "meta-227-train-077",
+          "meta-227-train-099",
+          "meta-227-train-105",
+          "meta-227-train-113",
+          "meta-227-train-114",
+          "meta-227-train-115",
+          "meta-227-train-124",
+          "meta-227-train-128",
+          "meta-227-train-137",
+          "meta-227-train-139",
+          "meta-227-train-140",
+          "meta-227-train-152",
+          "meta-227-train-155",
+          "meta-227-train-038",
+          "meta-227-train-044",
+          "meta-227-train-051",
+          "meta-227-train-052",
+          "meta-227-train-056",
+          "meta-227-train-061",
+          "meta-227-train-080",
+          "meta-227-train-085",
+          "meta-227-train-088",
+          "meta-227-train-093",
+          "meta-227-train-101",
+          "meta-227-train-107",
+          "meta-227-train-123",
+          "meta-227-train-127",
+          "meta-227-train-146",
+          "meta-227-train-147",
+          "meta-227-train-148",
+          "meta-227-train-151",
+          "meta-227-train-160"
+        ],
+        "size": 4,
+        "definition": "fn_2352281741(a) = max(a, (-a))"
+      },
+      {
+        "name": "fn_3518208291",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "min",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "const",
+                  "value": 1,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 29,
+        "sourceTasks": [
+          "meta-227-train-015",
+          "meta-227-train-016",
+          "meta-227-train-021",
+          "meta-227-train-028",
+          "meta-227-train-029",
+          "meta-227-train-030",
+          "meta-227-train-039",
+          "meta-227-train-042",
+          "meta-227-train-053",
+          "meta-227-train-064",
+          "meta-227-train-067",
+          "meta-227-train-081",
+          "meta-227-train-086",
+          "meta-227-train-091",
+          "meta-227-train-100",
+          "meta-227-train-103",
+          "meta-227-train-117",
+          "meta-227-train-121",
+          "meta-227-train-131",
+          "meta-227-train-136",
+          "meta-227-train-142",
+          "meta-227-train-154",
+          "meta-227-train-044",
+          "meta-227-train-052",
+          "meta-227-train-076",
+          "meta-227-train-094",
+          "meta-227-train-101",
+          "meta-227-train-119",
+          "meta-227-train-157"
+        ],
+        "size": 5,
+        "definition": "fn_3518208291(a) = max(0, min(a, 1))"
+      },
+      {
+        "name": "fn_3549247544",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 42,
+        "sourceTasks": [
+          "meta-227-train-007",
+          "meta-227-train-009",
+          "meta-227-train-011",
+          "meta-227-train-012",
+          "meta-227-train-013",
+          "meta-227-train-017",
+          "meta-227-train-018",
+          "meta-227-train-019",
+          "meta-227-train-022",
+          "meta-227-train-029",
+          "meta-227-train-034",
+          "meta-227-train-040",
+          "meta-227-train-049",
+          "meta-227-train-066",
+          "meta-227-train-068",
+          "meta-227-train-071",
+          "meta-227-train-072",
+          "meta-227-train-073",
+          "meta-227-train-075",
+          "meta-227-train-078",
+          "meta-227-train-086",
+          "meta-227-train-091",
+          "meta-227-train-103",
+          "meta-227-train-105",
+          "meta-227-train-109",
+          "meta-227-train-116",
+          "meta-227-train-120",
+          "meta-227-train-121",
+          "meta-227-train-131",
+          "meta-227-train-142",
+          "meta-227-train-144",
+          "meta-227-train-150",
+          "meta-227-train-154",
+          "meta-227-train-074",
+          "meta-227-train-094",
+          "meta-227-train-101",
+          "meta-227-train-107",
+          "meta-227-train-110",
+          "meta-227-train-126",
+          "meta-227-train-127",
+          "meta-227-train-138",
+          "meta-227-train-146"
+        ],
+        "size": 4,
+        "definition": "fn_3549247544(a) = max(0, (-a))"
+      }
+    ],
+    "edit": "incumbent-add",
+    "parents": [
+      "L4238592834"
+    ],
+    "features": [
+      3,
+      13,
+      1,
+      121,
+      50,
+      140,
+      5,
+      7
+    ]
+  }
+}

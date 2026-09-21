@@ -1,0 +1,229 @@
+{
+  "protocolHash": "7ee83a84bd5a074f0372a3d5cff705decd04377219dc133210fa060ceb3759b8",
+  "seed": 211,
+  "frozenHash": "3a32ce9a9988588021458da03e7fa6400c4a3d3f8239327021568c0590e47fc9",
+  "frozenAt": "2026-09-21T05:04:39.360Z",
+  "candidate": {
+    "id": "L75276018",
+    "macros": [
+      {
+        "name": "fn_2293102539",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "min",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "op": "arg",
+                      "value": 0,
+                      "args": []
+                    },
+                    {
+                      "op": "const",
+                      "value": 1,
+                      "args": []
+                    }
+                  ]
+                },
+                {
+                  "op": "const",
+                  "value": 1,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 11,
+        "sourceTasks": [
+          "meta-211-train-102",
+          "meta-211-train-105",
+          "meta-211-train-116",
+          "meta-211-train-153",
+          "meta-211-train-001",
+          "meta-211-train-069",
+          "meta-211-train-026",
+          "meta-211-train-094",
+          "meta-211-train-141",
+          "meta-211-train-146",
+          "meta-211-train-155"
+        ],
+        "size": 7,
+        "definition": "fn_2293102539(a) = max(0, min((a + 1), 1))"
+      },
+      {
+        "name": "fn_2352281741",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "arg",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 44,
+        "sourceTasks": [
+          "meta-211-train-004",
+          "meta-211-train-007",
+          "meta-211-train-009",
+          "meta-211-train-023",
+          "meta-211-train-024",
+          "meta-211-train-025",
+          "meta-211-train-027",
+          "meta-211-train-046",
+          "meta-211-train-047",
+          "meta-211-train-049",
+          "meta-211-train-051",
+          "meta-211-train-055",
+          "meta-211-train-057",
+          "meta-211-train-060",
+          "meta-211-train-062",
+          "meta-211-train-064",
+          "meta-211-train-065",
+          "meta-211-train-081",
+          "meta-211-train-087",
+          "meta-211-train-089",
+          "meta-211-train-091",
+          "meta-211-train-104",
+          "meta-211-train-109",
+          "meta-211-train-118",
+          "meta-211-train-137",
+          "meta-211-train-140",
+          "meta-211-train-144",
+          "meta-211-train-148",
+          "meta-211-train-154",
+          "meta-211-train-080",
+          "meta-211-train-100",
+          "meta-211-train-120",
+          "meta-211-train-006",
+          "meta-211-train-011",
+          "meta-211-train-026",
+          "meta-211-train-042",
+          "meta-211-train-044",
+          "meta-211-train-048",
+          "meta-211-train-061",
+          "meta-211-train-063",
+          "meta-211-train-095",
+          "meta-211-train-117",
+          "meta-211-train-131",
+          "meta-211-train-159"
+        ],
+        "size": 4,
+        "definition": "fn_2352281741(a) = max(a, (-a))"
+      },
+      {
+        "name": "fn_3549247544",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 47,
+        "sourceTasks": [
+          "meta-211-train-008",
+          "meta-211-train-012",
+          "meta-211-train-014",
+          "meta-211-train-021",
+          "meta-211-train-031",
+          "meta-211-train-032",
+          "meta-211-train-033",
+          "meta-211-train-034",
+          "meta-211-train-038",
+          "meta-211-train-041",
+          "meta-211-train-045",
+          "meta-211-train-052",
+          "meta-211-train-053",
+          "meta-211-train-058",
+          "meta-211-train-068",
+          "meta-211-train-073",
+          "meta-211-train-075",
+          "meta-211-train-083",
+          "meta-211-train-088",
+          "meta-211-train-089",
+          "meta-211-train-092",
+          "meta-211-train-093",
+          "meta-211-train-097",
+          "meta-211-train-106",
+          "meta-211-train-108",
+          "meta-211-train-119",
+          "meta-211-train-124",
+          "meta-211-train-129",
+          "meta-211-train-130",
+          "meta-211-train-133",
+          "meta-211-train-139",
+          "meta-211-train-152",
+          "meta-211-train-158",
+          "meta-211-train-160",
+          "meta-211-train-013",
+          "meta-211-train-015",
+          "meta-211-train-054",
+          "meta-211-train-070",
+          "meta-211-train-078",
+          "meta-211-train-079",
+          "meta-211-train-082",
+          "meta-211-train-096",
+          "meta-211-train-100",
+          "meta-211-train-103",
+          "meta-211-train-147",
+          "meta-211-train-149",
+          "meta-211-train-095"
+        ],
+        "size": 4,
+        "definition": "fn_3549247544(a) = max(0, (-a))"
+      }
+    ],
+    "edit": "retain",
+    "parents": [
+      "L75276018"
+    ],
+    "features": [
+      3,
+      15,
+      1,
+      102,
+      47,
+      153,
+      6,
+      9
+    ]
+  }
+}
