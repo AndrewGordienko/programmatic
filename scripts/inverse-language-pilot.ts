@@ -8,14 +8,18 @@ import { inverseSearch, type InverseResult } from "../src/joint/inverse";
 import { genome, type Genome } from "../src/joint/genome";
 import type { JointPolicy } from "../src/joint/policy";
 import { Random } from "../src/engine/random";
+import { languagePopulation } from "../src/joint/population";
 
-const v3 = process.argv.includes("--v3"),
+const v4 = process.argv.includes("--v4"),
+  v3 = v4 || process.argv.includes("--v3"),
   v2 = v3 || process.argv.includes("--v2"),
-  version = v3
-    ? "inverse-language-pilot-v3"
-    : v2
-      ? "inverse-language-pilot-v2"
-      : "inverse-language-pilot-v1";
+  version = v4
+    ? "inverse-language-pilot-v4"
+    : v3
+      ? "inverse-language-pilot-v3"
+      : v2
+        ? "inverse-language-pilot-v2"
+        : "inverse-language-pilot-v1";
 const out = `output/joint/${version}.json`;
 if (existsSync(out)) throw new Error("Preserve completed pilot");
 const start = performance.now(),
@@ -79,9 +83,26 @@ if (v3) {
   );
   for (const t of Object.values(diagnostic).flat()) exclude.add(t.signature);
 }
+if (v4) {
+  const old = JSON.parse(
+    readFileSync("output/joint/inverse-language-pilot-v3.json", "utf8"),
+  );
+  for (const sig of Object.values(old.splitSignatures).flat() as string[])
+    exclude.add(sig);
+}
 const suite = makeTasks(
-  { training: 1, development: 36, confirmation: 48, testing: 100 },
-  { seed: v3 ? 53092128 : v2 ? 53092127 : 53092126, exclude, prefix: version },
+  {
+    training: 1,
+    development: v4 ? 100 : 36,
+    confirmation: v4 ? 80 : 48,
+    testing: v4 ? 200 : 100,
+  },
+  {
+    seed: v4 ? 53092129 : v3 ? 53092128 : v2 ? 53092127 : 53092126,
+    exclude,
+    prefix: version,
+    ...(v4 ? { additionalExamples: { count: 50, range: 5 } } : {}),
+  },
 );
 // Restricted unary-library experiment: the current inverse solver only supports
 // unary invented productions in its forward fragment stage. No oracle concepts.
@@ -110,6 +131,28 @@ while (languages.size < (v3 ? 192 : 128)) {
     "multi-add",
   );
   languages.set(g.id, g);
+}
+if (v4) {
+  const parent = JSON.parse(
+    readFileSync("output/joint/inverse-language-pilot-v3.json", "utf8"),
+  );
+  const parents = [
+    ...new Map(
+      [
+        parent.candidate,
+        ...parent.medium.slice(0, 4).map((r: { genome: Genome }) => r.genome),
+      ].map((g) => [g.id, g]),
+    ).values(),
+  ] as Genome[];
+  languages.clear();
+  for (const g of languagePopulation(
+    parents,
+    pool,
+    815724,
+    512,
+    corpus.summary.solvedTasks,
+  ))
+    languages.set(g.id, g);
 }
 const searchOptions = v3
   ? {
@@ -172,7 +215,7 @@ const shortlisted = [
       base,
       ...screen
         .sort((a, b) => b.score - a.score)
-        .slice(0, 16)
+        .slice(0, v4 ? 32 : 16)
         .map((r) => r.genome),
     ].map((g) => [g.id, g]),
   ).values(),
@@ -181,9 +224,23 @@ console.log(
   `Confirming ${shortlisted.length} development finalists on fresh stage tasks.`,
 );
 const medium = shortlisted
-  .map((g) => race(g, suite.development.slice(12), 512, 3))
+  .map((g) =>
+    race(g, suite.development.slice(12, v4 ? 44 : undefined), 512, v4 ? 2 : 3),
+  )
   .sort((a, b) => b.score - a.score);
-const candidate = medium[0].genome;
+const full = v4
+  ? [
+      ...new Map(
+        [base, ...medium.slice(0, 8).map((r) => r.genome)].map((g) => [
+          g.id,
+          g,
+        ]),
+      ).values(),
+    ]
+      .map((g) => race(g, suite.development.slice(44), 512, 3))
+      .sort((a, b) => b.score - a.score)
+  : [];
+const candidate = (v4 ? full : medium)[0].genome;
 const frozenHash = createHash("sha256")
   .update(JSON.stringify({ candidate, policy }))
   .digest("hex");
@@ -263,11 +320,14 @@ const summary = Object.fromEntries(
     ];
   }),
 );
-const races = [...screen, ...medium, ...confirmation],
+const races = [...screen, ...medium, ...full, ...confirmation],
   cost = {
     parentCost: v3
       ? JSON.parse(
-          readFileSync("output/joint/inverse-language-pilot-v2.json", "utf8"),
+          readFileSync(
+            `output/joint/inverse-language-pilot-v${v4 ? 3 : 2}.json`,
+            "utf8",
+          ),
         ).cost
       : undefined,
     corpus: corpus.summary,
@@ -295,8 +355,13 @@ writeFileSync(
   out,
   JSON.stringify({
     version,
+    specification: {
+      examples: v4 ? 75 : 25,
+      extraIndependentInputs: v4 ? 50 : 0,
+      checks: 65,
+    },
     searchOptions,
-    note: `Shared fixed prior. Novel relative to recorded prior/dream/calibration functions by 97-probe signatures, not formal equivalence. ${languages.size} languages -> 16 fresh-stage finalists plus base -> one frozen candidate -> 48 confirmation tasks -> 100 tests. Candidate evaluated even when rejected. No oracle labels in selection. No surrogate savings claimed. Structural work units heterogeneous; wall time separately reported. V1/V2 restrict to unary libraries. V2 excludes all v1 tasks and uses equal 96-node expanded/active limits. V3 supports arity 1–3, re-solves training with the v2 learned library, records parent discovery costs, excludes v1/v2 and structural calibration tasks, and uses generic partial-application inverse semantics.`,
+    note: `Shared fixed prior. Novel relative to recorded prior/dream/calibration functions by 97-probe signatures, not formal equivalence. ${languages.size} languages -> ${v4 ? "32 medium and 8 full fresh-stage finalists" : "16 fresh-stage finalists"} plus base -> one frozen candidate -> ${suite.confirmation.length} confirmation tasks -> ${suite.testing.length} tests. Candidate evaluated even when rejected. No oracle labels in selection. No surrogate savings claimed. Structural work units heterogeneous; wall time separately reported. V1/V2 restrict to unary libraries. V2 excludes all v1 tasks and uses equal 96-node expanded/active limits. V3 supports arity 1–3, re-solves training with the v2 learned library, records parent discovery costs, excludes v1/v2 and structural calibration tasks, and uses generic partial-application inverse semantics. V4 reserves every incumbent addition before random population edits, excludes v3 task functions, uses 100 development tasks in three stages, and adds 50 independent observations to each task equally for all arms. This changes the task specification and is not directly comparable to the earlier 25-observation pilots.`,
     exposure,
     excludedSignatures: exclude.size,
     splitSignatures: Object.fromEntries(
@@ -310,6 +375,7 @@ writeFileSync(
     cost,
     screen,
     medium,
+    full,
     confirmation,
     trials,
   }),

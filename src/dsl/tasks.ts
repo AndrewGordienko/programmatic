@@ -67,11 +67,27 @@ export function makeTasks(
     seed?: number;
     exclude?: ReadonlySet<string>;
     prefix?: string;
+    additionalExamples?: { count: number; range: number };
   } = {},
 ) {
   const rng = new Random(options.seed ?? 812731),
     probes = inputs(903141, 97, 7);
-  const trainInputs = inputs(301, 25, 3),
+  const additional = options.additionalExamples;
+  if (
+    additional &&
+    (!Number.isInteger(additional.count) ||
+      additional.count < 9 ||
+      additional.count > 1000 ||
+      !Number.isFinite(additional.range) ||
+      additional.range <= 0)
+  )
+    throw new Error(
+      "Additional observations require 9–1000 inputs and a positive finite range",
+    );
+  const trainInputs = [
+      ...inputs(301, 25, 3),
+      ...(additional ? inputs(602, additional.count, additional.range) : []),
+    ],
     checkInputs = inputs(809, 65, 5);
   const seen = new Set<string>(options.exclude),
     tasks: Task[] = [];

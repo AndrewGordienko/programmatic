@@ -197,3 +197,36 @@ A separate population audit found that retaining the incumbent while randomly sa
 Training-only extension calibration now explicitly compares every unary addition to the incumbent. Clamp reaches the shortlist, but on the next 28 training tasks × three seeds it solves 62–64/84 versus 66/84 for the incumbent. Generic monotone-only inverse semantics do not materially change that outcome; they remain optional. The proposal gap was real, but fixing it has not yet yielded another accepted concept.
 
 Increasing the structural-search cap from 4,096 to 65,536 operations (with depth raised from three to five and the complete-proposal cap held at 512) changes the calibration library result only 222→223/330. Longer solves stay 3/30. The intermediate setting regresses. `inverse-depth-calibration-v1.json` records the cost/coverage tradeoff; these are adaptive diagnostics and wall timing shared the machine with routine checks. More depth/compute alone is not an effective fix.
+
+## Specification ambiguity and rejected solver alternatives
+
+The nested calibration exposes an observation problem separately from search: with 25 supplied I/O pairs, the guided inverse/library arm fits 25/30 trials exactly, but only 9/30 pass the independent checks. Increasing search depth cannot distinguish functions that agree on all supplied examples.
+
+An opt-in protocol now preserves those original 25 pairs and supplies additional independent inputs to both arms. Checks remain hidden. With 50 extra pairs, the same adaptive calibration changes base solves **193→209/330** and library solves **222→244/330**; nested library solves change **9→16/30**, and fitted nested programs now agree with checks. With 150 extra pairs, library solves reach 256/330, still only 3/30 longer solves. This supplies more information and increases point-evaluation cost: it is **not an algorithmic gain at the old observation budget**. Task identities/signatures stay unchanged. These adaptive results are in `inverse-observation-calibration-v1.json`.
+
+Increasing the fragment bank and additive-join budget helps only slightly: on the 60 structural calibration trials with 75 observations, the largest tested configuration changes library solves 19→23, including longer 3→6/30, while spending roughly an order of magnitude more structural work. It remains disabled.
+
+`parametric.ts` and `parametric-search.ts` test joint fitting of bounded integer affine arguments inside evolving program structures. Automatic derivatives and damped linear-system steps operate on the actual DSL body; there are no hidden-concept templates. Every floating or rounded fitting execution is charged against the program budget, and derivative/linear-algebra work and wall time are separate. Derivatives, expanded execution and check isolation have independent tests. At 2,048 executions on the 50-task adaptive sample, base/library solve **30/27**; simultaneous two-production mutations give **27/26**. Both variants solve zero longer tasks. They are retained but **not promoted**.
+
+A separate optional Python prototype uses [Z3](https://github.com/Z3Prover/z3) for bounded piecewise-affine circuits. Both arms receive affine leaves and exclude interior nonlinear products; this is a restricted synthesis heuristic, not the full base grammar. It incrementally adds counterexamples from the supplied observations only, records solver calls/statistics, and evaluates independent checks after returning a program. The seven-task pilot at a nominal three-second task cap solves **1/7 in both arms**. Encoding time is included in measured wall time; the timeout is soft because construction cannot be interrupted inside a stage. Solver effort is not disguised as a single cheap program evaluation. This prototype is also unpromoted.
+
+Reproduce the optional constraint diagnostic with `python3 -m venv .venv-research`, `.venv-research/bin/python -m pip install -r requirements-smt.txt`, then `.venv-research/bin/python scripts/constraint-synthesis.py --input output/joint/constraint-input-v1.json --output <new-output-path>`. Existing artifacts are never overwritten. None of these alternatives supplies new final evidence for DSL transfer.
+
+## Fourth fresh pilot: a third abstraction, with mixed transfer
+
+V4 supplies **75 observations** to every task in every arm. It evaluates 512 libraries, explicitly including additions to the incumbent, through 12-task screening, 32-task medium races and 56-task full development races. It freezes the winning library and shared policy before 80 confirmation tasks and 200 final tasks × three optimizer seeds. All v1–v3 task functions, prior/dream functions and the structural calibration sample are excluded by the same 97-probe signature audit. This remains one training lineage, not independent meta-training replication.
+
+Selection adds `fn_56758583(a,b) = max(a + min(b,1), a)` to magnitude and positive-part. Algebraically, this is `a + clamp01(b)`; the concept name is an interpretation after selection. The proposal came from synthesized training programs. It passes independent confirmation with work-utility gain 25.30 pp and the predeclared lower-bound estimate 18.42 pp before complexity penalty.
+
+| V4 final arm                 | Solved / 600 | Work-curve AUC | Search work | Wall time |
+| ---------------------------- | -----------: | -------------: | ----------: | --------: |
+| Base, uniform                |          110 |         10.78% |   2,238,374 |    8.60 s |
+| Learned library, uniform     |          253 |         31.36% |   1,761,392 |    7.53 s |
+| Base, shared frozen policy   |          201 |         22.95% |   1,929,917 |    8.06 s |
+| Learned library, same policy |          313 |         37.62% |   1,607,515 |    6.88 s |
+
+The guided solve-rate gain is **18.67 pp [13.0, 24.17]** and work-AUC gain **14.67 pp [10.64, 18.67]**, using descriptive task-cluster bootstrap intervals. Invented functions occur in 308/313 successful learned-library trials. Removing all macros gives the matched base/shared-policy arm.
+
+Transfer is mixed: related solves improve 123→228/360; nested declines **78→71/120**, a difference of −5.83 pp [−15.0, 2.5]; longer improves **0→14/120**, +11.67 pp [3.33, 21.67]. This is the first pilot with a positive longer-composition interval, but it does not establish uniform structural improvement or robustness across independently learned languages. V4 changes both selection and observation protocol, so its score cannot be treated as a causal improvement over v3.
+
+Complete proposals again increase (about 83 per task) while structural work and measured time decrease. The cumulative accounting projects **76,937 future tasks** for search-work payback and a lower-bound **70,802 tasks** for recorded wall costs; neither is observed amortization. These conservative projections include shared prior costs, even in the comparison where both arms use that same prior. A future accounting should separate shared pretraining from incremental language-discovery costs, while still displaying both. Earlier research/calibration overhead is not fully charged by these estimates. No surrogate compute savings or off-road transfer have been demonstrated.

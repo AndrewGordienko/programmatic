@@ -20,7 +20,7 @@ const intervals = (xs: number[], seed: number) => {
     tasks: xs.length,
   };
 };
-const reports = [1, 2, 3].map((version) => {
+const reports = [1, 2, 3, 4].map((version) => {
   const r = JSON.parse(
     readFileSync(
       `output/joint/inverse-language-pilot-v${version}.json`,

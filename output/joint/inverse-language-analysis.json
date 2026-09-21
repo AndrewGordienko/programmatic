@@ -1043,6 +1043,354 @@
         "workSavingsRobust": true,
         "wallSavingsRobust": true
       }
+    },
+    {
+      "version": 4,
+      "accepted": true,
+      "definitions": [
+        "fn_2352281741(a) = max(a, (-a))",
+        "fn_56758583(a, b) = max((a + min(b, 1)), a)",
+        "fn_715306984(a) = max(a, 0)"
+      ],
+      "comparisons": {
+        "guided": {
+          "all": {
+            "solveGain": {
+              "mean": 0.18666666666666665,
+              "lower": 0.13,
+              "upper": 0.24166666666666672,
+              "tasks": 200
+            },
+            "workAucGain": {
+              "mean": 0.14665762442129635,
+              "lower": 0.10640625,
+              "upper": 0.18665328414351848,
+              "tasks": 200
+            },
+            "programAucGain": {
+              "mean": 0.08121744791666666,
+              "lower": 0.03265950520833334,
+              "upper": 0.12911132812499995,
+              "tasks": 200
+            },
+            "workSaving": {
+              "mean": 537.3366666666666,
+              "lower": 371.9016666666665,
+              "upper": 701.8649999999999,
+              "tasks": 200
+            },
+            "wallSavingMs": {
+              "mean": 1.959837036666478,
+              "lower": 1.2101372416669867,
+              "upper": 2.696364393332866,
+              "tasks": 200
+            },
+            "programProposalSaving": {
+              "mean": -83.33833333333332,
+              "lower": -86.68500000000002,
+              "upper": -79.97166666666664,
+              "tasks": 200
+            }
+          },
+          "Related compositions": {
+            "solveGain": {
+              "mean": 0.29166666666666663,
+              "lower": 0.21666666666666665,
+              "upper": 0.3694444444444444,
+              "tasks": 120
+            },
+            "workAucGain": {
+              "mean": 0.23296079282407411,
+              "lower": 0.18086178626543212,
+              "upper": 0.28565116222993836,
+              "tasks": 120
+            },
+            "programAucGain": {
+              "mean": 0.1579318576388889,
+              "lower": 0.09105360243055555,
+              "upper": 0.22605794270833326,
+              "tasks": 120
+            },
+            "workSaving": {
+              "mean": 897.4916666666663,
+              "lower": 684.7805555555555,
+              "upper": 1114.1777777777775,
+              "tasks": 120
+            },
+            "wallSavingMs": {
+              "mean": 3.478790188888523,
+              "lower": 2.506259394444108,
+              "upper": 4.480914327778131,
+              "tasks": 120
+            },
+            "programProposalSaving": {
+              "mean": -83.11666666666663,
+              "lower": -87.44722222222218,
+              "upper": -78.90277777777781,
+              "tasks": 120
+            }
+          },
+          "Nested compositions": {
+            "solveGain": {
+              "mean": -0.058333333333333334,
+              "lower": -0.15,
+              "upper": 0.024999999999999998,
+              "tasks": 40
+            },
+            "workAucGain": {
+              "mean": -0.04856409143518518,
+              "lower": -0.11920030381944442,
+              "upper": 0.015351924189814816,
+              "tasks": 40
+            },
+            "programAucGain": {
+              "mean": -0.15338541666666666,
+              "lower": -0.23330078125000003,
+              "upper": -0.08274739583333336,
+              "tasks": 40
+            },
+            "workSaving": {
+              "mean": -251.17499999999995,
+              "lower": -548.1333333333332,
+              "upper": 21.166666666666718,
+              "tasks": 40
+            },
+            "wallSavingMs": {
+              "mean": -0.9141884833329333,
+              "lower": -2.296654799999428,
+              "upper": 0.3634674666665276,
+              "tasks": 40
+            },
+            "programProposalSaving": {
+              "mean": -74.26666666666665,
+              "lower": -81.625,
+              "upper": -66.53333333333333,
+              "tasks": 40
+            }
+          },
+          "Longer expressions": {
+            "solveGain": {
+              "mean": 0.11666666666666665,
+              "lower": 0.03333333333333333,
+              "upper": 0.21666666666666665,
+              "tasks": 40
+            },
+            "workAucGain": {
+              "mean": 0.08296983506944447,
+              "lower": 0.021690538194444445,
+              "upper": 0.1549895109953704,
+              "tasks": 40
+            },
+            "programAucGain": {
+              "mean": 0.08567708333333333,
+              "lower": 0.022509765625,
+              "upper": 0.16095377604166666,
+              "tasks": 40
+            },
+            "workSaving": {
+              "mean": 245.38333333333338,
+              "lower": -6.59166666666664,
+              "upper": 541.2916666666667,
+              "tasks": 40
+            },
+            "wallSavingMs": {
+              "mean": 0.27700309999975925,
+              "lower": -0.93054307500012,
+              "upper": 1.6595023833329225,
+              "tasks": 40
+            },
+            "programProposalSaving": {
+              "mean": -93.07500000000002,
+              "lower": -100.43333333333337,
+              "upper": -85.79166666666666,
+              "tasks": 40
+            }
+          }
+        },
+        "uniform": {
+          "all": {
+            "solveGain": {
+              "mean": 0.23833333333333337,
+              "lower": 0.17000000000000007,
+              "upper": 0.30500000000000005,
+              "tasks": 200
+            },
+            "workAucGain": {
+              "mean": 0.2058756510416667,
+              "lower": 0.15556568287037043,
+              "upper": 0.25666811342592594,
+              "tasks": 200
+            },
+            "programAucGain": {
+              "mean": 0.138505859375,
+              "lower": 0.08458658854166665,
+              "upper": 0.19078776041666665,
+              "tasks": 200
+            },
+            "workSaving": {
+              "mean": 794.9700000000001,
+              "lower": 588.2683333333331,
+              "upper": 1004.2849999999994,
+              "tasks": 200
+            },
+            "wallSavingMs": {
+              "mean": 1.779049290000523,
+              "lower": 0.8518201866671005,
+              "upper": 2.6884841616679234,
+              "tasks": 200
+            },
+            "programProposalSaving": {
+              "mean": -88.1666666666667,
+              "lower": -91.07333333333332,
+              "upper": -85.17666666666666,
+              "tasks": 200
+            }
+          },
+          "Related compositions": {
+            "solveGain": {
+              "mean": 0.41388888888888886,
+              "lower": 0.33611111111111097,
+              "upper": 0.49722222222222207,
+              "tasks": 120
+            },
+            "workAucGain": {
+              "mean": 0.33374927662037035,
+              "lower": 0.2726447964891975,
+              "upper": 0.39558437017746895,
+              "tasks": 120
+            },
+            "programAucGain": {
+              "mean": 0.2701171875,
+              "lower": 0.2085611979166666,
+              "upper": 0.3323730468750001,
+              "tasks": 120
+            },
+            "workSaving": {
+              "mean": 1320.9083333333333,
+              "lower": 1067.9666666666674,
+              "upper": 1577.9083333333338,
+              "tasks": 120
+            },
+            "wallSavingMs": {
+              "mean": 4.154459630556084,
+              "lower": 3.1167376055556018,
+              "upper": 5.191865408333775,
+              "tasks": 120
+            },
+            "programProposalSaving": {
+              "mean": -87.66944444444445,
+              "lower": -91.32499999999999,
+              "upper": -84.13611111111112,
+              "tasks": 120
+            }
+          },
+          "Nested compositions": {
+            "solveGain": {
+              "mean": -0.1166666666666667,
+              "lower": -0.26666666666666666,
+              "upper": 0.03333333333333335,
+              "tasks": 40
+            },
+            "workAucGain": {
+              "mean": -0.023502604166666673,
+              "lower": -0.13080873842592594,
+              "upper": 0.08545102719907408,
+              "tasks": 40
+            },
+            "programAucGain": {
+              "mean": -0.16767578125000004,
+              "lower": -0.2940755208333334,
+              "upper": -0.04124348958333333,
+              "tasks": 40
+            },
+            "workSaving": {
+              "mean": -101.6333333333334,
+              "lower": -544.0083333333334,
+              "upper": 348.07500000000005,
+              "tasks": 40
+            },
+            "wallSavingMs": {
+              "mean": -2.4856541999988013,
+              "lower": -5.039334041665643,
+              "upper": -0.2051336833329211,
+              "tasks": 40
+            },
+            "programProposalSaving": {
+              "mean": -79.18333333333334,
+              "lower": -85.90833333333333,
+              "upper": -72.04166666666666,
+              "tasks": 40
+            }
+          },
+          "Longer expressions": {
+            "solveGain": {
+              "mean": 0.06666666666666667,
+              "lower": 0,
+              "upper": 0.15,
+              "tasks": 40
+            },
+            "workAucGain": {
+              "mean": 0.05163302951388889,
+              "lower": 0,
+              "upper": 0.11538990162037037,
+              "tasks": 40
+            },
+            "programAucGain": {
+              "mean": 0.049853515625,
+              "lower": 0,
+              "upper": 0.111767578125,
+              "tasks": 40
+            },
+            "workSaving": {
+              "mean": 113.75833333333341,
+              "lower": -99.575,
+              "upper": 378.28333333333353,
+              "tasks": 40
+            },
+            "wallSavingMs": {
+              "mean": -1.0824782416668313,
+              "lower": -1.9899702333327398,
+              "upper": 0.04370299166548626,
+              "tasks": 40
+            },
+            "programProposalSaving": {
+              "mean": -98.64166666666665,
+              "lower": -104.64166666666665,
+              "upper": -93.05833333333331,
+              "tasks": 40
+            }
+          }
+        }
+      },
+      "jointSolved": {
+        "base-guided": {
+          "tasks": 53,
+          "medianProgramProposals": 49,
+          "medianWork": 1124,
+          "medianWallMs": 5.022458000006736
+        },
+        "candidate-guided": {
+          "tasks": 53,
+          "medianProgramProposals": 145,
+          "medianWork": 844,
+          "medianWallMs": 4.32979200000409
+        }
+      },
+      "cost": {
+        "selectionWork": 37626887,
+        "corpusWork": 3587686,
+        "stagesIncludingParents": 3,
+        "additionalPriorBootstrapEvaluations": 126086,
+        "priorTrainingUpdates": 3440640,
+        "wallCostLowerBoundMs": 138759.10144704237
+      },
+      "amortization": {
+        "note": "Extrapolation from task-clustered means, not an observed future stream. Heterogeneous structural units are not CPU equivalents. Wall cost is a lower bound: earlier bootstrap wall time, calibration/development research and runner overhead are not fully available. No robust finite break-even if saving interval includes zero.",
+        "searchWorkBreakEven": 76937,
+        "wallBreakEvenLowerBound": 70802,
+        "workSavingsRobust": true,
+        "wallSavingsRobust": true
+      }
     }
   ]
 }

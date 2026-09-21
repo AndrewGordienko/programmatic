@@ -3,7 +3,8 @@ import type { Expr } from "../dsl/types";
 import { interval } from "./semantics";
 const constant = (value: number): Expr => ({ op: "const", value, args: [] });
 const unknownArgs = (e: Expr): Expr =>
-  e.op === "arg"
+  e.op === "arg" ||
+  !["const", "add", "sub", "mul", "min", "max", "neg"].includes(e.op)
     ? { op: "?", args: [] }
     : { ...e, args: e.args.map(unknownArgs) };
 /** Small explicit algebraic rewrites, not an oracle vocabulary. */
@@ -11,7 +12,10 @@ export function canonical(e: Expr): Expr {
   if (!e.args.length) return e;
   const args = e.args.map(canonical),
     [a, b] = args;
-  if (args.every((v) => v.op === "const")) {
+  if (
+    ["add", "sub", "mul", "min", "max", "neg"].includes(e.op) &&
+    args.every((v) => v.op === "const")
+  ) {
     const value = evalExpr({ ...e, args }, []);
     if (Number.isFinite(value)) return constant(value);
   }

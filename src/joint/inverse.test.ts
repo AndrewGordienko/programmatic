@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { Random } from "../engine/random";
-import { inputs } from "../dsl/tasks";
+import { inputs, makeTasks } from "../dsl/tasks";
 import {
   compile,
   valid,
@@ -27,6 +27,124 @@ import { encoder, productions, type JointPolicy } from "./policy";
 import { specificationFeatures } from "./specification";
 import { languagePopulation } from "./population";
 import { genome } from "./genome";
+import {
+  affineSkeleton,
+  fitAffineSkeleton,
+  instantiateAffine,
+} from "./parametric";
+import { parametricSearch } from "./parametric-search";
+
+test("richer observation protocol preserves task identity and hides independent checks", () => {
+  const counts = {
+    training: 10,
+    development: 10,
+    confirmation: 10,
+    testing: 10,
+  };
+  const base = makeTasks(counts, { seed: 3721 }),
+    rich = makeTasks(counts, {
+      seed: 3721,
+      additionalExamples: { count: 50, range: 5 },
+    });
+  const a = Object.values(base).flat(),
+    b = Object.values(rich).flat();
+  for (let i = 0; i < a.length; i++) {
+    assert.equal(a[i].signature, b[i].signature);
+    assert.deepEqual(a[i].checks, b[i].checks);
+    assert.deepEqual(a[i].examples, b[i].examples.slice(0, 25));
+    assert.equal(b[i].examples.length, 75);
+  }
+});
+
+test("parametric search respects execution caps and final checks cannot steer fitting", () => {
+  const t = task((x, y) => x - y + 1);
+  const a = parametricSearch(t, [], undefined, 381, 128);
+  const b = parametricSearch(
+    { ...t, checks: t.checks.map((e) => ({ ...e, output: e.output + 100 })) },
+    [],
+    undefined,
+    381,
+    128,
+  );
+  assert.ok(a.solved);
+  assert.equal(b.solved, false);
+  assert.deepEqual(a.tree, b.tree);
+  assert.equal(a.evaluations, b.evaluations);
+  assert.ok(a.evaluations <= 128 && a.parameterWork > 0);
+  assert.equal(a.exampleExecutions, a.evaluations * t.examples.length);
+});
+
+test("joint affine fitting differentiates shared macro arguments and counts every executed parameter proposal", () => {
+  const a = { op: "arg", value: 0, args: [] };
+  const magnitude = abstraction(
+    { op: "max", args: [a, { op: "neg", args: [a] }] },
+    1,
+    [],
+    true,
+  )!;
+  const template = {
+    op: "add",
+    args: [
+      { op: magnitude.name, args: [{ op: "?", value: 0, args: [] }] },
+      { op: "?", value: 1, args: [] },
+    ],
+  };
+  const weights = [1.2, -0.4, 0.7, -0.2, 1.3, -1],
+    input = [1.8, -0.9];
+  const model = affineSkeleton(template, [magnitude]);
+  const row = model.evaluate(weights, input);
+  for (let i = 0; i < weights.length; i++) {
+    const plus = [...weights],
+      minus = [...weights];
+    plus[i] += 1e-6;
+    minus[i] -= 1e-6;
+    assert.ok(
+      Math.abs(
+        row.derivative[i] -
+          (model.evaluate(plus, input).value -
+            model.evaluate(minus, input).value) /
+            2e-6,
+      ) < 1e-6,
+    );
+  }
+  assert.ok(
+    Math.abs(
+      row.value -
+        evalExpr(instantiateAffine(template, weights), input, [magnitude]),
+    ) < 1e-10,
+  );
+  let executions = 0,
+    work = 0;
+  const examples = inputs(4821, 75, 5).map((input) => ({
+    input,
+    output: Math.abs(input[0] - input[1]) + 2 * input[1] + 1,
+  }));
+  const fit = fitAffineSkeleton(
+    template,
+    [magnitude],
+    examples,
+    new Random(72),
+    {
+      restarts: 12,
+      steps: 24,
+      chargeEvaluation: () => ++executions <= 512,
+      chargeWork: (n) => {
+        work += n;
+        return true;
+      },
+    },
+  );
+  assert.ok(fit);
+  assert.ok(fit.error < 1e-8);
+  assert.ok(executions <= 512 && work > 0);
+  for (const input of inputs(8291, 100, 8))
+    assert.ok(
+      Math.abs(
+        evalExpr(fit.tree, input, [magnitude]) -
+          (Math.abs(input[0] - input[1]) + 2 * input[1] + 1),
+      ) < 1e-8,
+    );
+});
 
 test("inverse policy matches independent masked PyTorch inference for base and learned languages", () => {
   const folder = "output/joint/neural-inverse/";

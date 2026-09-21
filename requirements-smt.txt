@@ -1,0 +1,2 @@
+# Optional exploratory scalar constraint solver; not a browser/app dependency.
+z3-solver==5.1.0.0

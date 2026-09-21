@@ -159,6 +159,7 @@ export function inverseSearch(
     macroBindings?: number;
     joinBudget?: number;
     envelopePlanes?: number;
+    activeLimit?: number;
   } = {},
 ): InverseResult {
   if (!Number.isInteger(budget) || budget < 1)
@@ -396,7 +397,7 @@ export function inverseSearch(
       }
   }
   bank.sort((x, y) => x.error - y.error || x.size - y.size);
-  const active = bank.slice(0, 64),
+  const active = bank.slice(0, options.activeLimit ?? 64),
     ps = productions(macros),
     predict = encoder(policy, ps);
   const indexes = task.examples.map((_, i) =>
