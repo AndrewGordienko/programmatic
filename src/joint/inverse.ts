@@ -48,6 +48,7 @@ export type InverseResult = SearchResult & {
   fragmentPredictions: number;
   fragmentFeaturePairs: number;
   fragmentNeuralMultiplications: number;
+  debugFragments?: { tree: Expr; active: boolean }[];
 };
 const c = (value: number): Expr => ({ op: "const", value, args: [] });
 const a = (value: number): Expr => ({ op: "arg", value, args: [] });
@@ -171,6 +172,10 @@ export function inverseSearch(
     fragmentValue?: FragmentValueModel;
     fragmentPreserve?: number;
     fragmentWeight?: number;
+    debugBank?: boolean;
+    affineLattice?: number;
+    forwardFraction?: number;
+    sortForward?: boolean;
   } = {},
 ): InverseResult {
   if (!Number.isInteger(budget) || budget < 1)
@@ -378,8 +383,29 @@ export function inverseSearch(
       if (answer) break;
     }
   }
+  if (options.affineLattice && !answer) {
+    const grid = Array.from({ length: 17 }, (_, i) => i - 8);
+    const lattice = grid
+      .flatMap((x) => grid.flatMap((y) => grid.map((z) => [x, y, z])))
+      .filter((v) => v[0] || v[1])
+      .sort(
+        (x, y) =>
+          x.reduce((s, v) => s + Math.abs(v), 0) -
+          y.reduce((s, v) => s + Math.abs(v), 0),
+      );
+    let added = 0;
+    for (const coeff of lattice) {
+      if (added >= options.affineLattice || answer || !charge()) break;
+      const tree = plane(coeff);
+      if (syntax.has(key(tree))) continue;
+      evaluate(tree);
+      added++;
+    }
+  }
   // Unary productions are cheap forward links; definitions are arbitrary DSL bodies.
   const seeds = [...bank];
+  if (options.sortForward)
+    seeds.sort((a, b) => a.size - b.size || a.error - b.error);
   const unaryOps = [
     "neg",
     ...macros.filter((m) => m.arity === 1).map((m) => m.name),
@@ -388,7 +414,12 @@ export function inverseSearch(
     ? seeds.flatMap((row) => unaryOps.map((op) => ({ row, op })))
     : unaryOps.flatMap((op) => seeds.map((row) => ({ row, op })));
   for (const { row, op } of links) {
-    if (answer || evaluations >= Math.max(16, Math.floor(budget * 0.5))) break;
+    if (
+      answer ||
+      evaluations >=
+        Math.max(16, Math.floor(budget * (options.forwardFraction ?? 0.5)))
+    )
+      break;
     evaluate({ op, args: [row.tree] });
   }
   if (options.macroForward && !answer) {
@@ -775,6 +806,14 @@ export function inverseSearch(
     constraintChecks,
     constraintPoints,
     bankSize: bank.length,
+    ...(options.debugBank
+      ? {
+          debugFragments: bank.map((row) => ({
+            tree: row.tree,
+            active: active.includes(row),
+          })),
+        }
+      : {}),
     fragmentPredictions: fragmentScores.size,
     fragmentFeaturePairs: fragmentScores.size * task.examples.length,
     fragmentNeuralMultiplications:
