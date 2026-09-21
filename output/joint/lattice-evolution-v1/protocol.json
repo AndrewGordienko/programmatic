@@ -1,0 +1,95 @@
+{
+  "version": "lattice-evolution-v1",
+  "innerConfirmationHash": "75a76fd985886b1a429656847c7a26c0294d847fd79575049a9441458c7fdaca",
+  "config": {
+    "seeds": [
+      307,
+      311,
+      313,
+      317,
+      331,
+      337,
+      347,
+      349
+    ],
+    "training": 160,
+    "development": 96,
+    "confirmation": 80,
+    "testing": 200,
+    "additionalExamples": {
+      "count": 50,
+      "range": 5
+    },
+    "wakeBudget": 1024,
+    "finalBudget": 512,
+    "population": 256,
+    "shortlist": 12,
+    "parents": 4,
+    "complexityPenalty": 0.0005,
+    "rounds": [
+      {
+        "screen": 8,
+        "medium": 16,
+        "budget": 128,
+        "reps": 2
+      },
+      {
+        "screen": 8,
+        "medium": 16,
+        "budget": 256,
+        "reps": 2
+      },
+      {
+        "screen": 12,
+        "medium": 36,
+        "budget": 256,
+        "reps": 3
+      }
+    ],
+    "search": {
+      "diverseBeam": true,
+      "affineDifferences": 32,
+      "maxNodes": 96,
+      "semanticRank": 2,
+      "affineFits": 512,
+      "fitDedup": true,
+      "primitiveDifferences": true,
+      "macroForward": 48,
+      "macroBindings": 8,
+      "localAffineNeighbors": 6,
+      "lattice": true
+    }
+  },
+  "policyHash": "5dcdaf2a32ca0f78f9922da075043626e9a03f9747ccd289a4e24d628069a8ad",
+  "sourceHashes": {
+    "scripts/lattice-language-evolution.ts": "a9effa8bcfbdb4a1c55db7e19d41031cb0278e9d2fd77a2ca6df7bb64a49009a",
+    "src/joint/canonical.ts": "247c02c4b7979fb02ad325cf215cc67c5d1733be1db60ce21314661d276a04b0",
+    "src/joint/domains.ts": "9b17844fa7554c3563817407f5590443bf2ceb742fbef20567dbaf44116677fa",
+    "src/joint/dreams.ts": "740709475d2f1e0e7f5308e1d61bedc187e913013df8f6cb0ae57a5bc1b17d6a",
+    "src/joint/experiment.ts": "f287d514ef5e5054ff8a478fed4ee0215a85559f8d54de3ab523a733d87f573a",
+    "src/joint/fragment-value.ts": "f2f95ef7f58dc8ec27f1b30b74e60b680ae6a2cca5481d320f33302c7a60b316",
+    "src/joint/full-context.ts": "27925cc69f57f3cccf0008b7b1883acd1dd53d3f99776f976731d79325263176",
+    "src/joint/genome.ts": "34fba25bc1621ae4017ad49b19087d4f6425d40bbcdc8be8fd9091a2841d1927",
+    "src/joint/hole-value.ts": "59470aaae2ff8ef56451b68fd8736b6ae48c54707c8d0272c47f3f6bdc108996",
+    "src/joint/inventions.ts": "1296e00cd47566359728821ed929af602b2f3cc57f7a21562d7ddf39179a02be",
+    "src/joint/inverse.ts": "7f8eb30418116de150de4bd40c2f5e9156fc525144c457af0d757fc893add1e9",
+    "src/joint/joins.ts": "f3e3642f3d77bd8f7be702bb5f825506b2de1a41a8e2b0d636da38f9af261d66",
+    "src/joint/language-value.ts": "ad2107cbee9ce79d8637eefe7563fc01661fb37a64e779dda370588ffc3fcf88",
+    "src/joint/lattice.ts": "41c196e29753a12ca0d66025cd9005d71043e210e8c237a565ea3f7914e7892d",
+    "src/joint/parametric-search.ts": "9b240c95b99941aba4284d09df1a6f630dd16ab0d2b355ba364aa70151dae0b5",
+    "src/joint/parametric.ts": "72551437a90276b7d570c3d5023cd105f9977883e62c46dfc70155cee7c354c0",
+    "src/joint/policy.ts": "6ee7d8c2ada415437ce5b0bf46e693d06a66e6f9d6f9dab2f44a3087d0bbcc1a",
+    "src/joint/population.ts": "8295396f9cc8f9c4cd8ee4d5e22ee9c11af0d5505387b7985575c5266b196fee",
+    "src/joint/search.ts": "24ffe0157dbc837de579e24aa7468e23843c5098434bfe22cae3ddc734dec78b",
+    "src/joint/semantics.ts": "1a58306384ebd7ff44ed15af593382df6a0faea944edb3d1eab7c78729887094",
+    "src/joint/sparse.ts": "a8aba9c60a498d40a261acbb6477d8bb0fb63cd170fa5f40e8a67c9bed20ca76",
+    "src/joint/specification.ts": "92ccaf8a17aa30d4cc57950b8a3dae6439f95710d18085f4d4e940ed1dfdfe6a",
+    "src/dsl/expressions.ts": "c447d71a8c7f0d01808ac2d86ce1d1fbf035ae99206c08820701eb312260ec6b",
+    "src/dsl/tasks.ts": "19b7a3a90e0a82afa05e48eba7bba371768ac5604ae26e6c15ddf32d1337a25c",
+    "src/dsl/types.ts": "9d54d343d09dbdf551c913668b6309c7380731f9973aa26d02a0c9008bdca30c",
+    "src/engine/language.ts": "9b527053bacc4b9b46371b4f918de1a81ef2209151248cce75b18e757dc1888d",
+    "src/engine/random.ts": "3eff3b1c6ff5cd3ed0aa413ed2bd2f7d1b4e9dc3d4c0c244daaccb12317f475d"
+  },
+  "note": "Eight predeclared language-training runs from empty libraries with the independently confirmed local6+lattice inner solver. Shared frozen prior, unchanged population objective and acceptance criterion. No surrogate, oracle library or new neural training. All historical task functions, prior exposure, fresh inner development/confirmation and downstream-stream functions excluded from dev/confirmation/final. All eight runs retained. Four final arms at matched budgets. Report overall, nested and longer utility intervals independently, including rejection/fallback. Counts, point work, process CPU and observational wall separate; no claim of broad structural transfer unless both group intervals improve.",
+  "protocolHash": "4bbbbda2a2dde48eee4bafc542fa406a39b82c025a92c6f059c41edd0bd0ebea"
+}

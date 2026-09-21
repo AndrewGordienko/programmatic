@@ -14,6 +14,8 @@ Final evaluation uses 200 new functions × three search seeds × four arms: base
 
 Report overall solve rate and work-AUC, each structural group, prior ablations, macro usage/removal, accepted/rejected languages, cross-run function overlap, and uncertainty across meta-seeds. A broad structural-transfer claim requires positive uncertainty bounds for both nested and longer language gains. An overall gain alone cannot turn that gate green. Do not stop or alter the protocol because early seeds look favorable or unfavorable.
 
+The confirmation/consistency gate retains the previous 80% criterion: at least seven of eight runs must accept a language and at least seven must have positive final work-AUC gain, alongside a positive lower bound for the accepted-language aggregate. Eight runs remain a pilot for this changed solver, not twenty independent replications. Intervals resample meta-seed means; the shared prior remains a conditioning assumption.
+
 Charge all wake, selection and confirmation search. Preserve complete proposals, structural operations, point arithmetic, and process CPU time separately. Also retain wall time, but do not use elapsed-time pauses as compute evidence. Shared inner-policy pretraining and historical R&D are additional costs; no outer-value pretraining is required by this experiment. Any payback estimate from the final cohort is a projection, separate from the already observed original-solver downstream stream.
 
 Source and policy hashes are frozen in `output/joint/lattice-evolution-v1/protocol.json`. Resume only completed matching artifacts; changing the algorithm requires a new protocol version.
