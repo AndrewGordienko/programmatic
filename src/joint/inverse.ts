@@ -25,6 +25,7 @@ import {
 import { canonical } from "./canonical";
 import type { SearchResult } from "./search";
 import { additiveJoin } from "./joins";
+import { sparseCompose } from "./sparse";
 import { specificationFeatures } from "./specification";
 import {
   type Box,
@@ -176,6 +177,10 @@ export function inverseSearch(
     affineLattice?: number;
     forwardFraction?: number;
     sortForward?: boolean;
+    residualBuild?: number;
+    sparseWidth?: number;
+    sparseSteps?: number;
+    unaryFirst?: number;
   } = {},
 ): InverseResult {
   if (!Number.isInteger(budget) || budget < 1)
@@ -184,6 +189,7 @@ export function inverseSearch(
     rng = new Random(seed),
     limit = options.workBudget ?? budget * 8;
   const maxNodes = options.maxNodes ?? 31;
+  let localLimit = limit;
   let evaluations = 0,
     expansions = 0,
     linearFits = 0,
@@ -198,7 +204,9 @@ export function inverseSearch(
   const fittedPlanes = new Map<string, number[]>();
   const relations = new Map(
     macros
-      .filter((m) => m.arity === 1 && options.relational)
+      .filter(
+        (m) => m.arity === 1 && (options.relational || options.unaryFirst),
+      )
       .map((m) => {
         const pieces = linearPieces(m.body);
         return [
@@ -213,7 +221,7 @@ export function inverseSearch(
       }),
   );
   const charge = () => {
-    if (expansions >= limit) return false;
+    if (expansions >= localLimit) return false;
     expansions++;
     return true;
   };
@@ -609,6 +617,97 @@ export function inverseSearch(
         if (row && accepts(row)) return tree;
       }
   };
+  // Construct components against the current hole's output constraints rather
+  // than only the whole task. This is an optional, charged search heuristic.
+  const buildResidual = (spec: Box): Expr | undefined => {
+    const fixed = spec.low
+      .map((l, i) => ({ i, l, h: spec.high[i] }))
+      .filter((r) => Number.isFinite(r.l) && Math.abs(r.l - r.h) < 1e-8);
+    if (fixed.length < 4) return;
+    const local: Fragment[] = [],
+      localKeys = new Set<string>();
+    const accepts = (row: Fragment) =>
+      row.values.every((v, i) => {
+        constraintPoints++;
+        return contains(spec, i, v);
+      });
+    const insert = (tree: Expr) => {
+      const row = syntax.get(key(tree)) ?? evaluate(tree, false);
+      if (!row) return;
+      const k = key(row.tree);
+      if (!localKeys.has(k)) {
+        localKeys.add(k);
+        local.push(row);
+      }
+      return row;
+    };
+    for (let fit = 0; fit < (options.residualBuild ?? 0) && charge(); fit++) {
+      linearFits++;
+      const p = rng.pick(fixed),
+        q = rng.pick(fixed),
+        r = rng.pick(fixed);
+      const [x, y] = task.examples[p.i].input;
+      const [qx, qy] = task.examples[q.i].input,
+        [rx, ry] = task.examples[r.i].input;
+      const dx = qx - x,
+        dy = qy - y,
+        ex = rx - x,
+        ey = ry - y,
+        det = dx * ey - dy * ex;
+      if (Math.abs(det) < 1e-9) continue;
+      const dz = q.l - p.l,
+        ez = r.l - p.l,
+        alpha = (dz * ey - dy * ez) / det,
+        beta = (dx * ez - dz * ex) / det;
+      const raw = [alpha, beta, p.l - alpha * x - beta * y],
+        coeff = raw.map(Math.round);
+      if (
+        raw.some((v, i) => Math.abs(v - coeff[i]) > 1e-6) ||
+        coeff.some((v) => Math.abs(v) > 8)
+      )
+        continue;
+      const row = insert(plane(coeff));
+      if (row && accepts(row)) return row.tree;
+    }
+    const seeds = [...local].sort((a, b) => a.size - b.size);
+    const forward = [
+      ...macros.filter((m) => m.arity === 1).map((m) => m.name),
+      "neg",
+    ];
+    for (const row of seeds)
+      for (const op of forward) {
+        if (!charge() || evaluations >= budget) return;
+        const next = insert({ op, args: [row.tree] });
+        if (next && accepts(next)) return next.tree;
+      }
+    // Single legal base productions with a constant argument remain available
+    // to both languages; no latent-concept template is supplied.
+    for (const row of seeds)
+      for (const value of [0, 1, -1, 2, -2])
+        for (const op of ["max", "min"]) {
+          if (!charge() || evaluations >= budget) return;
+          const next = insert({ op, args: [row.tree, c(value)] });
+          if (next && accepts(next)) return next.tree;
+        }
+    const pool = [...local, ...active.slice(0, 16)];
+    for (const left of pool)
+      for (const op of ["add", "sub", "max", "min"]) {
+        if (!charge()) return;
+        const child = inverseBox(op, spec, left.values);
+        if (!child) continue;
+        for (const right of pool) {
+          if (!charge()) return;
+          const fits = right.values.every((v, i) => {
+            constraintPoints++;
+            return contains(child, i, v);
+          });
+          if (!fits) continue;
+          const completed = { op, args: [left.tree, right.tree] };
+          const row = insert(completed);
+          if (row && accepts(row)) return completed;
+        }
+      }
+  };
   const solve = (
     spec: Box,
     depth: number,
@@ -616,11 +715,15 @@ export function inverseSearch(
     path: number[],
     ancestors: Set<string>,
   ): Expr | undefined => {
-    if (expansions >= limit || evaluations >= budget) return;
+    if (expansions >= localLimit || evaluations >= budget) return;
     const direct = find(spec);
     if (direct) return direct.tree;
     const fitted = affine(spec);
     if (fitted) return fitted;
+    if (options.residualBuild && path.length > 0) {
+      const built = buildResidual(spec);
+      if (built) return built;
+    }
     if (depth <= 0) return;
     const sk = boxKey(spec);
     if (ancestors.has(sk)) return;
@@ -632,16 +735,51 @@ export function inverseSearch(
     if (policy?.contextKind === "inverse-domains-v1")
       neuralContext.push(...specificationFeatures(spec));
     const probabilities = predict(neuralContext);
+    const attempted = new Set<string>();
+    if (options.unaryFirst && path.length === 0 && depth > 0) {
+      const unary = ps
+        .filter((p) => p.arity === 1 && relations.get(p.node.op))
+        .sort(
+          (a, b) => probabilities[ps.indexOf(b)] - probabilities[ps.indexOf(a)],
+        );
+      const allowance = Math.floor(
+        ((limit - expansions) * options.unaryFirst) / Math.max(1, unary.length),
+      );
+      for (const p of unary) {
+        if (!charge()) break;
+        const pieces = relations.get(p.node.op)!;
+        const child = inversePieces(pieces, spec);
+        constraintPoints += spec.low.length * pieces.length;
+        if (!child || boxKey(child) === sk) continue;
+        attempted.add(p.node.op);
+        const tree = { op: p.node.op, args: [hole()] };
+        const oldLimit = localLimit;
+        localLimit = Math.min(oldLimit, expansions + allowance);
+        const result = solve(
+          child,
+          depth - 1,
+          replace(partial, path, tree),
+          [...path, 0],
+          history,
+        );
+        localLimit = oldLimit;
+        if (result) {
+          const completed = { op: p.node.op, args: [result] };
+          if (exprSize(completed) <= maxNodes) return completed;
+        }
+      }
+    }
     const candidates: { tree: Expr; child: Box; cost: number; slot: number }[] =
       [];
     const ops = ps
       .filter(
         (p) =>
-          ["add", "sub", "mul", "min", "max", "neg"].includes(p.node.op) ||
-          !!relations.get(p.node.op) ||
-          (!!options.macroBindings &&
-            p.arity > 1 &&
-            macros.some((m) => m.name === p.node.op)),
+          !attempted.has(p.node.op) &&
+          (["add", "sub", "mul", "min", "max", "neg"].includes(p.node.op) ||
+            !!relations.get(p.node.op) ||
+            (!!options.macroBindings &&
+              p.arity > 1 &&
+              macros.some((m) => m.name === p.node.op))),
       )
       .sort(
         (x, y) => probabilities[ps.indexOf(y)] - probabilities[ps.indexOf(x)],
@@ -764,6 +902,25 @@ export function inverseSearch(
       }
     }
   };
+  if (!answer && options.sparseWidth) {
+    sparseCompose(
+      bank,
+      task.examples,
+      {
+        width: options.sparseWidth,
+        depth: 4,
+        steps: options.sparseSteps ?? 1024,
+      },
+      charge,
+      (n) => {
+        constraintPoints += n;
+      },
+      (tree) => {
+        const row = evaluate(tree, false);
+        return !!row && row.error < 1e-8;
+      },
+    );
+  }
   if (!answer) {
     const result = solve(target, options.depth ?? 3, hole(), [], new Set());
     if (result && !answer) evaluate(result, false);
