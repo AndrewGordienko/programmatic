@@ -29,6 +29,7 @@ export function languagePopulation(
   );
   put([], "base", []);
   refreshed.forEach((p) => put(p.macros, "retain", p.parents));
+  if (!pool.length) return [...out.values()];
   const incumbent = refreshed[0];
   if (incumbent.macros.length < 4)
     for (const m of pool)

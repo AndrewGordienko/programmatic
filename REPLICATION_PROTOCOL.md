@@ -1,0 +1,21 @@
+# Conditional-prior language-learning replication v1
+
+This protocol is fixed before running its final evaluations. It tests independent language-training randomness conditional on one already trained, frozen neural policy. It is not 20 independent neural pretraining runs and does not establish general DSL invention or control transfer.
+
+- Meta-seeds: 0–18 and 42. All completed outcomes remain included.
+- Each run starts with an empty library and 160 newly drawn training functions. Training may overlap neural pretraining, as ordinary training data can; no prior learned symbolic library is supplied.
+- Each task supplies the original 25 I/O pairs plus 50 independent pairs. Independent 65-point checks are hidden from inner search until it stops.
+- Final/development/confirmation functions exclude every recorded whole neural-training program, every subtree of those programs, historical pilot/calibration functions, and the run's training functions, using 97 empirical probes. This is empirical functional disjointness, not formal equivalence. Across-run overlap will be reported separately.
+- Three generations alternate corpus synthesis with whole-library mutation/selection. Each wake uses two paired searches at 1,024 complete-proposal evaluations per training task. Mining sees only synthesized programs and their training I/O.
+- Generations use 256 proposed languages and fresh development stages of 8+16, 8+16, and 12+36 tasks (96 total). Screen caps are 128/256/256; medium caps 512 with 2/2/3 paired inner seeds. Twelve screen winners plus current parents and base proceed. Four languages survive each generation. The objective is solve-vs-work AUC minus 0.0005 per definition node.
+- The best language freezes before 80 confirmation tasks × three seeds. Acceptance requires positive paired task-mean utility after a two-standard-error lower-bound estimate and complexity penalty. This is an approximate confirmation rule, not an exact distribution-free confidence guarantee.
+- Regardless of acceptance, all four candidate/base × uniform/frozen-prior arms run on 200 final tasks × three seeds. The deployable accepted-language policy falls back to base for rejected runs. Candidate results remain visible, so rejection cannot hide regressions.
+- Final task groups: 120 related, 40 nested, 40 longer compositions. Nested/longer classes are absent from this protocol's language-selection tasks; random neural pretraining dreams can contain nested syntax.
+- Per-run incremental discovery time/work is recorded separately from shared neural pretraining. Both prior-guided arms pay the same shared pretraining. Comparing against uniform search must include that additional prior cost. Structural operations, program proposals, point checks and wall time are distinct units.
+- No surrogate ranking or savings are claimed. No extra observations, parameter-fitting engine or constraint solver is introduced mid-run.
+
+Report solve rates, work-AUC, per-group changes, primitive use, individual meta-seed outcomes, discovery costs and extrapolated payback. Use meta-seed uncertainty as well as within-run task clustering; three optimizer replicates are not independent tasks. Positive overall means do not erase a negative transfer group. Broad structural improvement requires a positive interval in both nested and longer groups; a positive longer-only interval is a narrower result. A language effect must remain with identical frozen neural weights and disappear when all macros are removed. No projected break-even is labeled observed amortization.
+
+`output/joint/replication-v1/protocol.json` stores exact configuration, policy hash and relevant source hashes before any run. The runner refuses to mix completed artifacts under a changed protocol. Frozen candidate files are written before confirmation/final evaluation. Completed reports are retained as compressed JSON plus readable summaries. The progress file is telemetry, not a complete resume point; interrupted compute must be counted separately if a run is restarted.
+
+Run `npx tsx scripts/inverse-replication.ts`. `--seed N` runs one predeclared seed for operational checking without changing the protocol. Re-running skips completed seeds only when their protocol hash matches.
