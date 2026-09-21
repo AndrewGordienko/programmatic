@@ -1,0 +1,12 @@
+[
+  {
+    "time": "2026-09-21T04:22:54.583520+00:00",
+    "event": "Additional experimental fragment-data generation started in parallel; forthcoming training uses two CPU threads. Main benchmark remains count-budgeted and source-frozen. Wall times are observational under shared-host load.",
+    "logicalCpus": 15,
+    "memoryBytes": 25769803776
+  },
+  {
+    "time": "2026-09-21T04:27:07.127272+00:00",
+    "event": "Fragment dataset generation and two-thread model training completed; separate count-budgeted calibration started in isolated worktree."
+  }
+]

@@ -1,0 +1,91 @@
+{
+  "version": "inverse-language-replication-v1",
+  "config": {
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      42
+    ],
+    "training": 160,
+    "development": 96,
+    "confirmation": 80,
+    "testing": 200,
+    "additionalExamples": {
+      "count": 50,
+      "range": 5
+    },
+    "wakeBudget": 1024,
+    "finalBudget": 512,
+    "population": 256,
+    "shortlist": 12,
+    "parents": 4,
+    "complexityPenalty": 0.0005,
+    "rounds": [
+      {
+        "screen": 8,
+        "medium": 16,
+        "budget": 128,
+        "reps": 2
+      },
+      {
+        "screen": 8,
+        "medium": 16,
+        "budget": 256,
+        "reps": 2
+      },
+      {
+        "screen": 12,
+        "medium": 36,
+        "budget": 256,
+        "reps": 3
+      }
+    ],
+    "search": {
+      "diverseBeam": true,
+      "affineDifferences": 32,
+      "maxNodes": 96,
+      "semanticRank": 2,
+      "affineFits": 512,
+      "fitDedup": true,
+      "primitiveDifferences": true,
+      "macroForward": 48,
+      "macroBindings": 8
+    }
+  },
+  "policyHash": "5dcdaf2a32ca0f78f9922da075043626e9a03f9747ccd289a4e24d628069a8ad",
+  "sourceHashes": {
+    "scripts/inverse-replication.ts": "5a68d871f28462d40167e7141676fba27318692bd30281d52f483c3b6f2dfafc",
+    "src/joint/inverse.ts": "20d8f8d4a5037819efa91fe36de1a7bb58fd7097fd873974b94a8ad4bdf4fa89",
+    "src/joint/domains.ts": "b5127aece94b9b3a49fb9f9cd0cdb80f8b6e4f6d1de3dcb4612fca77217672dd",
+    "src/joint/joins.ts": "f3e3642f3d77bd8f7be702bb5f825506b2de1a41a8e2b0d636da38f9af261d66",
+    "src/joint/policy.ts": "2dea9130311c22381920d3edce5d4d90ce829a18cd1faaf5aada4729dabb9a51",
+    "src/joint/inventions.ts": "1296e00cd47566359728821ed929af602b2f3cc57f7a21562d7ddf39179a02be",
+    "src/joint/population.ts": "8295396f9cc8f9c4cd8ee4d5e22ee9c11af0d5505387b7985575c5266b196fee",
+    "src/joint/genome.ts": "34fba25bc1621ae4017ad49b19087d4f6425d40bbcdc8be8fd9091a2841d1927",
+    "src/joint/canonical.ts": "247c02c4b7979fb02ad325cf215cc67c5d1733be1db60ce21314661d276a04b0",
+    "src/joint/semantics.ts": "1a58306384ebd7ff44ed15af593382df6a0faea944edb3d1eab7c78729887094",
+    "src/dsl/expressions.ts": "c447d71a8c7f0d01808ac2d86ce1d1fbf035ae99206c08820701eb312260ec6b",
+    "src/dsl/tasks.ts": "19b7a3a90e0a82afa05e48eba7bba371768ac5604ae26e6c15ddf32d1337a25c",
+    "src/engine/language.ts": "9b527053bacc4b9b46371b4f918de1a81ef2209151248cce75b18e757dc1888d",
+    "src/engine/random.ts": "3eff3b1c6ff5cd3ed0aa413ed2bd2f7d1b4e9dc3d4c0c244daaccb12317f475d"
+  },
+  "note": "20 predeclared independent language-training runs conditional on one shared frozen pretrained neural policy. Each starts with an empty library, fresh training tasks, optimizer seeds, and population evolution. Three wake/selection generations use fresh development stages. Full prior-program AND prior-subtree function signatures, historical pilot/calibration functions, and own training functions are excluded from dev/confirmation/final. 75 observations; checks inaccessible to inner search until it stops. Training may overlap pretraining; final cannot. No new policy training or surrogate. Rejected candidates are still evaluated and labeled; accepted-policy arm falls back to base. Overlap across independently sampled runs is reported, not silently treated as distinct tasks. Incremental discovery cost and shared pretraining are separate.",
+  "protocolHash": "b7f051048d60131292a955e094a204b47eee2a9a95d8db47ba8bcba847a55c88"
+}

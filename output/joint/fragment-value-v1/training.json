@@ -1,0 +1,97 @@
+{
+  "seed": 803121,
+  "trainingRows": 72082,
+  "validationRows": 7680,
+  "selectedEpoch": 45,
+  "validationLoss": 0.1818677932024002,
+  "updates": 11421,
+  "elapsedMs": 4663.324958004523,
+  "history": [
+    {
+      "epoch": 0,
+      "validationLoss": 0.28798770904541016,
+      "accuracy": 0.8815104365348816
+    },
+    {
+      "epoch": 5,
+      "validationLoss": 0.22218561172485352,
+      "accuracy": 0.9067708253860474
+    },
+    {
+      "epoch": 10,
+      "validationLoss": 0.2115430384874344,
+      "accuracy": 0.9095051884651184
+    },
+    {
+      "epoch": 15,
+      "validationLoss": 0.19941101968288422,
+      "accuracy": 0.91796875
+    },
+    {
+      "epoch": 20,
+      "validationLoss": 0.196346253156662,
+      "accuracy": 0.9192708134651184
+    },
+    {
+      "epoch": 25,
+      "validationLoss": 0.19157437980175018,
+      "accuracy": 0.9235677123069763
+    },
+    {
+      "epoch": 30,
+      "validationLoss": 0.18935292959213257,
+      "accuracy": 0.923046886920929
+    },
+    {
+      "epoch": 35,
+      "validationLoss": 0.18403027951717377,
+      "accuracy": 0.9251301884651184
+    },
+    {
+      "epoch": 40,
+      "validationLoss": 0.18465538322925568,
+      "accuracy": 0.9251301884651184
+    },
+    {
+      "epoch": 45,
+      "validationLoss": 0.1818677932024002,
+      "accuracy": 0.9248697757720947
+    },
+    {
+      "epoch": 50,
+      "validationLoss": 0.1846628338098526,
+      "accuracy": 0.9273437261581421
+    },
+    {
+      "epoch": 55,
+      "validationLoss": 0.18498964607715607,
+      "accuracy": 0.9283854365348816
+    },
+    {
+      "epoch": 60,
+      "validationLoss": 0.19141295552253723,
+      "accuracy": 0.9253906011581421
+    },
+    {
+      "epoch": 65,
+      "validationLoss": 0.18396027386188507,
+      "accuracy": 0.9287760257720947
+    },
+    {
+      "epoch": 70,
+      "validationLoss": 0.18649183213710785,
+      "accuracy": 0.9253906011581421
+    },
+    {
+      "epoch": 75,
+      "validationLoss": 0.18560022115707397,
+      "accuracy": 0.9270833134651184
+    },
+    {
+      "epoch": 80,
+      "validationLoss": 0.18490247428417206,
+      "accuracy": 0.9281250238418579
+    }
+  ],
+  "note": "Classifier labels concern membership in the sampled teacher decomposition, not all valid solutions. Held-out teacher accuracy cannot substitute for a fresh downstream search calibration. No final task outcomes are used."
+}

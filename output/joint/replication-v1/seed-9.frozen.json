@@ -1,0 +1,177 @@
+{
+  "protocolHash": "b7f051048d60131292a955e094a204b47eee2a9a95d8db47ba8bcba847a55c88",
+  "seed": 9,
+  "frozenHash": "ab62234c91849d57ff7a5081e1ad436a0a90e894144320dd23ad0a0a142a5404",
+  "frozenAt": "2026-09-21T04:26:19.609Z",
+  "candidate": {
+    "id": "L4238592834",
+    "macros": [
+      {
+        "name": "fn_2352281741",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "arg",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 50,
+        "sourceTasks": [
+          "meta-9-train-003",
+          "meta-9-train-004",
+          "meta-9-train-007",
+          "meta-9-train-013",
+          "meta-9-train-030",
+          "meta-9-train-035",
+          "meta-9-train-039",
+          "meta-9-train-047",
+          "meta-9-train-048",
+          "meta-9-train-051",
+          "meta-9-train-057",
+          "meta-9-train-060",
+          "meta-9-train-061",
+          "meta-9-train-062",
+          "meta-9-train-076",
+          "meta-9-train-080",
+          "meta-9-train-091",
+          "meta-9-train-101",
+          "meta-9-train-113",
+          "meta-9-train-121",
+          "meta-9-train-125",
+          "meta-9-train-127",
+          "meta-9-train-128",
+          "meta-9-train-146",
+          "meta-9-train-147",
+          "meta-9-train-148",
+          "meta-9-train-156",
+          "meta-9-train-158",
+          "meta-9-train-160",
+          "meta-9-train-005",
+          "meta-9-train-017",
+          "meta-9-train-028",
+          "meta-9-train-032",
+          "meta-9-train-037",
+          "meta-9-train-041",
+          "meta-9-train-043",
+          "meta-9-train-052",
+          "meta-9-train-056",
+          "meta-9-train-067",
+          "meta-9-train-075",
+          "meta-9-train-084",
+          "meta-9-train-093",
+          "meta-9-train-098",
+          "meta-9-train-102",
+          "meta-9-train-104",
+          "meta-9-train-126",
+          "meta-9-train-139",
+          "meta-9-train-144",
+          "meta-9-train-154",
+          "meta-9-train-155"
+        ],
+        "size": 4,
+        "definition": "fn_2352281741(a) = max(a, (-a))"
+      },
+      {
+        "name": "fn_3549247544",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 44,
+        "sourceTasks": [
+          "meta-9-train-006",
+          "meta-9-train-014",
+          "meta-9-train-018",
+          "meta-9-train-020",
+          "meta-9-train-023",
+          "meta-9-train-024",
+          "meta-9-train-025",
+          "meta-9-train-026",
+          "meta-9-train-029",
+          "meta-9-train-036",
+          "meta-9-train-038",
+          "meta-9-train-039",
+          "meta-9-train-045",
+          "meta-9-train-050",
+          "meta-9-train-068",
+          "meta-9-train-070",
+          "meta-9-train-079",
+          "meta-9-train-089",
+          "meta-9-train-092",
+          "meta-9-train-099",
+          "meta-9-train-100",
+          "meta-9-train-103",
+          "meta-9-train-105",
+          "meta-9-train-111",
+          "meta-9-train-112",
+          "meta-9-train-115",
+          "meta-9-train-116",
+          "meta-9-train-117",
+          "meta-9-train-119",
+          "meta-9-train-121",
+          "meta-9-train-130",
+          "meta-9-train-138",
+          "meta-9-train-157",
+          "meta-9-train-032",
+          "meta-9-train-037",
+          "meta-9-train-040",
+          "meta-9-train-052",
+          "meta-9-train-054",
+          "meta-9-train-056",
+          "meta-9-train-104",
+          "meta-9-train-106",
+          "meta-9-train-114",
+          "meta-9-train-118",
+          "meta-9-train-120"
+        ],
+        "size": 4,
+        "definition": "fn_3549247544(a) = max(0, (-a))"
+      }
+    ],
+    "edit": "retain",
+    "parents": [
+      "L4238592834"
+    ],
+    "features": [
+      2,
+      8,
+      1,
+      94,
+      50,
+      135,
+      4,
+      4
+    ]
+  }
+}

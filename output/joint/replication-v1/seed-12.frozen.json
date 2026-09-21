@@ -1,0 +1,242 @@
+{
+  "protocolHash": "b7f051048d60131292a955e094a204b47eee2a9a95d8db47ba8bcba847a55c88",
+  "seed": 12,
+  "frozenHash": "1c18ea4c10ede9644fa84ef54421b8b9a457df906c8df226743fa728d0075eb8",
+  "frozenAt": "2026-09-21T04:32:34.301Z",
+  "candidate": {
+    "id": "L3676341650",
+    "macros": [
+      {
+        "name": "fn_2352281741",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "arg",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 62,
+        "sourceTasks": [
+          "meta-12-train-003",
+          "meta-12-train-005",
+          "meta-12-train-007",
+          "meta-12-train-011",
+          "meta-12-train-015",
+          "meta-12-train-018",
+          "meta-12-train-022",
+          "meta-12-train-026",
+          "meta-12-train-027",
+          "meta-12-train-030",
+          "meta-12-train-033",
+          "meta-12-train-043",
+          "meta-12-train-044",
+          "meta-12-train-046",
+          "meta-12-train-050",
+          "meta-12-train-054",
+          "meta-12-train-057",
+          "meta-12-train-062",
+          "meta-12-train-065",
+          "meta-12-train-072",
+          "meta-12-train-073",
+          "meta-12-train-076",
+          "meta-12-train-079",
+          "meta-12-train-084",
+          "meta-12-train-086",
+          "meta-12-train-095",
+          "meta-12-train-098",
+          "meta-12-train-104",
+          "meta-12-train-111",
+          "meta-12-train-112",
+          "meta-12-train-123",
+          "meta-12-train-130",
+          "meta-12-train-149",
+          "meta-12-train-006",
+          "meta-12-train-013",
+          "meta-12-train-014",
+          "meta-12-train-019",
+          "meta-12-train-029",
+          "meta-12-train-038",
+          "meta-12-train-048",
+          "meta-12-train-066",
+          "meta-12-train-069",
+          "meta-12-train-087",
+          "meta-12-train-106",
+          "meta-12-train-110",
+          "meta-12-train-119",
+          "meta-12-train-121",
+          "meta-12-train-127",
+          "meta-12-train-139",
+          "meta-12-train-143",
+          "meta-12-train-145",
+          "meta-12-train-146",
+          "meta-12-train-148",
+          "meta-12-train-150",
+          "meta-12-train-154",
+          "meta-12-train-160",
+          "meta-12-train-058",
+          "meta-12-train-088",
+          "meta-12-train-092",
+          "meta-12-train-126",
+          "meta-12-train-147",
+          "meta-12-train-156"
+        ],
+        "size": 4,
+        "definition": "fn_2352281741(a) = max(a, (-a))"
+      },
+      {
+        "name": "fn_3518208291",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "min",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                },
+                {
+                  "op": "const",
+                  "value": 1,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 31,
+        "sourceTasks": [
+          "meta-12-train-004",
+          "meta-12-train-008",
+          "meta-12-train-023",
+          "meta-12-train-024",
+          "meta-12-train-025",
+          "meta-12-train-028",
+          "meta-12-train-059",
+          "meta-12-train-063",
+          "meta-12-train-075",
+          "meta-12-train-081",
+          "meta-12-train-085",
+          "meta-12-train-093",
+          "meta-12-train-094",
+          "meta-12-train-101",
+          "meta-12-train-107",
+          "meta-12-train-122",
+          "meta-12-train-124",
+          "meta-12-train-129",
+          "meta-12-train-131",
+          "meta-12-train-133",
+          "meta-12-train-134",
+          "meta-12-train-136",
+          "meta-12-train-142",
+          "meta-12-train-144",
+          "meta-12-train-151",
+          "meta-12-train-069",
+          "meta-12-train-119",
+          "meta-12-train-139",
+          "meta-12-train-012",
+          "meta-12-train-089",
+          "meta-12-train-156"
+        ],
+        "size": 5,
+        "definition": "fn_3518208291(a) = max(0, min(a, 1))"
+      },
+      {
+        "name": "fn_3549247544",
+        "body": {
+          "op": "max",
+          "args": [
+            {
+              "op": "const",
+              "value": 0,
+              "args": []
+            },
+            {
+              "op": "neg",
+              "args": [
+                {
+                  "op": "arg",
+                  "value": 0,
+                  "args": []
+                }
+              ]
+            }
+          ]
+        },
+        "arity": 1,
+        "support": 32,
+        "sourceTasks": [
+          "meta-12-train-009",
+          "meta-12-train-010",
+          "meta-12-train-020",
+          "meta-12-train-024",
+          "meta-12-train-025",
+          "meta-12-train-031",
+          "meta-12-train-037",
+          "meta-12-train-055",
+          "meta-12-train-061",
+          "meta-12-train-076",
+          "meta-12-train-097",
+          "meta-12-train-103",
+          "meta-12-train-108",
+          "meta-12-train-109",
+          "meta-12-train-115",
+          "meta-12-train-128",
+          "meta-12-train-129",
+          "meta-12-train-130",
+          "meta-12-train-131",
+          "meta-12-train-135",
+          "meta-12-train-137",
+          "meta-12-train-141",
+          "meta-12-train-155",
+          "meta-12-train-157",
+          "meta-12-train-012",
+          "meta-12-train-060",
+          "meta-12-train-089",
+          "meta-12-train-091",
+          "meta-12-train-092",
+          "meta-12-train-120",
+          "meta-12-train-140",
+          "meta-12-train-152"
+        ],
+        "size": 4,
+        "definition": "fn_3549247544(a) = max(0, (-a))"
+      }
+    ],
+    "edit": "incumbent-add",
+    "parents": [
+      "L4238592834"
+    ],
+    "features": [
+      3,
+      13,
+      1,
+      125,
+      62,
+      151,
+      5,
+      7
+    ]
+  }
+}

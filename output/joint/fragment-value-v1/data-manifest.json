@@ -1,0 +1,12 @@
+{
+  "rows": 79762,
+  "features": 255,
+  "positive": 39762,
+  "training": 72082,
+  "validation": 7680,
+  "exposureTrees": 24299,
+  "programExecutions": 37593,
+  "exampleExecutions": 3039475,
+  "generationMs": 22529.722292,
+  "note": "Experimental subtree-usefulness labels from executed corpus/dream programs, with random and output-close negatives. No final tasks. Alternative useful decompositions can be labeled negative, so this is only a ranking heuristic. Validation is grouped by empirical whole-function signature. Every generated root and sampled fragment must enter future exposure exclusions."
+}
