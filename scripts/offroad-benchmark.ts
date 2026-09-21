@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { OffroadSearch } from "../src/offroad/search";
 import { compile, programLines } from "../src/offroad/program";
 import {
+  SIMULATOR_VERSION,
   initialState,
   observe,
   step,
@@ -34,7 +35,8 @@ function blindness(p: Program) {
   return { arrivals, collisions, count: 36 };
 }
 const report = {
-  version: 1,
+  version: 2,
+  simulatorVersion: SIMULATOR_VERSION,
   config: CONFIG,
   seeds,
   testSeedBase: 1_900_000_000,

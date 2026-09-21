@@ -20,7 +20,7 @@ import Modal from "../components/Modal";
 import Chart from "../components/Chart";
 import OffroadViewport from "./OffroadViewport";
 import { activeGenes, programLines, validate } from "./program";
-import { initialState } from "./simulator";
+import { initialState, SIMULATOR_VERSION } from "./simulator";
 import { makeTerrain } from "./terrain";
 import {
   CONFIG,
@@ -41,7 +41,7 @@ const END = {
   driving: "Driving",
   arrived: "Destination reached",
   collision: "Rock / tree collision",
-  rollover: "Stability limit exceeded",
+  rollover: "Sustained loss of wheel support",
   grounded: "Ground clearance exhausted",
   boundary: "Left the test area",
   timeout: "Time limit reached",
@@ -60,6 +60,7 @@ function valid(s: unknown): s is Snapshot {
   try {
     const p = s as Snapshot;
     return (
+      p?.simulatorVersion === SIMULATOR_VERSION &&
       !!p?.history?.length &&
       validate(p.best.program) &&
       !!p.checkpoints?.length
@@ -145,7 +146,7 @@ export default function OffroadLab({
         notify("Off-road search complete. Test the program on unseen terrain.");
         try {
           localStorage.setItem(
-            "argos-offroad-v1",
+            "argos-offroad-support-v2",
             JSON.stringify(latest.current),
           );
         } catch {
@@ -166,7 +167,7 @@ export default function OffroadLab({
     let loaded = false;
     try {
       const saved = JSON.parse(
-        localStorage.getItem("argos-offroad-v1") ?? "null",
+        localStorage.getItem("argos-offroad-support-v2") ?? "null",
       );
       if (valid(saved)) {
         setSnapshot(saved);
@@ -201,7 +202,8 @@ export default function OffroadLab({
     fetch("/offroad-benchmark.json", { signal: controller.signal })
       .then((r) => (r.ok ? r.json() : null))
       .then((b) => {
-        if (b?.arms?.length) setBenchmark(b);
+        if (b?.simulatorVersion === SIMULATOR_VERSION && b?.arms?.length)
+          setBenchmark(b);
       })
       .catch(() => {});
     return () => {
@@ -509,8 +511,19 @@ export default function OffroadLab({
                     </strong>
                   </div>
                   <div>
-                    <span>GRIP</span>
-                    <strong>{frame.grip.toFixed(2)}</strong>
+                    <span title="Resultant load / support boundary; above 100% for 0.4s ends the episode">
+                      SUPPORT LOAD
+                    </span>
+                    <strong>
+                      {(
+                        100 *
+                        Math.max(
+                          frame.stability?.lateral ?? 0,
+                          frame.stability?.longitudinal ?? 0,
+                        )
+                      ).toFixed(0)}
+                      %
+                    </strong>
                   </div>
                   <div>
                     <span>CLEARANCE</span>
@@ -535,6 +548,13 @@ export default function OffroadLab({
                       )}
                     </span>
                     <h3>{END[frame.status]}</h3>
+                    {frame.status === "rollover" && (
+                      <p>
+                        Load beyond the wheel footprint for{" "}
+                        {frame.stability?.unsupportedSeconds.toFixed(2)}s.
+                        Approximate support test; no body rollover animation.
+                      </p>
+                    )}
                     <p>
                       {progress.toFixed(0)}% progress · {frame.time.toFixed(1)}s
                       · {frame.distance.toFixed(0)}m driven

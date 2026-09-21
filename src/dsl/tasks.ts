@@ -63,12 +63,17 @@ function target(r: Random, group: string): (x: number, y: number) => number {
 
 export function makeTasks(
   c: Pick<Config, "training" | "development" | "confirmation" | "testing">,
+  options: {
+    seed?: number;
+    exclude?: ReadonlySet<string>;
+    prefix?: string;
+  } = {},
 ) {
-  const rng = new Random(812731),
+  const rng = new Random(options.seed ?? 812731),
     probes = inputs(903141, 97, 7);
   const trainInputs = inputs(301, 25, 3),
     checkInputs = inputs(809, 65, 5);
-  const seen = new Set<string>(),
+  const seen = new Set<string>(options.exclude),
     tasks: Task[] = [];
   const total = c.training + c.development + c.confirmation + c.testing;
   if (total > 2000 || total < 4)
@@ -94,7 +99,7 @@ export function makeTasks(
     const examples = (xs: [number, number][]): Example[] =>
       xs.map((input) => ({ input, output: f(...input) }));
     tasks.push({
-      id: `task-${String(tasks.length + 1).padStart(3, "0")}`,
+      id: `${options.prefix ?? "task"}-${String(tasks.length + 1).padStart(3, "0")}`,
       examples: examples(trainInputs),
       checks: examples(checkInputs),
       signature,

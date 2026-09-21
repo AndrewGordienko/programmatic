@@ -3,6 +3,7 @@ import { INPUTS, OPS, type Gene, type ValueType } from "./types";
 const FEATURES = 32,
   HIDDEN = 16,
   CHOICES = 64;
+export type GraphPriorData = Pick<GraphPrior, "w1" | "w2" | "b1" | "b2">;
 export type Decision = { context: number[]; legal: number[]; choice: number };
 // A masked neural prior over both operators and graph connections. It sees a
 // summary of the partial typed graph, operand role, and requested output type.
@@ -11,6 +12,32 @@ export class GraphPrior {
   w2: number[][];
   b1: number[];
   b2: number[];
+  freeze(): GraphPriorData {
+    return structuredClone({
+      w1: this.w1,
+      w2: this.w2,
+      b1: this.b1,
+      b2: this.b2,
+    });
+  }
+  restore(data: GraphPriorData) {
+    const matrix = (m: number[][], rows: number, cols: number) =>
+      Array.isArray(m) &&
+      m.length === rows &&
+      m.every(
+        (r) =>
+          Array.isArray(r) && r.length === cols && r.every(Number.isFinite),
+      );
+    if (
+      !matrix(data.w1, HIDDEN, FEATURES) ||
+      !matrix(data.w2, CHOICES, HIDDEN) ||
+      data.b1.length !== HIDDEN ||
+      data.b2.length !== CHOICES ||
+      ![...data.b1, ...data.b2].every(Number.isFinite)
+    )
+      throw Error("Invalid frozen graph prior");
+    Object.assign(this, structuredClone(data));
+  }
   constructor(rng: Random) {
     this.w1 = Array.from({ length: HIDDEN }, () =>
       Array.from({ length: FEATURES }, () => (rng.next() - 0.5) * 0.2),

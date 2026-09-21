@@ -47,6 +47,11 @@ export type Truck = {
     | "timeout";
   controls: Controls;
   scans?: Observation;
+  stability?: {
+    lateral: number;
+    longitudinal: number;
+    unsupportedSeconds: number;
+  };
 };
 export type Controls = { steering: number; acceleration: number };
 export const RAYS = 19;
@@ -171,6 +176,7 @@ export type Invention = {
   rollouts: number;
 };
 export type Snapshot = {
+  simulatorVersion?: string;
   config: Config;
   generation: number;
   best: Candidate;

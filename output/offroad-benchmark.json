@@ -1,5 +1,6 @@
 {
-  "version": 1,
+  "version": 2,
+  "simulatorVersion": "offroad-support-v2",
   "config": {
     "seed": 42,
     "population": 64,
@@ -24,13 +25,13 @@
       "runs": [
         {
           "seed": 0,
-          "arrivals": 22,
+          "arrivals": 26,
           "count": 36,
-          "collisions": 2,
-          "instabilities": 10,
+          "collisions": 5,
+          "instabilities": 3,
           "trainingRollouts": 31374,
           "discoveryRollouts": 0,
-          "seconds": 18.331788125000006,
+          "seconds": 17.992787291999992,
           "macros": 0,
           "trainingArrivals": 8,
           "blindObstacleSensors": {
@@ -43,10 +44,10 @@
               "kind": "woodland",
               "count": 12,
               "success": 0.75,
-              "collisions": 1,
-              "instabilities": 2,
+              "collisions": 2,
+              "instabilities": 1,
               "timeouts": 0,
-              "completion": 0.9188791533120891,
+              "completion": 0.8958369709303894,
               "seeds": [
                 1900000000,
                 1900000097,
@@ -66,10 +67,10 @@
               "kind": "quarry",
               "count": 12,
               "success": 0.8333333333333334,
-              "collisions": 1,
-              "instabilities": 1,
+              "collisions": 2,
+              "instabilities": 0,
               "timeouts": 0,
-              "completion": 0.9333721313723378,
+              "completion": 0.9337451535544873,
               "seeds": [
                 1900100000,
                 1900100097,
@@ -88,11 +89,11 @@
             {
               "kind": "ridge",
               "count": 12,
-              "success": 0.25,
-              "collisions": 0,
-              "instabilities": 7,
+              "success": 0.5833333333333334,
+              "collisions": 1,
+              "instabilities": 2,
               "timeouts": 2,
-              "completion": 0.5466828820632516,
+              "completion": 0.7228200704821394,
               "seeds": [
                 1900200000,
                 1900200097,
@@ -110,25 +111,25 @@
             }
           ],
           "program": {
-            "id": "off-01735",
+            "id": "off-02800",
             "genes": [
               {
-                "op": "v_scale",
-                "type": "vector",
-                "refs": [
-                  0,
-                  11
-                ],
-                "value": 0.33560332702472806
-              },
-              {
-                "op": "v_mul",
+                "op": "v_add",
                 "type": "vector",
                 "refs": [
                   1,
-                  0
+                  1
                 ],
-                "value": 1.5127859241329134
+                "value": -1.9787685787305236
+              },
+              {
+                "op": "v_sub",
+                "type": "vector",
+                "refs": [
+                  0,
+                  1
+                ],
+                "value": 1.9772130455821753
               },
               {
                 "op": "v_add",
@@ -140,76 +141,72 @@
                 "value": 0.007750086486339569
               },
               {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  16,
-                  14
-                ],
-                "value": -0.38331621838733554
-              },
-              {
-                "op": "subtract",
-                "type": "scalar",
-                "refs": [
-                  11,
-                  13
-                ],
-                "value": 2.501279756426811
-              },
-              {
                 "op": "v_add",
                 "type": "vector",
                 "refs": [
-                  17,
-                  3
-                ],
-                "value": 2.8171095019206405
-              },
-              {
-                "op": "v_scale",
-                "type": "vector",
-                "refs": [
-                  17,
-                  13
-                ],
-                "value": 2.9037478817626834
-              },
-              {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  17,
+                  14,
                   1
                 ],
-                "value": 1.360689732246101
+                "value": -2.733185850083828
               },
               {
-                "op": "add",
+                "op": "max",
                 "type": "scalar",
                 "refs": [
-                  18,
-                  6
+                  6,
+                  13
                 ],
-                "value": -1.071711623109877
+                "value": 1.7974757091142237
               },
               {
-                "op": "v_max",
+                "op": "v_negate",
                 "type": "vector",
                 "refs": [
-                  21,
-                  20
+                  0
                 ],
-                "value": 2.615018291864544
+                "value": -1.9003560547716916
               },
               {
                 "op": "v_sub",
                 "type": "vector",
                 "refs": [
-                  21,
-                  19
+                  16,
+                  3
                 ],
-                "value": -2.6669128853827715
+                "value": 2.0748869595117867
+              },
+              {
+                "op": "v_max",
+                "type": "vector",
+                "refs": [
+                  0,
+                  16
+                ],
+                "value": -2.7118904809467494
+              },
+              {
+                "op": "constant",
+                "type": "scalar",
+                "refs": [],
+                "value": 0.8111112755723298
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  14,
+                  16
+                ],
+                "value": 2.7257628673687577
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  19,
+                  1
+                ],
+                "value": 1.3279608255252242
               },
               {
                 "op": "v_negate",
@@ -223,23 +220,25 @@
                 "op": "argmax",
                 "type": "angle",
                 "refs": [
-                  21
+                  16
                 ],
-                "value": 0.46336630498990417
+                "value": 1.0728104431182146
               },
               {
-                "op": "tanh",
+                "op": "center",
                 "type": "scalar",
                 "refs": [
-                  22
+                  23
                 ],
-                "value": -1.0839578518643975
+                "value": -1.9913568729534745
               },
               {
-                "op": "constant",
+                "op": "negate",
                 "type": "scalar",
-                "refs": [],
-                "value": 2.034190407022834
+                "refs": [
+                  11
+                ],
+                "value": -2.0328886094503105
               },
               {
                 "op": "angle_add",
@@ -248,7 +247,7 @@
                   26,
                   26
                 ],
-                "value": 1.8435721839778125
+                "value": -2.563390200957656
               }
             ],
             "steering": 29,
@@ -258,528 +257,26 @@
           },
           "code": [
             "def drive(scan, state):",
-            "  v0 = v_scale(scan.goal_alignment, state.one)",
+            "  v0 = v_add(scan.clearance, scan.clearance)",
             "  v1 = v_add(v0, scan.goal_alignment)",
-            "  v2 = v_mul(v1, v0)",
-            "  v3 = subtract(state.one, state.minus_one)",
-            "  v4 = v_add(v2, scan.clearance)",
-            "  v5 = add(v3, state.pitch)",
-            "  v6 = argmax(v4)",
-            "  v7 = tanh(v5)",
-            "  v8 = angle_add(v6, v6)",
-            "  return clip(v8, -1, 1),",
-            "         clip(v7, -1, 1)"
+            "  v2 = v_mul(v0, v1)",
+            "  v3 = argmax(v1)",
+            "  v4 = center(v2)",
+            "  v5 = angle_add(v3, v3)",
+            "  return clip(v5, -1, 1),",
+            "         clip(v4, -1, 1)"
           ],
           "inventions": []
         },
         {
           "seed": 7,
-          "arrivals": 16,
+          "arrivals": 26,
           "count": 36,
-          "collisions": 7,
-          "instabilities": 11,
+          "collisions": 5,
+          "instabilities": 3,
           "trainingRollouts": 31374,
           "discoveryRollouts": 0,
-          "seconds": 14.916167791000007,
-          "macros": 0,
-          "trainingArrivals": 9,
-          "blindObstacleSensors": {
-            "arrivals": 3,
-            "collisions": 30,
-            "count": 36
-          },
-          "results": [
-            {
-              "kind": "woodland",
-              "count": 12,
-              "success": 0.5833333333333334,
-              "collisions": 1,
-              "instabilities": 4,
-              "timeouts": 0,
-              "completion": 0.8540463281224508,
-              "seeds": [
-                1900000000,
-                1900000097,
-                1900000194,
-                1900000291,
-                1900000388,
-                1900000485,
-                1900000582,
-                1900000679,
-                1900000776,
-                1900000873,
-                1900000970,
-                1900001067
-              ]
-            },
-            {
-              "kind": "quarry",
-              "count": 12,
-              "success": 0.4166666666666667,
-              "collisions": 4,
-              "instabilities": 3,
-              "timeouts": 0,
-              "completion": 0.7764947224460316,
-              "seeds": [
-                1900100000,
-                1900100097,
-                1900100194,
-                1900100291,
-                1900100388,
-                1900100485,
-                1900100582,
-                1900100679,
-                1900100776,
-                1900100873,
-                1900100970,
-                1900101067
-              ]
-            },
-            {
-              "kind": "ridge",
-              "count": 12,
-              "success": 0.3333333333333333,
-              "collisions": 2,
-              "instabilities": 4,
-              "timeouts": 2,
-              "completion": 0.5495373058439966,
-              "seeds": [
-                1900200000,
-                1900200097,
-                1900200194,
-                1900200291,
-                1900200388,
-                1900200485,
-                1900200582,
-                1900200679,
-                1900200776,
-                1900200873,
-                1900200970,
-                1900201067
-              ]
-            }
-          ],
-          "program": {
-            "id": "off-02540",
-            "genes": [
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  0,
-                  0
-                ],
-                "value": 0.860726410523057
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  4
-                ],
-                "value": -0.23405296867713332
-              },
-              {
-                "op": "subtract",
-                "type": "scalar",
-                "refs": [
-                  5,
-                  8
-                ],
-                "value": 0.6794986724853516
-              },
-              {
-                "op": "v_scale",
-                "type": "vector",
-                "refs": [
-                  14,
-                  16
-                ],
-                "value": -1.20477933017537
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  17
-                ],
-                "value": -2.208613137714565
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  1,
-                  1
-                ],
-                "value": 2.5381043795496225
-              },
-              {
-                "op": "angle_scale",
-                "type": "angle",
-                "refs": [
-                  18,
-                  5
-                ],
-                "value": 2.9652630127966404
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  19
-                ],
-                "value": -2.6119251656346023
-              },
-              {
-                "op": "angle_add",
-                "type": "angle",
-                "refs": [
-                  20,
-                  15
-                ],
-                "value": 1.9433212392032146
-              },
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  1,
-                  17
-                ],
-                "value": 0.841883473098278
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  19
-                ],
-                "value": 1.5036133085377514
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  23
-                ],
-                "value": -1.0544744920916855
-              },
-              {
-                "op": "angle_add",
-                "type": "angle",
-                "refs": [
-                  21,
-                  15
-                ],
-                "value": -0.2033001878298819
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  19,
-                  25
-                ],
-                "value": 2.566408233717084
-              },
-              {
-                "op": "constant",
-                "type": "scalar",
-                "refs": [],
-                "value": 1.436406334070489
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  27
-                ],
-                "value": -1.9510364960879087
-              }
-            ],
-            "steering": 29,
-            "acceleration": 11,
-            "macros": [],
-            "origin": "mutation"
-          },
-          "code": [
-            "def drive(scan, state):",
-            "  v0 = v_mul(scan.goal_alignment, scan.goal_alignment)",
-            "  v1 = subtract(state.speed, state.previous_steer)",
-            "  v2 = v_scale(v0, v1)",
-            "  v3 = v_mul(scan.clearance, scan.clearance)",
-            "  v4 = v_max(scan.clearance, v2)",
-            "  v5 = v_negate(v4)",
-            "  v6 = v_sub(v3, v5)",
-            "  v7 = argmax(v6)",
-            "  return clip(v7, -1, 1),",
-            "         clip(state.one, -1, 1)"
-          ],
-          "inventions": []
-        },
-        {
-          "seed": 42,
-          "arrivals": 15,
-          "count": 36,
-          "collisions": 12,
-          "instabilities": 6,
-          "trainingRollouts": 31374,
-          "discoveryRollouts": 0,
-          "seconds": 19.662394252000013,
-          "macros": 0,
-          "trainingArrivals": 7,
-          "blindObstacleSensors": {
-            "arrivals": 2,
-            "collisions": 31,
-            "count": 36
-          },
-          "results": [
-            {
-              "kind": "woodland",
-              "count": 12,
-              "success": 0.5833333333333334,
-              "collisions": 4,
-              "instabilities": 1,
-              "timeouts": 0,
-              "completion": 0.8248706082213021,
-              "seeds": [
-                1900000000,
-                1900000097,
-                1900000194,
-                1900000291,
-                1900000388,
-                1900000485,
-                1900000582,
-                1900000679,
-                1900000776,
-                1900000873,
-                1900000970,
-                1900001067
-              ]
-            },
-            {
-              "kind": "quarry",
-              "count": 12,
-              "success": 0.5,
-              "collisions": 3,
-              "instabilities": 2,
-              "timeouts": 1,
-              "completion": 0.7043933464863513,
-              "seeds": [
-                1900100000,
-                1900100097,
-                1900100194,
-                1900100291,
-                1900100388,
-                1900100485,
-                1900100582,
-                1900100679,
-                1900100776,
-                1900100873,
-                1900100970,
-                1900101067
-              ]
-            },
-            {
-              "kind": "ridge",
-              "count": 12,
-              "success": 0.16666666666666666,
-              "collisions": 5,
-              "instabilities": 3,
-              "timeouts": 2,
-              "completion": 0.44289216770732254,
-              "seeds": [
-                1900200000,
-                1900200097,
-                1900200194,
-                1900200291,
-                1900200388,
-                1900200485,
-                1900200582,
-                1900200679,
-                1900200776,
-                1900200873,
-                1900200970,
-                1900201067
-              ]
-            }
-          ],
-          "program": {
-            "id": "off-03199",
-            "genes": [
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  0,
-                  2
-                ],
-                "value": 1.6032051681540906
-              },
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  1,
-                  3
-                ],
-                "value": -0.8926454242318869
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  1
-                ],
-                "value": -2.373024463187903
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  0,
-                  1
-                ],
-                "value": -1.2528624599799514
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  2,
-                  4
-                ],
-                "value": -2.1665694303810596
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  17,
-                  3
-                ],
-                "value": 2.1538741453550756
-              },
-              {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  1,
-                  19
-                ],
-                "value": -1.4278224147856236
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  19,
-                  18
-                ],
-                "value": 1.920072192326188
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  21
-                ],
-                "value": 1.8837277558632195
-              },
-              {
-                "op": "angle_scale",
-                "type": "angle",
-                "refs": [
-                  22,
-                  7
-                ],
-                "value": -1.6900637517683208
-              },
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  15,
-                  15
-                ],
-                "value": 2.2949200524017215
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  1,
-                  17
-                ],
-                "value": -2.9094749372452497
-              },
-              {
-                "op": "negate",
-                "type": "scalar",
-                "refs": [
-                  10
-                ],
-                "value": -0.2285476536490023
-              },
-              {
-                "op": "v_min",
-                "type": "vector",
-                "refs": [
-                  25,
-                  14
-                ],
-                "value": -2.6053882115520537
-              },
-              {
-                "op": "constant",
-                "type": "scalar",
-                "refs": [],
-                "value": -0.6929281745105982
-              },
-              {
-                "op": "angle_add",
-                "type": "angle",
-                "refs": [
-                  16,
-                  23
-                ],
-                "value": 2.5881281197071075
-              }
-            ],
-            "steering": 22,
-            "acceleration": 9,
-            "macros": [],
-            "origin": "mutation"
-          },
-          "code": [
-            "def drive(scan, state):",
-            "  v0 = v_mul(scan.goal_alignment, scan.clearance)",
-            "  v1 = v_mul(scan.slope, scan.traction)",
-            "  v2 = v_sub(v0, scan.roughness)",
-            "  v3 = v_sub(v2, v1)",
-            "  v4 = argmax(v3)",
-            "  return clip(v4, -1, 1),",
-            "         clip(state.goal_distance, -1, 1)"
-          ],
-          "inventions": []
-        }
-      ]
-    },
-    {
-      "name": "Neural + evolution · fixed DSL",
-      "neural": true,
-      "evolveDSL": false,
-      "runs": [
-        {
-          "seed": 0,
-          "arrivals": 23,
-          "count": 36,
-          "collisions": 4,
-          "instabilities": 6,
-          "trainingRollouts": 31374,
-          "discoveryRollouts": 0,
-          "seconds": 17.259760207,
+          "seconds": 15.127858835999982,
           "macros": 0,
           "trainingArrivals": 8,
           "blindObstacleSensors": {
@@ -791,11 +288,11 @@
             {
               "kind": "woodland",
               "count": 12,
-              "success": 0.6666666666666666,
-              "collisions": 2,
+              "success": 0.8333333333333334,
+              "collisions": 0,
               "instabilities": 2,
               "timeouts": 0,
-              "completion": 0.8575340275680615,
+              "completion": 0.9533874222809705,
               "seeds": [
                 1900000000,
                 1900000097,
@@ -818,7 +315,7 @@
               "collisions": 2,
               "instabilities": 0,
               "timeouts": 0,
-              "completion": 0.9221131661083076,
+              "completion": 0.8794288929911863,
               "seeds": [
                 1900100000,
                 1900100097,
@@ -837,11 +334,11 @@
             {
               "kind": "ridge",
               "count": 12,
-              "success": 0.4166666666666667,
-              "collisions": 0,
-              "instabilities": 4,
-              "timeouts": 3,
-              "completion": 0.6086169815990314,
+              "success": 0.5,
+              "collisions": 3,
+              "instabilities": 1,
+              "timeouts": 2,
+              "completion": 0.6697280883406685,
               "seeds": [
                 1900200000,
                 1900200097,
@@ -859,184 +356,174 @@
             }
           ],
           "program": {
-            "id": "off-02790",
+            "id": "off-00386",
             "genes": [
               {
-                "op": "argmax",
-                "type": "angle",
+                "op": "v_max",
+                "type": "vector",
                 "refs": [
-                  2
+                  0,
+                  4
                 ],
-                "value": -1.0381615455262363
+                "value": -1.9989838376641273
               },
               {
                 "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  3,
-                  2
-                ],
-                "value": 0.715110840741545
-              },
-              {
-                "op": "v_add",
                 "type": "vector",
                 "refs": [
                   1,
-                  15
+                  14
                 ],
-                "value": -0.5092092077247798
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  16,
-                  16
-                ],
-                "value": -1.2227635541930795
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  4,
-                  1
-                ],
-                "value": -0.0899182059802115
-              },
-              {
-                "op": "v_min",
-                "type": "vector",
-                "refs": [
-                  17,
-                  0
-                ],
-                "value": -0.5804728008806705
+                "value": 1.143947631586343
               },
               {
                 "op": "argmax",
                 "type": "angle",
                 "refs": [
-                  19
+                  1
                 ],
-                "value": -1.144261667970568
-              },
-              {
-                "op": "subtract",
-                "type": "scalar",
-                "refs": [
-                  5,
-                  7
-                ],
-                "value": 1.5857495055533946
+                "value": 1.3491824632510543
               },
               {
                 "op": "angle_scale",
                 "type": "angle",
                 "refs": [
-                  20,
-                  9
-                ],
-                "value": 2.903428447432816
-              },
-              {
-                "op": "multiply",
-                "type": "scalar",
-                "refs": [
-                  5,
+                  16,
                   6
                 ],
-                "value": 2.6902845832519233
+                "value": -2.6363262911327183
               },
               {
                 "op": "v_add",
                 "type": "vector",
                 "refs": [
-                  2,
-                  18
+                  4,
+                  14
                 ],
-                "value": 2.3904287139885128
+                "value": -2.695401260163635
               },
               {
-                "op": "angle_add",
+                "op": "argmax",
                 "type": "angle",
                 "refs": [
-                  20,
-                  22
+                  15
                 ],
-                "value": -0.12699813907966018
+                "value": -1.6403403840959072
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  2
+                ],
+                "value": 0.27751915622502565
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  1,
+                  4
+                ],
+                "value": 0.18794128065928817
+              },
+              {
+                "op": "v_max",
+                "type": "vector",
+                "refs": [
+                  18,
+                  21
+                ],
+                "value": 0.5118792406283319
               },
               {
                 "op": "v_scale",
                 "type": "vector",
                 "refs": [
-                  24,
-                  13
+                  0,
+                  5
                 ],
-                "value": 0.3164061759598553
+                "value": 0.6049983417615294
               },
               {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  24,
-                  15
-                ],
-                "value": 0.4892006730660796
-              },
-              {
-                "op": "center",
-                "type": "scalar",
-                "refs": [
-                  27
-                ],
-                "value": 0.15105397207662463
-              },
-              {
-                "op": "angle_add",
+                "op": "angle_scale",
                 "type": "angle",
                 "refs": [
-                  20,
-                  25
+                  17,
+                  5
                 ],
-                "value": 0.047464067582041025
+                "value": -2.0820087916217744
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  22,
+                  3
+                ],
+                "value": 2.3133752765133977
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  0
+                ],
+                "value": 1.8272424819879234
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  20,
+                  9
+                ],
+                "value": 0.02940121153369546
+              },
+              {
+                "op": "multiply",
+                "type": "scalar",
+                "refs": [
+                  6,
+                  5
+                ],
+                "value": 0.3973232489079237
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  3
+                ],
+                "value": -2.6090202271007
               }
             ],
-            "steering": 25,
-            "acceleration": 28,
+            "steering": 19,
+            "acceleration": 11,
             "macros": [],
             "origin": "mutation"
           },
           "code": [
             "def drive(scan, state):",
-            "  v0 = v_mul(scan.roughness, scan.slope)",
-            "  v1 = v_add(scan.clearance, v0)",
-            "  v2 = v_mul(v1, v1)",
-            "  v3 = v_mul(scan.traction, scan.clearance)",
-            "  v4 = v_min(v2, scan.goal_alignment)",
-            "  v5 = argmax(v4)",
-            "  v6 = angle_scale(v5, state.goal_distance)",
-            "  v7 = v_add(scan.slope, v3)",
-            "  v8 = angle_add(v5, v6)",
-            "  v9 = v_add(v7, v0)",
-            "  v10 = center(v9)",
-            "  return clip(v8, -1, 1),",
-            "         clip(v10, -1, 1)"
+            "  v0 = v_max(scan.goal_alignment, scan.traction)",
+            "  v1 = v_mul(scan.clearance, v0)",
+            "  v2 = argmax(v1)",
+            "  return clip(v2, -1, 1),",
+            "         clip(state.one, -1, 1)"
           ],
           "inventions": []
         },
         {
-          "seed": 7,
-          "arrivals": 27,
+          "seed": 42,
+          "arrivals": 26,
           "count": 36,
-          "collisions": 3,
-          "instabilities": 4,
+          "collisions": 5,
+          "instabilities": 3,
           "trainingRollouts": 31374,
           "discoveryRollouts": 0,
-          "seconds": 15.626625163000076,
+          "seconds": 19.343084752000003,
           "macros": 0,
-          "trainingArrivals": 7,
+          "trainingArrivals": 8,
           "blindObstacleSensors": {
             "arrivals": 0,
             "collisions": 34,
@@ -1046,11 +533,11 @@
             {
               "kind": "woodland",
               "count": 12,
-              "success": 0.8333333333333334,
+              "success": 0.75,
               "collisions": 2,
-              "instabilities": 0,
+              "instabilities": 1,
               "timeouts": 0,
-              "completion": 0.9638257801333326,
+              "completion": 0.945364456921349,
               "seeds": [
                 1900000000,
                 1900000097,
@@ -1070,10 +557,10 @@
               "kind": "quarry",
               "count": 12,
               "success": 0.9166666666666666,
-              "collisions": 0,
-              "instabilities": 1,
+              "collisions": 1,
+              "instabilities": 0,
               "timeouts": 0,
-              "completion": 0.9525527457926062,
+              "completion": 0.9546917090960898,
               "seeds": [
                 1900100000,
                 1900100097,
@@ -1093,10 +580,10 @@
               "kind": "ridge",
               "count": 12,
               "success": 0.5,
-              "collisions": 1,
-              "instabilities": 3,
+              "collisions": 2,
+              "instabilities": 2,
               "timeouts": 2,
-              "completion": 0.6374671152597342,
+              "completion": 0.7184482271227086,
               "seeds": [
                 1900200000,
                 1900200097,
@@ -1114,50 +601,70 @@
             }
           ],
           "program": {
-            "id": "off-02447",
+            "id": "off-02151",
             "genes": [
               {
                 "op": "v_add",
                 "type": "vector",
                 "refs": [
-                  0,
-                  0
-                ],
-                "value": -1.3001761576160789
-              },
-              {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  14,
-                  1
-                ],
-                "value": 0.24297745618969202
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  15
-                ],
-                "value": -2.873903453350067
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  3
-                ],
-                "value": 2.2272285860963166
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
                   1,
                   2
                 ],
-                "value": -0.16421517077833414
+                "value": -1.3305320343934
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  4,
+                  1
+                ],
+                "value": 1.0794963771477342
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  1,
+                  0
+                ],
+                "value": 1.4789388617500663
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  4,
+                  1
+                ],
+                "value": 0.6602372657507658
+              },
+              {
+                "op": "subtract",
+                "type": "scalar",
+                "refs": [
+                  8,
+                  12
+                ],
+                "value": -0.23358537023887038
+              },
+              {
+                "op": "max",
+                "type": "scalar",
+                "refs": [
+                  6,
+                  13
+                ],
+                "value": -0.15104513755068183
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  4,
+                  13
+                ],
+                "value": -0.10478312708437443
               },
               {
                 "op": "v_sub",
@@ -1166,140 +673,126 @@
                   17,
                   4
                 ],
-                "value": -2.817916485015303
+                "value": -0.57284678472206
               },
               {
-                "op": "add",
-                "type": "scalar",
+                "op": "argmax",
+                "type": "angle",
                 "refs": [
-                  9,
-                  6
+                  16
                 ],
-                "value": 1.4173599779605865
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  15
-                ],
-                "value": 2.061238991562277
+                "value": 0.844163004308939
               },
               {
                 "op": "v_add",
                 "type": "vector",
                 "refs": [
-                  18,
-                  19
-                ],
-                "value": -0.9446557438932359
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  4,
-                  1
-                ],
-                "value": -1.0052550695836544
-              },
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  15,
-                  2
-                ],
-                "value": -1.554811263922602
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
                   0,
-                  4
+                  16
                 ],
-                "value": 2.6413512700237334
+                "value": 1.974678478203714
               },
               {
-                "op": "angle_scale",
-                "type": "angle",
+                "op": "v_sub",
+                "type": "vector",
                 "refs": [
-                  16,
-                  11
+                  2,
+                  0
                 ],
-                "value": -0.48743962263688445
+                "value": -0.738676852080971
               },
               {
-                "op": "angle_scale",
-                "type": "angle",
-                "refs": [
-                  16,
-                  20
-                ],
-                "value": 2.4922116002999246
-              },
-              {
-                "op": "negate",
+                "op": "center",
                 "type": "scalar",
                 "refs": [
-                  7
+                  14
                 ],
-                "value": 1.909268909599632
+                "value": 0.8827234776690602
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  17,
+                  24
+                ],
+                "value": -0.6392960934899747
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  21,
+                  24
+                ],
+                "value": 2.071784463711083
+              },
+              {
+                "op": "subtract",
+                "type": "scalar",
+                "refs": [
+                  12,
+                  5
+                ],
+                "value": -0.6248166323639452
               },
               {
                 "op": "angle_add",
                 "type": "angle",
                 "refs": [
-                  16,
-                  27
+                  22,
+                  22
                 ],
-                "value": 1.5428935890085995
+                "value": 1.4104680768214166
               }
             ],
             "steering": 29,
-            "acceleration": 20,
+            "acceleration": 11,
             "macros": [],
             "origin": "mutation"
           },
           "code": [
             "def drive(scan, state):",
-            "  v0 = v_add(scan.goal_alignment, scan.goal_alignment)",
-            "  v1 = v_add(v0, scan.clearance)",
-            "  v2 = argmax(v1)",
-            "  v3 = add(state.goal_distance, state.pitch)",
-            "  v4 = angle_scale(v2, v3)",
-            "  v5 = angle_add(v2, v4)",
-            "  return clip(v5, -1, 1),",
-            "         clip(v3, -1, 1)"
+            "  v0 = v_mul(scan.clearance, scan.goal_alignment)",
+            "  v1 = argmax(v0)",
+            "  v2 = angle_add(v1, v1)",
+            "  return clip(v2, -1, 1),",
+            "         clip(state.one, -1, 1)"
           ],
           "inventions": []
-        },
+        }
+      ]
+    },
+    {
+      "name": "Neural + evolution · fixed DSL",
+      "neural": true,
+      "evolveDSL": false,
+      "runs": [
         {
-          "seed": 42,
-          "arrivals": 21,
+          "seed": 0,
+          "arrivals": 23,
           "count": 36,
-          "collisions": 10,
-          "instabilities": 3,
+          "collisions": 6,
+          "instabilities": 4,
           "trainingRollouts": 31374,
           "discoveryRollouts": 0,
-          "seconds": 18.605837253999997,
+          "seconds": 19.409722709999993,
           "macros": 0,
-          "trainingArrivals": 7,
+          "trainingArrivals": 8,
           "blindObstacleSensors": {
-            "arrivals": 3,
-            "collisions": 30,
+            "arrivals": 0,
+            "collisions": 34,
             "count": 36
           },
           "results": [
             {
               "kind": "woodland",
               "count": 12,
-              "success": 0.8333333333333334,
-              "collisions": 2,
-              "instabilities": 0,
+              "success": 0.6666666666666666,
+              "collisions": 3,
+              "instabilities": 1,
               "timeouts": 0,
-              "completion": 0.939635634520728,
+              "completion": 0.8660024115788781,
               "seeds": [
                 1900000000,
                 1900000097,
@@ -1318,11 +811,11 @@
             {
               "kind": "quarry",
               "count": 12,
-              "success": 0.5833333333333334,
-              "collisions": 4,
-              "instabilities": 1,
+              "success": 0.8333333333333334,
+              "collisions": 2,
+              "instabilities": 0,
               "timeouts": 0,
-              "completion": 0.7013697389785635,
+              "completion": 0.9219581248588327,
               "seeds": [
                 1900100000,
                 1900100097,
@@ -1341,11 +834,11 @@
             {
               "kind": "ridge",
               "count": 12,
-              "success": 0.3333333333333333,
-              "collisions": 4,
-              "instabilities": 2,
-              "timeouts": 2,
-              "completion": 0.5039282744776563,
+              "success": 0.4166666666666667,
+              "collisions": 1,
+              "instabilities": 3,
+              "timeouts": 3,
+              "completion": 0.6107098443608254,
               "seeds": [
                 1900200000,
                 1900200097,
@@ -1363,126 +856,24 @@
             }
           ],
           "program": {
-            "id": "off-01987",
+            "id": "off-01872",
             "genes": [
               {
-                "op": "add",
+                "op": "negate",
                 "type": "scalar",
                 "refs": [
-                  9,
-                  6
+                  11
                 ],
-                "value": 2.7896043732762337
+                "value": -1.9511597366072237
               },
               {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  2
-                ],
-                "value": 1.5802898649126291
-              },
-              {
-                "op": "v_sub",
+                "op": "v_min",
                 "type": "vector",
                 "refs": [
-                  0,
-                  3
-                ],
-                "value": -0.38398811174556613
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  2,
+                  1,
                   0
                 ],
-                "value": 2.0297518903389573
-              },
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  16,
-                  4
-                ],
-                "value": 1.3033406250178814
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  1
-                ],
-                "value": 2.0525332214310765
-              },
-              {
-                "op": "constant",
-                "type": "scalar",
-                "refs": [],
-                "value": -1.3768747779540718
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  4
-                ],
-                "value": -2.4214359037578106
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  16,
-                  1
-                ],
-                "value": 0.4450731477700174
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  19,
-                  1
-                ],
-                "value": 2.127640179824084
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  22
-                ],
-                "value": -1.0072989156469703
-              },
-              {
-                "op": "max",
-                "type": "scalar",
-                "refs": [
-                  14,
-                  9
-                ],
-                "value": 2.782973410561681
-              },
-              {
-                "op": "max",
-                "type": "scalar",
-                "refs": [
-                  14,
-                  5
-                ],
-                "value": -2.39826392987743
-              },
-              {
-                "op": "add",
-                "type": "scalar",
-                "refs": [
-                  25,
-                  8
-                ],
-                "value": -2.432421427220106
+                "value": -0.15700947772711515
               },
               {
                 "op": "center",
@@ -1490,51 +881,398 @@
                 "refs": [
                   0
                 ],
-                "value": -1.9910644702613354
+                "value": -2.1472818232141435
+              },
+              {
+                "op": "center",
+                "type": "scalar",
+                "refs": [
+                  15
+                ],
+                "value": 0.8311499445699155
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  4,
+                  2
+                ],
+                "value": -2.269466686528176
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  15
+                ],
+                "value": -2.666868574451655
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  2,
+                  18
+                ],
+                "value": 1.8794965879060328
+              },
+              {
+                "op": "angle_scale",
+                "type": "angle",
+                "refs": [
+                  19,
+                  9
+                ],
+                "value": -1.3870797157287598
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  20
+                ],
+                "value": 2.094649092759937
+              },
+              {
+                "op": "multiply",
+                "type": "scalar",
+                "refs": [
+                  9,
+                  12
+                ],
+                "value": -0.7897970345802605
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  18
+                ],
+                "value": -0.3450458482839167
               },
               {
                 "op": "angle_add",
                 "type": "angle",
                 "refs": [
-                  15,
-                  15
+                  19,
+                  21
                 ],
-                "value": 1.543976423330605
+                "value": -0.4905703919939697
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  21,
+                  19
+                ],
+                "value": -2.203986905515194
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  4
+                ],
+                "value": 0.09211734775453806
+              },
+              {
+                "op": "min",
+                "type": "scalar",
+                "refs": [
+                  5,
+                  10
+                ],
+                "value": -1.3465182138606906
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  25,
+                  25
+                ],
+                "value": -2.4198113358579576
               }
             ],
-            "steering": 24,
-            "acceleration": 25,
+            "steering": 29,
+            "acceleration": 17,
             "macros": [],
-            "origin": "crossover"
+            "origin": "mutation"
           },
           "code": [
             "def drive(scan, state):",
-            "  v0 = add(state.goal_distance, state.pitch)",
-            "  v1 = v_sub(scan.goal_alignment, scan.roughness)",
-            "  v2 = v_mul(v1, scan.clearance)",
-            "  v3 = argmax(v2)",
-            "  v4 = max(v0, state.goal_distance)",
-            "  return clip(v3, -1, 1),",
-            "         clip(v4, -1, 1)"
+            "  v0 = v_min(scan.clearance, scan.goal_alignment)",
+            "  v1 = center(v0)",
+            "  v2 = argmax(v0)",
+            "  v3 = angle_scale(v2, state.goal_distance)",
+            "  v4 = angle_add(v2, v3)",
+            "  v5 = angle_add(v4, v4)",
+            "  return clip(v5, -1, 1),",
+            "         clip(v1, -1, 1)"
           ],
           "inventions": []
-        }
-      ]
-    },
-    {
-      "name": "Evolution · evolving DSL",
-      "neural": false,
-      "evolveDSL": true,
-      "runs": [
+        },
         {
-          "seed": 0,
-          "arrivals": 22,
+          "seed": 7,
+          "arrivals": 23,
           "count": 36,
-          "collisions": 2,
-          "instabilities": 10,
+          "collisions": 4,
+          "instabilities": 7,
           "trainingRollouts": 31374,
-          "discoveryRollouts": 3780,
-          "seconds": 20.453395873999952,
+          "discoveryRollouts": 0,
+          "seconds": 15.555803457999994,
+          "macros": 0,
+          "trainingArrivals": 9,
+          "blindObstacleSensors": {
+            "arrivals": 0,
+            "collisions": 34,
+            "count": 36
+          },
+          "results": [
+            {
+              "kind": "woodland",
+              "count": 12,
+              "success": 0.6666666666666666,
+              "collisions": 2,
+              "instabilities": 2,
+              "timeouts": 0,
+              "completion": 0.8511292009314079,
+              "seeds": [
+                1900000000,
+                1900000097,
+                1900000194,
+                1900000291,
+                1900000388,
+                1900000485,
+                1900000582,
+                1900000679,
+                1900000776,
+                1900000873,
+                1900000970,
+                1900001067
+              ]
+            },
+            {
+              "kind": "quarry",
+              "count": 12,
+              "success": 0.8333333333333334,
+              "collisions": 2,
+              "instabilities": 0,
+              "timeouts": 0,
+              "completion": 0.9209601427396543,
+              "seeds": [
+                1900100000,
+                1900100097,
+                1900100194,
+                1900100291,
+                1900100388,
+                1900100485,
+                1900100582,
+                1900100679,
+                1900100776,
+                1900100873,
+                1900100970,
+                1900101067
+              ]
+            },
+            {
+              "kind": "ridge",
+              "count": 12,
+              "success": 0.4166666666666667,
+              "collisions": 0,
+              "instabilities": 5,
+              "timeouts": 2,
+              "completion": 0.6277492536207063,
+              "seeds": [
+                1900200000,
+                1900200097,
+                1900200194,
+                1900200291,
+                1900200388,
+                1900200485,
+                1900200582,
+                1900200679,
+                1900200776,
+                1900200873,
+                1900200970,
+                1900201067
+              ]
+            }
+          ],
+          "program": {
+            "id": "off-02899",
+            "genes": [
+              {
+                "op": "center",
+                "type": "scalar",
+                "refs": [
+                  4
+                ],
+                "value": -2.6460651392117143
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  0,
+                  2
+                ],
+                "value": 0.9246531170792878
+              },
+              {
+                "op": "subtract",
+                "type": "scalar",
+                "refs": [
+                  5,
+                  7
+                ],
+                "value": 2.296159027609974
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  0,
+                  11
+                ],
+                "value": 2.964604098815471
+              },
+              {
+                "op": "v_max",
+                "type": "vector",
+                "refs": [
+                  4,
+                  0
+                ],
+                "value": -0.26502057490870357
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  2,
+                  16
+                ],
+                "value": -0.6979946913197637
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  18,
+                  1
+                ],
+                "value": -2.6503590303473175
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  3,
+                  17
+                ],
+                "value": 2.852847905829549
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  18,
+                  3
+                ],
+                "value": 2.8626786321401596
+              },
+              {
+                "op": "min",
+                "type": "scalar",
+                "refs": [
+                  16,
+                  6
+                ],
+                "value": 0.9761703405529261
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  20,
+                  1
+                ],
+                "value": 1.7269328339025378
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  24
+                ],
+                "value": 1.0285588935948908
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  25,
+                  25
+                ],
+                "value": 1.4410159047693014
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  25,
+                  26
+                ],
+                "value": -0.5668511339463294
+              },
+              {
+                "op": "add",
+                "type": "scalar",
+                "refs": [
+                  6,
+                  11
+                ],
+                "value": 0.9179655374027789
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  20
+                ],
+                "value": 1.9727893746457994
+              }
+            ],
+            "steering": 27,
+            "acceleration": 11,
+            "macros": [],
+            "origin": "mutation"
+          },
+          "code": [
+            "def drive(scan, state):",
+            "  v0 = v_max(scan.traction, scan.goal_alignment)",
+            "  v1 = v_add(v0, scan.clearance)",
+            "  v2 = v_mul(v1, scan.clearance)",
+            "  v3 = argmax(v2)",
+            "  v4 = angle_add(v3, v3)",
+            "  v5 = angle_add(v3, v4)",
+            "  return clip(v5, -1, 1),",
+            "         clip(state.one, -1, 1)"
+          ],
+          "inventions": []
+        },
+        {
+          "seed": 42,
+          "arrivals": 26,
+          "count": 36,
+          "collisions": 5,
+          "instabilities": 3,
+          "trainingRollouts": 31374,
+          "discoveryRollouts": 0,
+          "seconds": 19.51037454100007,
           "macros": 0,
           "trainingArrivals": 8,
           "blindObstacleSensors": {
@@ -1547,10 +1285,262 @@
               "kind": "woodland",
               "count": 12,
               "success": 0.75,
-              "collisions": 1,
-              "instabilities": 2,
+              "collisions": 2,
+              "instabilities": 1,
               "timeouts": 0,
-              "completion": 0.9188791533120891,
+              "completion": 0.945364456921349,
+              "seeds": [
+                1900000000,
+                1900000097,
+                1900000194,
+                1900000291,
+                1900000388,
+                1900000485,
+                1900000582,
+                1900000679,
+                1900000776,
+                1900000873,
+                1900000970,
+                1900001067
+              ]
+            },
+            {
+              "kind": "quarry",
+              "count": 12,
+              "success": 0.9166666666666666,
+              "collisions": 1,
+              "instabilities": 0,
+              "timeouts": 0,
+              "completion": 0.9547606975355413,
+              "seeds": [
+                1900100000,
+                1900100097,
+                1900100194,
+                1900100291,
+                1900100388,
+                1900100485,
+                1900100582,
+                1900100679,
+                1900100776,
+                1900100873,
+                1900100970,
+                1900101067
+              ]
+            },
+            {
+              "kind": "ridge",
+              "count": 12,
+              "success": 0.5,
+              "collisions": 2,
+              "instabilities": 2,
+              "timeouts": 2,
+              "completion": 0.7184482271227086,
+              "seeds": [
+                1900200000,
+                1900200097,
+                1900200194,
+                1900200291,
+                1900200388,
+                1900200485,
+                1900200582,
+                1900200679,
+                1900200776,
+                1900200873,
+                1900200970,
+                1900201067
+              ]
+            }
+          ],
+          "program": {
+            "id": "off-00771",
+            "genes": [
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  1,
+                  2
+                ],
+                "value": -2.838494188617915
+              },
+              {
+                "op": "tanh",
+                "type": "scalar",
+                "refs": [
+                  5
+                ],
+                "value": 0.18537619477137923
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  1,
+                  0
+                ],
+                "value": 2.893813439179212
+              },
+              {
+                "op": "negate",
+                "type": "scalar",
+                "refs": [
+                  11
+                ],
+                "value": 0.8145613688975573
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  16,
+                  16
+                ],
+                "value": 0.030390301253646612
+              },
+              {
+                "op": "tanh",
+                "type": "scalar",
+                "refs": [
+                  9
+                ],
+                "value": -1.0195658477023244
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  16
+                ],
+                "value": 2.361353184096515
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  16
+                ],
+                "value": -1.4443631619215012
+              },
+              {
+                "op": "min",
+                "type": "scalar",
+                "refs": [
+                  7,
+                  9
+                ],
+                "value": 0.8890744834206998
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  14,
+                  0
+                ],
+                "value": 1.919940201099962
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  18,
+                  20
+                ],
+                "value": -1.8771922839805484
+              },
+              {
+                "op": "v_max",
+                "type": "vector",
+                "refs": [
+                  14,
+                  16
+                ],
+                "value": 2.488761398009956
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  23,
+                  23
+                ],
+                "value": -2.8954423014074564
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  24,
+                  5
+                ],
+                "value": -1.8032146822661161
+              },
+              {
+                "op": "min",
+                "type": "scalar",
+                "refs": [
+                  22,
+                  8
+                ],
+                "value": 1.7221990716643631
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  21,
+                  21
+                ],
+                "value": 0.2593500707298517
+              }
+            ],
+            "steering": 29,
+            "acceleration": 11,
+            "macros": [],
+            "origin": "mutation"
+          },
+          "code": [
+            "def drive(scan, state):",
+            "  v0 = v_add(scan.clearance, scan.goal_alignment)",
+            "  v1 = argmax(v0)",
+            "  v2 = angle_add(v1, v1)",
+            "  return clip(v2, -1, 1),",
+            "         clip(state.one, -1, 1)"
+          ],
+          "inventions": []
+        }
+      ]
+    },
+    {
+      "name": "Evolution · evolving DSL",
+      "neural": false,
+      "evolveDSL": true,
+      "runs": [
+        {
+          "seed": 0,
+          "arrivals": 26,
+          "count": 36,
+          "collisions": 5,
+          "instabilities": 3,
+          "trainingRollouts": 31374,
+          "discoveryRollouts": 2520,
+          "seconds": 20.301418788999975,
+          "macros": 0,
+          "trainingArrivals": 8,
+          "blindObstacleSensors": {
+            "arrivals": 0,
+            "collisions": 34,
+            "count": 36
+          },
+          "results": [
+            {
+              "kind": "woodland",
+              "count": 12,
+              "success": 0.75,
+              "collisions": 2,
+              "instabilities": 1,
+              "timeouts": 0,
+              "completion": 0.8958369709303894,
               "seeds": [
                 1900000000,
                 1900000097,
@@ -1570,10 +1560,10 @@
               "kind": "quarry",
               "count": 12,
               "success": 0.8333333333333334,
-              "collisions": 1,
-              "instabilities": 1,
+              "collisions": 2,
+              "instabilities": 0,
               "timeouts": 0,
-              "completion": 0.9333721313723378,
+              "completion": 0.9337451535544873,
               "seeds": [
                 1900100000,
                 1900100097,
@@ -1592,11 +1582,11 @@
             {
               "kind": "ridge",
               "count": 12,
-              "success": 0.25,
-              "collisions": 0,
-              "instabilities": 7,
+              "success": 0.5833333333333334,
+              "collisions": 1,
+              "instabilities": 2,
               "timeouts": 2,
-              "completion": 0.5466828820632516,
+              "completion": 0.7228200704821394,
               "seeds": [
                 1900200000,
                 1900200097,
@@ -1614,25 +1604,25 @@
             }
           ],
           "program": {
-            "id": "off-01735",
+            "id": "off-02800",
             "genes": [
               {
-                "op": "v_scale",
-                "type": "vector",
-                "refs": [
-                  0,
-                  11
-                ],
-                "value": 0.33560332702472806
-              },
-              {
-                "op": "v_mul",
+                "op": "v_add",
                 "type": "vector",
                 "refs": [
                   1,
-                  0
+                  1
                 ],
-                "value": 1.5127859241329134
+                "value": -1.9787685787305236
+              },
+              {
+                "op": "v_sub",
+                "type": "vector",
+                "refs": [
+                  0,
+                  1
+                ],
+                "value": 1.9772130455821753
               },
               {
                 "op": "v_add",
@@ -1644,76 +1634,72 @@
                 "value": 0.007750086486339569
               },
               {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  16,
-                  14
-                ],
-                "value": -0.38331621838733554
-              },
-              {
-                "op": "subtract",
-                "type": "scalar",
-                "refs": [
-                  11,
-                  13
-                ],
-                "value": 2.501279756426811
-              },
-              {
                 "op": "v_add",
                 "type": "vector",
                 "refs": [
-                  17,
-                  3
-                ],
-                "value": 2.8171095019206405
-              },
-              {
-                "op": "v_scale",
-                "type": "vector",
-                "refs": [
-                  17,
-                  13
-                ],
-                "value": 2.9037478817626834
-              },
-              {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  17,
+                  14,
                   1
                 ],
-                "value": 1.360689732246101
+                "value": -2.733185850083828
               },
               {
-                "op": "add",
+                "op": "max",
                 "type": "scalar",
                 "refs": [
-                  18,
-                  6
+                  6,
+                  13
                 ],
-                "value": -1.071711623109877
+                "value": 1.7974757091142237
               },
               {
-                "op": "v_max",
+                "op": "v_negate",
                 "type": "vector",
                 "refs": [
-                  21,
-                  20
+                  0
                 ],
-                "value": 2.615018291864544
+                "value": -1.9003560547716916
               },
               {
                 "op": "v_sub",
                 "type": "vector",
                 "refs": [
-                  21,
-                  19
+                  16,
+                  3
                 ],
-                "value": -2.6669128853827715
+                "value": 2.0748869595117867
+              },
+              {
+                "op": "v_max",
+                "type": "vector",
+                "refs": [
+                  0,
+                  16
+                ],
+                "value": -2.7118904809467494
+              },
+              {
+                "op": "constant",
+                "type": "scalar",
+                "refs": [],
+                "value": 0.8111112755723298
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  14,
+                  16
+                ],
+                "value": 2.7257628673687577
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  19,
+                  1
+                ],
+                "value": 1.3279608255252242
               },
               {
                 "op": "v_negate",
@@ -1727,23 +1713,25 @@
                 "op": "argmax",
                 "type": "angle",
                 "refs": [
-                  21
+                  16
                 ],
-                "value": 0.46336630498990417
+                "value": 1.0728104431182146
               },
               {
-                "op": "tanh",
+                "op": "center",
                 "type": "scalar",
                 "refs": [
-                  22
+                  23
                 ],
-                "value": -1.0839578518643975
+                "value": -1.9913568729534745
               },
               {
-                "op": "constant",
+                "op": "negate",
                 "type": "scalar",
-                "refs": [],
-                "value": 2.034190407022834
+                "refs": [
+                  11
+                ],
+                "value": -2.0328886094503105
               },
               {
                 "op": "angle_add",
@@ -1752,7 +1740,7 @@
                   26,
                   26
                 ],
-                "value": 1.8435721839778125
+                "value": -2.563390200957656
               }
             ],
             "steering": 29,
@@ -1762,19 +1750,1162 @@
           },
           "code": [
             "def drive(scan, state):",
-            "  v0 = v_scale(scan.goal_alignment, state.one)",
+            "  v0 = v_add(scan.clearance, scan.clearance)",
             "  v1 = v_add(v0, scan.goal_alignment)",
-            "  v2 = v_mul(v1, v0)",
-            "  v3 = subtract(state.one, state.minus_one)",
-            "  v4 = v_add(v2, scan.clearance)",
-            "  v5 = add(v3, state.pitch)",
-            "  v6 = argmax(v4)",
-            "  v7 = tanh(v5)",
-            "  v8 = angle_add(v6, v6)",
-            "  return clip(v8, -1, 1),",
-            "         clip(v7, -1, 1)"
+            "  v2 = v_mul(v0, v1)",
+            "  v3 = argmax(v1)",
+            "  v4 = center(v2)",
+            "  v5 = angle_add(v3, v3)",
+            "  return clip(v5, -1, 1),",
+            "         clip(v4, -1, 1)"
           ],
           "inventions": [
+            {
+              "generation": 20,
+              "macro": {
+                "name": "terrain_fn_1",
+                "output": "vector",
+                "args": [
+                  "vector",
+                  "vector",
+                  "vector"
+                ],
+                "inner": "v_add",
+                "outer": "v_add",
+                "slot": 0,
+                "definition": "terrain_fn_1(a, b, c) = v_add(v_add(a, b), c)"
+              },
+              "before": 31.0394771523965,
+              "after": 48.54786876962201,
+              "used": 1,
+              "accepted": false,
+              "rollouts": 630
+            },
+            {
+              "generation": 40,
+              "macro": {
+                "name": "terrain_fn_1",
+                "output": "vector",
+                "args": [
+                  "vector",
+                  "vector",
+                  "vector"
+                ],
+                "inner": "v_add",
+                "outer": "v_add",
+                "slot": 0,
+                "definition": "terrain_fn_1(a, b, c) = v_add(v_add(a, b), c)"
+              },
+              "before": 44.85832145623134,
+              "after": 99.565246692854,
+              "used": 0,
+              "accepted": false,
+              "rollouts": 630
+            }
+          ]
+        },
+        {
+          "seed": 7,
+          "arrivals": 26,
+          "count": 36,
+          "collisions": 5,
+          "instabilities": 3,
+          "trainingRollouts": 31374,
+          "discoveryRollouts": 2520,
+          "seconds": 17.979008045000054,
+          "macros": 0,
+          "trainingArrivals": 8,
+          "blindObstacleSensors": {
+            "arrivals": 0,
+            "collisions": 34,
+            "count": 36
+          },
+          "results": [
+            {
+              "kind": "woodland",
+              "count": 12,
+              "success": 0.8333333333333334,
+              "collisions": 0,
+              "instabilities": 2,
+              "timeouts": 0,
+              "completion": 0.9533874222809705,
+              "seeds": [
+                1900000000,
+                1900000097,
+                1900000194,
+                1900000291,
+                1900000388,
+                1900000485,
+                1900000582,
+                1900000679,
+                1900000776,
+                1900000873,
+                1900000970,
+                1900001067
+              ]
+            },
+            {
+              "kind": "quarry",
+              "count": 12,
+              "success": 0.8333333333333334,
+              "collisions": 2,
+              "instabilities": 0,
+              "timeouts": 0,
+              "completion": 0.8794288929911863,
+              "seeds": [
+                1900100000,
+                1900100097,
+                1900100194,
+                1900100291,
+                1900100388,
+                1900100485,
+                1900100582,
+                1900100679,
+                1900100776,
+                1900100873,
+                1900100970,
+                1900101067
+              ]
+            },
+            {
+              "kind": "ridge",
+              "count": 12,
+              "success": 0.5,
+              "collisions": 3,
+              "instabilities": 1,
+              "timeouts": 2,
+              "completion": 0.6697280883406685,
+              "seeds": [
+                1900200000,
+                1900200097,
+                1900200194,
+                1900200291,
+                1900200388,
+                1900200485,
+                1900200582,
+                1900200679,
+                1900200776,
+                1900200873,
+                1900200970,
+                1900201067
+              ]
+            }
+          ],
+          "program": {
+            "id": "off-00386",
+            "genes": [
+              {
+                "op": "v_max",
+                "type": "vector",
+                "refs": [
+                  0,
+                  4
+                ],
+                "value": -1.9989838376641273
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  1,
+                  14
+                ],
+                "value": 1.143947631586343
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  1
+                ],
+                "value": 1.3491824632510543
+              },
+              {
+                "op": "angle_scale",
+                "type": "angle",
+                "refs": [
+                  16,
+                  6
+                ],
+                "value": -2.6363262911327183
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  4,
+                  14
+                ],
+                "value": -2.695401260163635
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  15
+                ],
+                "value": -1.6403403840959072
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  2
+                ],
+                "value": 0.27751915622502565
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  1,
+                  4
+                ],
+                "value": 0.18794128065928817
+              },
+              {
+                "op": "v_max",
+                "type": "vector",
+                "refs": [
+                  18,
+                  21
+                ],
+                "value": 0.5118792406283319
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  0,
+                  5
+                ],
+                "value": 0.6049983417615294
+              },
+              {
+                "op": "angle_scale",
+                "type": "angle",
+                "refs": [
+                  17,
+                  5
+                ],
+                "value": -2.0820087916217744
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  22,
+                  3
+                ],
+                "value": 2.3133752765133977
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  0
+                ],
+                "value": 1.8272424819879234
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  20,
+                  9
+                ],
+                "value": 0.02940121153369546
+              },
+              {
+                "op": "multiply",
+                "type": "scalar",
+                "refs": [
+                  6,
+                  5
+                ],
+                "value": 0.3973232489079237
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  3
+                ],
+                "value": -2.6090202271007
+              }
+            ],
+            "steering": 19,
+            "acceleration": 11,
+            "macros": [],
+            "origin": "mutation"
+          },
+          "code": [
+            "def drive(scan, state):",
+            "  v0 = v_max(scan.goal_alignment, scan.traction)",
+            "  v1 = v_mul(scan.clearance, v0)",
+            "  v2 = argmax(v1)",
+            "  return clip(v2, -1, 1),",
+            "         clip(state.one, -1, 1)"
+          ],
+          "inventions": [
+            {
+              "generation": 20,
+              "macro": {
+                "name": "terrain_fn_1",
+                "output": "vector",
+                "args": [
+                  "vector",
+                  "vector",
+                  "vector"
+                ],
+                "inner": "v_max",
+                "outer": "v_mul",
+                "slot": 1,
+                "definition": "terrain_fn_1(a, b, c) = v_mul(c, v_max(a, b))"
+              },
+              "before": 80.83873790344742,
+              "after": 13.837861869301449,
+              "used": 0,
+              "accepted": false,
+              "rollouts": 630
+            },
+            {
+              "generation": 40,
+              "macro": {
+                "name": "terrain_fn_1",
+                "output": "vector",
+                "args": [
+                  "vector",
+                  "vector",
+                  "vector"
+                ],
+                "inner": "v_max",
+                "outer": "v_mul",
+                "slot": 1,
+                "definition": "terrain_fn_1(a, b, c) = v_mul(c, v_max(a, b))"
+              },
+              "before": 64.6562633808379,
+              "after": 10.112792995480007,
+              "used": 0,
+              "accepted": false,
+              "rollouts": 630
+            }
+          ]
+        },
+        {
+          "seed": 42,
+          "arrivals": 26,
+          "count": 36,
+          "collisions": 5,
+          "instabilities": 3,
+          "trainingRollouts": 31374,
+          "discoveryRollouts": 1890,
+          "seconds": 21.916731920999883,
+          "macros": 0,
+          "trainingArrivals": 8,
+          "blindObstacleSensors": {
+            "arrivals": 0,
+            "collisions": 34,
+            "count": 36
+          },
+          "results": [
+            {
+              "kind": "woodland",
+              "count": 12,
+              "success": 0.75,
+              "collisions": 2,
+              "instabilities": 1,
+              "timeouts": 0,
+              "completion": 0.945364456921349,
+              "seeds": [
+                1900000000,
+                1900000097,
+                1900000194,
+                1900000291,
+                1900000388,
+                1900000485,
+                1900000582,
+                1900000679,
+                1900000776,
+                1900000873,
+                1900000970,
+                1900001067
+              ]
+            },
+            {
+              "kind": "quarry",
+              "count": 12,
+              "success": 0.9166666666666666,
+              "collisions": 1,
+              "instabilities": 0,
+              "timeouts": 0,
+              "completion": 0.9546917090960898,
+              "seeds": [
+                1900100000,
+                1900100097,
+                1900100194,
+                1900100291,
+                1900100388,
+                1900100485,
+                1900100582,
+                1900100679,
+                1900100776,
+                1900100873,
+                1900100970,
+                1900101067
+              ]
+            },
+            {
+              "kind": "ridge",
+              "count": 12,
+              "success": 0.5,
+              "collisions": 2,
+              "instabilities": 2,
+              "timeouts": 2,
+              "completion": 0.7184482271227086,
+              "seeds": [
+                1900200000,
+                1900200097,
+                1900200194,
+                1900200291,
+                1900200388,
+                1900200485,
+                1900200582,
+                1900200679,
+                1900200776,
+                1900200873,
+                1900200970,
+                1900201067
+              ]
+            }
+          ],
+          "program": {
+            "id": "off-02151",
+            "genes": [
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  1,
+                  2
+                ],
+                "value": -1.3305320343934
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  4,
+                  1
+                ],
+                "value": 1.0794963771477342
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  1,
+                  0
+                ],
+                "value": 1.4789388617500663
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  4,
+                  1
+                ],
+                "value": 0.6602372657507658
+              },
+              {
+                "op": "subtract",
+                "type": "scalar",
+                "refs": [
+                  8,
+                  12
+                ],
+                "value": -0.23358537023887038
+              },
+              {
+                "op": "max",
+                "type": "scalar",
+                "refs": [
+                  6,
+                  13
+                ],
+                "value": -0.15104513755068183
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  4,
+                  13
+                ],
+                "value": -0.10478312708437443
+              },
+              {
+                "op": "v_sub",
+                "type": "vector",
+                "refs": [
+                  17,
+                  4
+                ],
+                "value": -0.57284678472206
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  16
+                ],
+                "value": 0.844163004308939
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  0,
+                  16
+                ],
+                "value": 1.974678478203714
+              },
+              {
+                "op": "v_sub",
+                "type": "vector",
+                "refs": [
+                  2,
+                  0
+                ],
+                "value": -0.738676852080971
+              },
+              {
+                "op": "center",
+                "type": "scalar",
+                "refs": [
+                  14
+                ],
+                "value": 0.8827234776690602
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  17,
+                  24
+                ],
+                "value": -0.6392960934899747
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  21,
+                  24
+                ],
+                "value": 2.071784463711083
+              },
+              {
+                "op": "subtract",
+                "type": "scalar",
+                "refs": [
+                  12,
+                  5
+                ],
+                "value": -0.6248166323639452
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  22,
+                  22
+                ],
+                "value": 1.4104680768214166
+              }
+            ],
+            "steering": 29,
+            "acceleration": 11,
+            "macros": [],
+            "origin": "mutation"
+          },
+          "code": [
+            "def drive(scan, state):",
+            "  v0 = v_mul(scan.clearance, scan.goal_alignment)",
+            "  v1 = argmax(v0)",
+            "  v2 = angle_add(v1, v1)",
+            "  return clip(v2, -1, 1),",
+            "         clip(state.one, -1, 1)"
+          ],
+          "inventions": [
+            {
+              "generation": 40,
+              "macro": {
+                "name": "terrain_fn_1",
+                "output": "vector",
+                "args": [
+                  "vector",
+                  "scalar",
+                  "vector"
+                ],
+                "inner": "v_scale",
+                "outer": "v_min",
+                "slot": 0,
+                "definition": "terrain_fn_1(a, b, c) = v_min(v_scale(a, b), c)"
+              },
+              "before": 26.37212090364568,
+              "after": 17.817722408088926,
+              "used": 0,
+              "accepted": false,
+              "rollouts": 630
+            },
+            {
+              "generation": 40,
+              "macro": {
+                "name": "terrain_fn_1",
+                "output": "vector",
+                "args": [
+                  "vector",
+                  "vector",
+                  "vector"
+                ],
+                "inner": "v_min",
+                "outer": "v_min",
+                "slot": 1,
+                "definition": "terrain_fn_1(a, b, c) = v_min(c, v_min(a, b))"
+              },
+              "before": 26.37212090364568,
+              "after": 17.817722408088926,
+              "used": 0,
+              "accepted": false,
+              "rollouts": 630
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Neural + evolution · evolving DSL",
+      "neural": true,
+      "evolveDSL": true,
+      "runs": [
+        {
+          "seed": 0,
+          "arrivals": 23,
+          "count": 36,
+          "collisions": 6,
+          "instabilities": 4,
+          "trainingRollouts": 31374,
+          "discoveryRollouts": 0,
+          "seconds": 20.36034762799996,
+          "macros": 0,
+          "trainingArrivals": 8,
+          "blindObstacleSensors": {
+            "arrivals": 0,
+            "collisions": 34,
+            "count": 36
+          },
+          "results": [
+            {
+              "kind": "woodland",
+              "count": 12,
+              "success": 0.6666666666666666,
+              "collisions": 3,
+              "instabilities": 1,
+              "timeouts": 0,
+              "completion": 0.8660024115788781,
+              "seeds": [
+                1900000000,
+                1900000097,
+                1900000194,
+                1900000291,
+                1900000388,
+                1900000485,
+                1900000582,
+                1900000679,
+                1900000776,
+                1900000873,
+                1900000970,
+                1900001067
+              ]
+            },
+            {
+              "kind": "quarry",
+              "count": 12,
+              "success": 0.8333333333333334,
+              "collisions": 2,
+              "instabilities": 0,
+              "timeouts": 0,
+              "completion": 0.9219581248588327,
+              "seeds": [
+                1900100000,
+                1900100097,
+                1900100194,
+                1900100291,
+                1900100388,
+                1900100485,
+                1900100582,
+                1900100679,
+                1900100776,
+                1900100873,
+                1900100970,
+                1900101067
+              ]
+            },
+            {
+              "kind": "ridge",
+              "count": 12,
+              "success": 0.4166666666666667,
+              "collisions": 1,
+              "instabilities": 3,
+              "timeouts": 3,
+              "completion": 0.6107098443608254,
+              "seeds": [
+                1900200000,
+                1900200097,
+                1900200194,
+                1900200291,
+                1900200388,
+                1900200485,
+                1900200582,
+                1900200679,
+                1900200776,
+                1900200873,
+                1900200970,
+                1900201067
+              ]
+            }
+          ],
+          "program": {
+            "id": "off-01872",
+            "genes": [
+              {
+                "op": "negate",
+                "type": "scalar",
+                "refs": [
+                  11
+                ],
+                "value": -1.9511597366072237
+              },
+              {
+                "op": "v_min",
+                "type": "vector",
+                "refs": [
+                  1,
+                  0
+                ],
+                "value": -0.15700947772711515
+              },
+              {
+                "op": "center",
+                "type": "scalar",
+                "refs": [
+                  0
+                ],
+                "value": -2.1472818232141435
+              },
+              {
+                "op": "center",
+                "type": "scalar",
+                "refs": [
+                  15
+                ],
+                "value": 0.8311499445699155
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  4,
+                  2
+                ],
+                "value": -2.269466686528176
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  15
+                ],
+                "value": -2.666868574451655
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  2,
+                  18
+                ],
+                "value": 1.8794965879060328
+              },
+              {
+                "op": "angle_scale",
+                "type": "angle",
+                "refs": [
+                  19,
+                  9
+                ],
+                "value": -1.3870797157287598
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  20
+                ],
+                "value": 2.094649092759937
+              },
+              {
+                "op": "multiply",
+                "type": "scalar",
+                "refs": [
+                  9,
+                  12
+                ],
+                "value": -0.7897970345802605
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  18
+                ],
+                "value": -0.3450458482839167
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  19,
+                  21
+                ],
+                "value": -0.4905703919939697
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  21,
+                  19
+                ],
+                "value": -2.203986905515194
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  4
+                ],
+                "value": 0.09211734775453806
+              },
+              {
+                "op": "min",
+                "type": "scalar",
+                "refs": [
+                  5,
+                  10
+                ],
+                "value": -1.3465182138606906
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  25,
+                  25
+                ],
+                "value": -2.4198113358579576
+              }
+            ],
+            "steering": 29,
+            "acceleration": 17,
+            "macros": [],
+            "origin": "mutation"
+          },
+          "code": [
+            "def drive(scan, state):",
+            "  v0 = v_min(scan.clearance, scan.goal_alignment)",
+            "  v1 = center(v0)",
+            "  v2 = argmax(v0)",
+            "  v3 = angle_scale(v2, state.goal_distance)",
+            "  v4 = angle_add(v2, v3)",
+            "  v5 = angle_add(v4, v4)",
+            "  return clip(v5, -1, 1),",
+            "         clip(v1, -1, 1)"
+          ],
+          "inventions": []
+        },
+        {
+          "seed": 7,
+          "arrivals": 23,
+          "count": 36,
+          "collisions": 4,
+          "instabilities": 7,
+          "trainingRollouts": 31374,
+          "discoveryRollouts": 3780,
+          "seconds": 19.90850487400015,
+          "macros": 0,
+          "trainingArrivals": 9,
+          "blindObstacleSensors": {
+            "arrivals": 0,
+            "collisions": 34,
+            "count": 36
+          },
+          "results": [
+            {
+              "kind": "woodland",
+              "count": 12,
+              "success": 0.6666666666666666,
+              "collisions": 2,
+              "instabilities": 2,
+              "timeouts": 0,
+              "completion": 0.8511292009314079,
+              "seeds": [
+                1900000000,
+                1900000097,
+                1900000194,
+                1900000291,
+                1900000388,
+                1900000485,
+                1900000582,
+                1900000679,
+                1900000776,
+                1900000873,
+                1900000970,
+                1900001067
+              ]
+            },
+            {
+              "kind": "quarry",
+              "count": 12,
+              "success": 0.8333333333333334,
+              "collisions": 2,
+              "instabilities": 0,
+              "timeouts": 0,
+              "completion": 0.9209601427396543,
+              "seeds": [
+                1900100000,
+                1900100097,
+                1900100194,
+                1900100291,
+                1900100388,
+                1900100485,
+                1900100582,
+                1900100679,
+                1900100776,
+                1900100873,
+                1900100970,
+                1900101067
+              ]
+            },
+            {
+              "kind": "ridge",
+              "count": 12,
+              "success": 0.4166666666666667,
+              "collisions": 0,
+              "instabilities": 5,
+              "timeouts": 2,
+              "completion": 0.6277492536207063,
+              "seeds": [
+                1900200000,
+                1900200097,
+                1900200194,
+                1900200291,
+                1900200388,
+                1900200485,
+                1900200582,
+                1900200679,
+                1900200776,
+                1900200873,
+                1900200970,
+                1900201067
+              ]
+            }
+          ],
+          "program": {
+            "id": "off-02899",
+            "genes": [
+              {
+                "op": "center",
+                "type": "scalar",
+                "refs": [
+                  4
+                ],
+                "value": -2.6460651392117143
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  0,
+                  2
+                ],
+                "value": 0.9246531170792878
+              },
+              {
+                "op": "subtract",
+                "type": "scalar",
+                "refs": [
+                  5,
+                  7
+                ],
+                "value": 2.296159027609974
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  0,
+                  11
+                ],
+                "value": 2.964604098815471
+              },
+              {
+                "op": "v_max",
+                "type": "vector",
+                "refs": [
+                  4,
+                  0
+                ],
+                "value": -0.26502057490870357
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  2,
+                  16
+                ],
+                "value": -0.6979946913197637
+              },
+              {
+                "op": "v_add",
+                "type": "vector",
+                "refs": [
+                  18,
+                  1
+                ],
+                "value": -2.6503590303473175
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  3,
+                  17
+                ],
+                "value": 2.852847905829549
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  18,
+                  3
+                ],
+                "value": 2.8626786321401596
+              },
+              {
+                "op": "min",
+                "type": "scalar",
+                "refs": [
+                  16,
+                  6
+                ],
+                "value": 0.9761703405529261
+              },
+              {
+                "op": "v_mul",
+                "type": "vector",
+                "refs": [
+                  20,
+                  1
+                ],
+                "value": 1.7269328339025378
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  24
+                ],
+                "value": 1.0285588935948908
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  25,
+                  25
+                ],
+                "value": 1.4410159047693014
+              },
+              {
+                "op": "angle_add",
+                "type": "angle",
+                "refs": [
+                  25,
+                  26
+                ],
+                "value": -0.5668511339463294
+              },
+              {
+                "op": "add",
+                "type": "scalar",
+                "refs": [
+                  6,
+                  11
+                ],
+                "value": 0.9179655374027789
+              },
+              {
+                "op": "argmax",
+                "type": "angle",
+                "refs": [
+                  20
+                ],
+                "value": 1.9727893746457994
+              }
+            ],
+            "steering": 27,
+            "acceleration": 11,
+            "macros": [],
+            "origin": "mutation"
+          },
+          "code": [
+            "def drive(scan, state):",
+            "  v0 = v_max(scan.traction, scan.goal_alignment)",
+            "  v1 = v_add(v0, scan.clearance)",
+            "  v2 = v_mul(v1, scan.clearance)",
+            "  v3 = argmax(v2)",
+            "  v4 = angle_add(v3, v3)",
+            "  v5 = angle_add(v3, v4)",
+            "  return clip(v5, -1, 1),",
+            "         clip(state.one, -1, 1)"
+          ],
+          "inventions": [
+            {
+              "generation": 20,
+              "macro": {
+                "name": "terrain_fn_1",
+                "output": "vector",
+                "args": [
+                  "vector",
+                  "scalar",
+                  "vector"
+                ],
+                "inner": "v_scale",
+                "outer": "v_max",
+                "slot": 1,
+                "definition": "terrain_fn_1(a, b, c) = v_max(c, v_scale(a, b))"
+              },
+              "before": 32.6849483550621,
+              "after": 61.46810037933651,
+              "used": 0,
+              "accepted": false,
+              "rollouts": 630
+            },
             {
               "generation": 20,
               "macro": {
@@ -1790,50 +2921,8 @@
                 "slot": 0,
                 "definition": "terrain_fn_1(a, b, c) = v_add(v_max(a, b), c)"
               },
-              "before": 47.20120024127605,
-              "after": 59.05470874081725,
-              "used": 1,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 20,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_add",
-                "outer": "v_mul",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_mul(v_add(a, b), c)"
-              },
-              "before": 47.20120024127605,
-              "after": 42.19934001803462,
-              "used": 1,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 40,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_add",
-                "outer": "v_mul",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_mul(v_add(a, b), c)"
-              },
-              "before": -2.55150832777698,
-              "after": 82.78175446577504,
+              "before": 32.6849483550621,
+              "after": 66.63649495453453,
               "used": 0,
               "accepted": false,
               "rollouts": 630
@@ -1845,324 +2934,16 @@
                 "output": "vector",
                 "args": [
                   "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_mul",
-                "outer": "v_add",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_add(v_mul(a, b), c)"
-              },
-              "before": -2.55150832777698,
-              "after": 82.78175446577504,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            }
-          ]
-        },
-        {
-          "seed": 7,
-          "arrivals": 16,
-          "count": 36,
-          "collisions": 7,
-          "instabilities": 11,
-          "trainingRollouts": 31374,
-          "discoveryRollouts": 3780,
-          "seconds": 17.65710299800012,
-          "macros": 0,
-          "trainingArrivals": 9,
-          "blindObstacleSensors": {
-            "arrivals": 3,
-            "collisions": 30,
-            "count": 36
-          },
-          "results": [
-            {
-              "kind": "woodland",
-              "count": 12,
-              "success": 0.5833333333333334,
-              "collisions": 1,
-              "instabilities": 4,
-              "timeouts": 0,
-              "completion": 0.8540463281224508,
-              "seeds": [
-                1900000000,
-                1900000097,
-                1900000194,
-                1900000291,
-                1900000388,
-                1900000485,
-                1900000582,
-                1900000679,
-                1900000776,
-                1900000873,
-                1900000970,
-                1900001067
-              ]
-            },
-            {
-              "kind": "quarry",
-              "count": 12,
-              "success": 0.4166666666666667,
-              "collisions": 4,
-              "instabilities": 3,
-              "timeouts": 0,
-              "completion": 0.7764947224460316,
-              "seeds": [
-                1900100000,
-                1900100097,
-                1900100194,
-                1900100291,
-                1900100388,
-                1900100485,
-                1900100582,
-                1900100679,
-                1900100776,
-                1900100873,
-                1900100970,
-                1900101067
-              ]
-            },
-            {
-              "kind": "ridge",
-              "count": 12,
-              "success": 0.3333333333333333,
-              "collisions": 2,
-              "instabilities": 4,
-              "timeouts": 2,
-              "completion": 0.5495373058439966,
-              "seeds": [
-                1900200000,
-                1900200097,
-                1900200194,
-                1900200291,
-                1900200388,
-                1900200485,
-                1900200582,
-                1900200679,
-                1900200776,
-                1900200873,
-                1900200970,
-                1900201067
-              ]
-            }
-          ],
-          "program": {
-            "id": "off-02540",
-            "genes": [
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  0,
-                  0
-                ],
-                "value": 0.860726410523057
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  4
-                ],
-                "value": -0.23405296867713332
-              },
-              {
-                "op": "subtract",
-                "type": "scalar",
-                "refs": [
-                  5,
-                  8
-                ],
-                "value": 0.6794986724853516
-              },
-              {
-                "op": "v_scale",
-                "type": "vector",
-                "refs": [
-                  14,
-                  16
-                ],
-                "value": -1.20477933017537
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  17
-                ],
-                "value": -2.208613137714565
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  1,
-                  1
-                ],
-                "value": 2.5381043795496225
-              },
-              {
-                "op": "angle_scale",
-                "type": "angle",
-                "refs": [
-                  18,
-                  5
-                ],
-                "value": 2.9652630127966404
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  19
-                ],
-                "value": -2.6119251656346023
-              },
-              {
-                "op": "angle_add",
-                "type": "angle",
-                "refs": [
-                  20,
-                  15
-                ],
-                "value": 1.9433212392032146
-              },
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  1,
-                  17
-                ],
-                "value": 0.841883473098278
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  19
-                ],
-                "value": 1.5036133085377514
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  23
-                ],
-                "value": -1.0544744920916855
-              },
-              {
-                "op": "angle_add",
-                "type": "angle",
-                "refs": [
-                  21,
-                  15
-                ],
-                "value": -0.2033001878298819
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  19,
-                  25
-                ],
-                "value": 2.566408233717084
-              },
-              {
-                "op": "constant",
-                "type": "scalar",
-                "refs": [],
-                "value": 1.436406334070489
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  27
-                ],
-                "value": -1.9510364960879087
-              }
-            ],
-            "steering": 29,
-            "acceleration": 11,
-            "macros": [],
-            "origin": "mutation"
-          },
-          "code": [
-            "def drive(scan, state):",
-            "  v0 = v_mul(scan.goal_alignment, scan.goal_alignment)",
-            "  v1 = subtract(state.speed, state.previous_steer)",
-            "  v2 = v_scale(v0, v1)",
-            "  v3 = v_mul(scan.clearance, scan.clearance)",
-            "  v4 = v_max(scan.clearance, v2)",
-            "  v5 = v_negate(v4)",
-            "  v6 = v_sub(v3, v5)",
-            "  v7 = argmax(v6)",
-            "  return clip(v7, -1, 1),",
-            "         clip(state.one, -1, 1)"
-          ],
-          "inventions": [
-            {
-              "generation": 20,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
                   "vector",
                   "vector"
                 ],
                 "inner": "v_max",
-                "outer": "v_negate",
+                "outer": "v_add",
                 "slot": 0,
-                "definition": "terrain_fn_1(a, b) = v_negate(v_max(a, b))"
+                "definition": "terrain_fn_1(a, b, c) = v_add(v_max(a, b), c)"
               },
-              "before": 17.01430838345067,
-              "after": 39.87819664702296,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 20,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_negate",
-                "outer": "v_sub",
-                "slot": 1,
-                "definition": "terrain_fn_1(a, b) = v_sub(b, v_negate(a))"
-              },
-              "before": 17.01430838345067,
-              "after": 39.890338979569414,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 40,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "scalar"
-                ],
-                "inner": "v_mul",
-                "outer": "v_scale",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_scale(v_mul(a, b), c)"
-              },
-              "before": 11.89597294469818,
-              "after": 56.570701351813454,
+              "before": 59.087780608105874,
+              "after": 85.83772210883299,
               "used": 0,
               "accepted": false,
               "rollouts": 630
@@ -2182,8 +2963,8 @@
                 "slot": 1,
                 "definition": "terrain_fn_1(a, b, c) = v_max(c, v_scale(a, b))"
               },
-              "before": 11.89597294469818,
-              "after": 56.570701351813454,
+              "before": 59.087780608105874,
+              "after": 82.76425446577502,
               "used": 0,
               "accepted": false,
               "rollouts": 630
@@ -2192,351 +2973,13 @@
         },
         {
           "seed": 42,
-          "arrivals": 15,
+          "arrivals": 26,
           "count": 36,
-          "collisions": 12,
-          "instabilities": 6,
+          "collisions": 5,
+          "instabilities": 3,
           "trainingRollouts": 31374,
-          "discoveryRollouts": 3780,
-          "seconds": 22.141099627000163,
-          "macros": 0,
-          "trainingArrivals": 7,
-          "blindObstacleSensors": {
-            "arrivals": 2,
-            "collisions": 31,
-            "count": 36
-          },
-          "results": [
-            {
-              "kind": "woodland",
-              "count": 12,
-              "success": 0.5833333333333334,
-              "collisions": 4,
-              "instabilities": 1,
-              "timeouts": 0,
-              "completion": 0.8248706082213021,
-              "seeds": [
-                1900000000,
-                1900000097,
-                1900000194,
-                1900000291,
-                1900000388,
-                1900000485,
-                1900000582,
-                1900000679,
-                1900000776,
-                1900000873,
-                1900000970,
-                1900001067
-              ]
-            },
-            {
-              "kind": "quarry",
-              "count": 12,
-              "success": 0.5,
-              "collisions": 3,
-              "instabilities": 2,
-              "timeouts": 1,
-              "completion": 0.7043933464863513,
-              "seeds": [
-                1900100000,
-                1900100097,
-                1900100194,
-                1900100291,
-                1900100388,
-                1900100485,
-                1900100582,
-                1900100679,
-                1900100776,
-                1900100873,
-                1900100970,
-                1900101067
-              ]
-            },
-            {
-              "kind": "ridge",
-              "count": 12,
-              "success": 0.16666666666666666,
-              "collisions": 5,
-              "instabilities": 3,
-              "timeouts": 2,
-              "completion": 0.44289216770732254,
-              "seeds": [
-                1900200000,
-                1900200097,
-                1900200194,
-                1900200291,
-                1900200388,
-                1900200485,
-                1900200582,
-                1900200679,
-                1900200776,
-                1900200873,
-                1900200970,
-                1900201067
-              ]
-            }
-          ],
-          "program": {
-            "id": "off-03199",
-            "genes": [
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  0,
-                  2
-                ],
-                "value": 1.6032051681540906
-              },
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  1,
-                  3
-                ],
-                "value": -0.8926454242318869
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  1
-                ],
-                "value": -2.373024463187903
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  0,
-                  1
-                ],
-                "value": -1.2528624599799514
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  2,
-                  4
-                ],
-                "value": -2.1665694303810596
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  17,
-                  3
-                ],
-                "value": 2.1538741453550756
-              },
-              {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  1,
-                  19
-                ],
-                "value": -1.4278224147856236
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  19,
-                  18
-                ],
-                "value": 1.920072192326188
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  21
-                ],
-                "value": 1.8837277558632195
-              },
-              {
-                "op": "angle_scale",
-                "type": "angle",
-                "refs": [
-                  22,
-                  7
-                ],
-                "value": -1.6900637517683208
-              },
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  15,
-                  15
-                ],
-                "value": 2.2949200524017215
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  1,
-                  17
-                ],
-                "value": -2.9094749372452497
-              },
-              {
-                "op": "negate",
-                "type": "scalar",
-                "refs": [
-                  10
-                ],
-                "value": -0.2285476536490023
-              },
-              {
-                "op": "v_min",
-                "type": "vector",
-                "refs": [
-                  25,
-                  14
-                ],
-                "value": -2.6053882115520537
-              },
-              {
-                "op": "constant",
-                "type": "scalar",
-                "refs": [],
-                "value": -0.6929281745105982
-              },
-              {
-                "op": "angle_add",
-                "type": "angle",
-                "refs": [
-                  16,
-                  23
-                ],
-                "value": 2.5881281197071075
-              }
-            ],
-            "steering": 22,
-            "acceleration": 9,
-            "macros": [],
-            "origin": "mutation"
-          },
-          "code": [
-            "def drive(scan, state):",
-            "  v0 = v_mul(scan.goal_alignment, scan.clearance)",
-            "  v1 = v_mul(scan.slope, scan.traction)",
-            "  v2 = v_sub(v0, scan.roughness)",
-            "  v3 = v_sub(v2, v1)",
-            "  v4 = argmax(v3)",
-            "  return clip(v4, -1, 1),",
-            "         clip(state.goal_distance, -1, 1)"
-          ],
-          "inventions": [
-            {
-              "generation": 20,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_max",
-                "outer": "v_mul",
-                "slot": 1,
-                "definition": "terrain_fn_1(a, b, c) = v_mul(c, v_max(a, b))"
-              },
-              "before": 82.76425446577502,
-              "after": 23.531245511123114,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 20,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_mul",
-                "outer": "v_sub",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_sub(v_mul(a, b), c)"
-              },
-              "before": 82.76425446577502,
-              "after": 34.91587844622177,
-              "used": 2,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 40,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_add",
-                "outer": "v_sub",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_sub(v_add(a, b), c)"
-              },
-              "before": 0.909219231928037,
-              "after": 19.457012446524722,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 40,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_max",
-                "outer": "v_mul",
-                "slot": 1,
-                "definition": "terrain_fn_1(a, b, c) = v_mul(c, v_max(a, b))"
-              },
-              "before": 0.909219231928037,
-              "after": 22.955453376400698,
-              "used": 1,
-              "accepted": false,
-              "rollouts": 630
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Neural + evolution · evolving DSL",
-      "neural": true,
-      "evolveDSL": true,
-      "runs": [
-        {
-          "seed": 0,
-          "arrivals": 23,
-          "count": 36,
-          "collisions": 4,
-          "instabilities": 6,
-          "trainingRollouts": 31374,
-          "discoveryRollouts": 3780,
-          "seconds": 19.540987422000065,
+          "discoveryRollouts": 1890,
+          "seconds": 20.85005807999999,
           "macros": 0,
           "trainingArrivals": 8,
           "blindObstacleSensors": {
@@ -2548,351 +2991,11 @@
             {
               "kind": "woodland",
               "count": 12,
-              "success": 0.6666666666666666,
+              "success": 0.75,
               "collisions": 2,
-              "instabilities": 2,
+              "instabilities": 1,
               "timeouts": 0,
-              "completion": 0.8575340275680615,
-              "seeds": [
-                1900000000,
-                1900000097,
-                1900000194,
-                1900000291,
-                1900000388,
-                1900000485,
-                1900000582,
-                1900000679,
-                1900000776,
-                1900000873,
-                1900000970,
-                1900001067
-              ]
-            },
-            {
-              "kind": "quarry",
-              "count": 12,
-              "success": 0.8333333333333334,
-              "collisions": 2,
-              "instabilities": 0,
-              "timeouts": 0,
-              "completion": 0.9221131661083076,
-              "seeds": [
-                1900100000,
-                1900100097,
-                1900100194,
-                1900100291,
-                1900100388,
-                1900100485,
-                1900100582,
-                1900100679,
-                1900100776,
-                1900100873,
-                1900100970,
-                1900101067
-              ]
-            },
-            {
-              "kind": "ridge",
-              "count": 12,
-              "success": 0.4166666666666667,
-              "collisions": 0,
-              "instabilities": 4,
-              "timeouts": 3,
-              "completion": 0.6086169815990314,
-              "seeds": [
-                1900200000,
-                1900200097,
-                1900200194,
-                1900200291,
-                1900200388,
-                1900200485,
-                1900200582,
-                1900200679,
-                1900200776,
-                1900200873,
-                1900200970,
-                1900201067
-              ]
-            }
-          ],
-          "program": {
-            "id": "off-02790",
-            "genes": [
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  2
-                ],
-                "value": -1.0381615455262363
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  3,
-                  2
-                ],
-                "value": 0.715110840741545
-              },
-              {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  1,
-                  15
-                ],
-                "value": -0.5092092077247798
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  16,
-                  16
-                ],
-                "value": -1.2227635541930795
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  4,
-                  1
-                ],
-                "value": -0.0899182059802115
-              },
-              {
-                "op": "v_min",
-                "type": "vector",
-                "refs": [
-                  17,
-                  0
-                ],
-                "value": -0.5804728008806705
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  19
-                ],
-                "value": -1.144261667970568
-              },
-              {
-                "op": "subtract",
-                "type": "scalar",
-                "refs": [
-                  5,
-                  7
-                ],
-                "value": 1.5857495055533946
-              },
-              {
-                "op": "angle_scale",
-                "type": "angle",
-                "refs": [
-                  20,
-                  9
-                ],
-                "value": 2.903428447432816
-              },
-              {
-                "op": "multiply",
-                "type": "scalar",
-                "refs": [
-                  5,
-                  6
-                ],
-                "value": 2.6902845832519233
-              },
-              {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  2,
-                  18
-                ],
-                "value": 2.3904287139885128
-              },
-              {
-                "op": "angle_add",
-                "type": "angle",
-                "refs": [
-                  20,
-                  22
-                ],
-                "value": -0.12699813907966018
-              },
-              {
-                "op": "v_scale",
-                "type": "vector",
-                "refs": [
-                  24,
-                  13
-                ],
-                "value": 0.3164061759598553
-              },
-              {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  24,
-                  15
-                ],
-                "value": 0.4892006730660796
-              },
-              {
-                "op": "center",
-                "type": "scalar",
-                "refs": [
-                  27
-                ],
-                "value": 0.15105397207662463
-              },
-              {
-                "op": "angle_add",
-                "type": "angle",
-                "refs": [
-                  20,
-                  25
-                ],
-                "value": 0.047464067582041025
-              }
-            ],
-            "steering": 25,
-            "acceleration": 28,
-            "macros": [],
-            "origin": "mutation"
-          },
-          "code": [
-            "def drive(scan, state):",
-            "  v0 = v_mul(scan.roughness, scan.slope)",
-            "  v1 = v_add(scan.clearance, v0)",
-            "  v2 = v_mul(v1, v1)",
-            "  v3 = v_mul(scan.traction, scan.clearance)",
-            "  v4 = v_min(v2, scan.goal_alignment)",
-            "  v5 = argmax(v4)",
-            "  v6 = angle_scale(v5, state.goal_distance)",
-            "  v7 = v_add(scan.slope, v3)",
-            "  v8 = angle_add(v5, v6)",
-            "  v9 = v_add(v7, v0)",
-            "  v10 = center(v9)",
-            "  return clip(v8, -1, 1),",
-            "         clip(v10, -1, 1)"
-          ],
-          "inventions": [
-            {
-              "generation": 20,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_add",
-                "outer": "v_min",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_min(v_add(a, b), c)"
-              },
-              "before": 29.344564889807483,
-              "after": 8.064771102360545,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 20,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_mul",
-                "outer": "v_add",
-                "slot": 1,
-                "definition": "terrain_fn_1(a, b, c) = v_add(c, v_mul(a, b))"
-              },
-              "before": 29.344564889807483,
-              "after": 9.270599539762141,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 40,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_mul",
-                "outer": "v_add",
-                "slot": 1,
-                "definition": "terrain_fn_1(a, b, c) = v_add(c, v_mul(a, b))"
-              },
-              "before": 15.246735611129582,
-              "after": 53.405773251073725,
-              "used": 1,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 40,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_add",
-                "outer": "v_min",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_min(v_add(a, b), c)"
-              },
-              "before": 15.246735611129582,
-              "after": 1.6393406482677961,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            }
-          ]
-        },
-        {
-          "seed": 7,
-          "arrivals": 27,
-          "count": 36,
-          "collisions": 3,
-          "instabilities": 4,
-          "trainingRollouts": 31374,
-          "discoveryRollouts": 2520,
-          "seconds": 17.086202167000067,
-          "macros": 0,
-          "trainingArrivals": 7,
-          "blindObstacleSensors": {
-            "arrivals": 0,
-            "collisions": 34,
-            "count": 36
-          },
-          "results": [
-            {
-              "kind": "woodland",
-              "count": 12,
-              "success": 0.8333333333333334,
-              "collisions": 2,
-              "instabilities": 0,
-              "timeouts": 0,
-              "completion": 0.9638257801333326,
+              "completion": 0.945364456921349,
               "seeds": [
                 1900000000,
                 1900000097,
@@ -2912,10 +3015,10 @@
               "kind": "quarry",
               "count": 12,
               "success": 0.9166666666666666,
-              "collisions": 0,
-              "instabilities": 1,
+              "collisions": 1,
+              "instabilities": 0,
               "timeouts": 0,
-              "completion": 0.9525527457926062,
+              "completion": 0.9547606975355413,
               "seeds": [
                 1900100000,
                 1900100097,
@@ -2935,10 +3038,10 @@
               "kind": "ridge",
               "count": 12,
               "success": 0.5,
-              "collisions": 1,
-              "instabilities": 3,
+              "collisions": 2,
+              "instabilities": 2,
               "timeouts": 2,
-              "completion": 0.6374671152597342,
+              "completion": 0.7184482271227086,
               "seeds": [
                 1900200000,
                 1900200097,
@@ -2956,451 +3059,160 @@
             }
           ],
           "program": {
-            "id": "off-02447",
+            "id": "off-00771",
             "genes": [
               {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  0,
-                  0
-                ],
-                "value": -1.3001761576160789
-              },
-              {
-                "op": "v_add",
-                "type": "vector",
-                "refs": [
-                  14,
-                  1
-                ],
-                "value": 0.24297745618969202
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  15
-                ],
-                "value": -2.873903453350067
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  3
-                ],
-                "value": 2.2272285860963166
-              },
-              {
-                "op": "v_sub",
+                "op": "v_min",
                 "type": "vector",
                 "refs": [
                   1,
                   2
                 ],
-                "value": -0.16421517077833414
+                "value": -2.838494188617915
               },
               {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  17,
-                  4
-                ],
-                "value": -2.817916485015303
-              },
-              {
-                "op": "add",
+                "op": "tanh",
                 "type": "scalar",
                 "refs": [
-                  9,
-                  6
+                  5
                 ],
-                "value": 1.4173599779605865
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  15
-                ],
-                "value": 2.061238991562277
+                "value": 0.18537619477137923
               },
               {
                 "op": "v_add",
                 "type": "vector",
                 "refs": [
-                  18,
-                  19
+                  1,
+                  0
                 ],
-                "value": -0.9446557438932359
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  4,
-                  1
-                ],
-                "value": -1.0052550695836544
-              },
-              {
-                "op": "v_max",
-                "type": "vector",
-                "refs": [
-                  15,
-                  2
-                ],
-                "value": -1.554811263922602
-              },
-              {
-                "op": "v_sub",
-                "type": "vector",
-                "refs": [
-                  0,
-                  4
-                ],
-                "value": 2.6413512700237334
-              },
-              {
-                "op": "angle_scale",
-                "type": "angle",
-                "refs": [
-                  16,
-                  11
-                ],
-                "value": -0.48743962263688445
-              },
-              {
-                "op": "angle_scale",
-                "type": "angle",
-                "refs": [
-                  16,
-                  20
-                ],
-                "value": 2.4922116002999246
+                "value": 2.893813439179212
               },
               {
                 "op": "negate",
                 "type": "scalar",
                 "refs": [
-                  7
+                  11
                 ],
-                "value": 1.909268909599632
+                "value": 0.8145613688975573
               },
               {
-                "op": "angle_add",
-                "type": "angle",
+                "op": "v_add",
+                "type": "vector",
                 "refs": [
                   16,
-                  27
+                  16
                 ],
-                "value": 1.5428935890085995
-              }
-            ],
-            "steering": 29,
-            "acceleration": 20,
-            "macros": [],
-            "origin": "mutation"
-          },
-          "code": [
-            "def drive(scan, state):",
-            "  v0 = v_add(scan.goal_alignment, scan.goal_alignment)",
-            "  v1 = v_add(v0, scan.clearance)",
-            "  v2 = argmax(v1)",
-            "  v3 = add(state.goal_distance, state.pitch)",
-            "  v4 = angle_scale(v2, v3)",
-            "  v5 = angle_add(v2, v4)",
-            "  return clip(v5, -1, 1),",
-            "         clip(v3, -1, 1)"
-          ],
-          "inventions": [
-            {
-              "generation": 20,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_mul",
-                "outer": "v_add",
-                "slot": 1,
-                "definition": "terrain_fn_1(a, b, c) = v_add(c, v_mul(a, b))"
+                "value": 0.030390301253646612
               },
-              "before": 25.95158428236169,
-              "after": 82.69758144824095,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 40,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_mul",
-                "outer": "v_add",
-                "slot": 1,
-                "definition": "terrain_fn_1(a, b, c) = v_add(c, v_mul(a, b))"
-              },
-              "before": 42.03544736254401,
-              "after": 55.2740832158572,
-              "used": 0,
-              "accepted": false,
-              "rollouts": 630
-            }
-          ]
-        },
-        {
-          "seed": 42,
-          "arrivals": 21,
-          "count": 36,
-          "collisions": 10,
-          "instabilities": 3,
-          "trainingRollouts": 31374,
-          "discoveryRollouts": 3150,
-          "seconds": 20.662641333000153,
-          "macros": 0,
-          "trainingArrivals": 7,
-          "blindObstacleSensors": {
-            "arrivals": 3,
-            "collisions": 30,
-            "count": 36
-          },
-          "results": [
-            {
-              "kind": "woodland",
-              "count": 12,
-              "success": 0.8333333333333334,
-              "collisions": 2,
-              "instabilities": 0,
-              "timeouts": 0,
-              "completion": 0.939635634520728,
-              "seeds": [
-                1900000000,
-                1900000097,
-                1900000194,
-                1900000291,
-                1900000388,
-                1900000485,
-                1900000582,
-                1900000679,
-                1900000776,
-                1900000873,
-                1900000970,
-                1900001067
-              ]
-            },
-            {
-              "kind": "quarry",
-              "count": 12,
-              "success": 0.5833333333333334,
-              "collisions": 4,
-              "instabilities": 1,
-              "timeouts": 0,
-              "completion": 0.7013697389785635,
-              "seeds": [
-                1900100000,
-                1900100097,
-                1900100194,
-                1900100291,
-                1900100388,
-                1900100485,
-                1900100582,
-                1900100679,
-                1900100776,
-                1900100873,
-                1900100970,
-                1900101067
-              ]
-            },
-            {
-              "kind": "ridge",
-              "count": 12,
-              "success": 0.3333333333333333,
-              "collisions": 4,
-              "instabilities": 2,
-              "timeouts": 2,
-              "completion": 0.5039282744776563,
-              "seeds": [
-                1900200000,
-                1900200097,
-                1900200194,
-                1900200291,
-                1900200388,
-                1900200485,
-                1900200582,
-                1900200679,
-                1900200776,
-                1900200873,
-                1900200970,
-                1900201067
-              ]
-            }
-          ],
-          "program": {
-            "id": "off-01987",
-            "genes": [
               {
-                "op": "add",
+                "op": "tanh",
                 "type": "scalar",
                 "refs": [
-                  9,
-                  6
+                  9
                 ],
-                "value": 2.7896043732762337
+                "value": -1.0195658477023244
+              },
+              {
+                "op": "v_negate",
+                "type": "vector",
+                "refs": [
+                  16
+                ],
+                "value": 2.361353184096515
               },
               {
                 "op": "argmax",
                 "type": "angle",
                 "refs": [
-                  2
+                  16
                 ],
-                "value": 1.5802898649126291
+                "value": -1.4443631619215012
               },
               {
-                "op": "v_sub",
+                "op": "min",
+                "type": "scalar",
+                "refs": [
+                  7,
+                  9
+                ],
+                "value": 0.8890744834206998
+              },
+              {
+                "op": "v_add",
                 "type": "vector",
                 "refs": [
-                  0,
-                  3
+                  14,
+                  0
                 ],
-                "value": -0.38398811174556613
+                "value": 1.919940201099962
               },
               {
                 "op": "v_mul",
                 "type": "vector",
                 "refs": [
-                  2,
-                  0
+                  18,
+                  20
                 ],
-                "value": 2.0297518903389573
+                "value": -1.8771922839805484
               },
               {
                 "op": "v_max",
                 "type": "vector",
                 "refs": [
-                  16,
-                  4
-                ],
-                "value": 1.3033406250178814
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  1
-                ],
-                "value": 2.0525332214310765
-              },
-              {
-                "op": "constant",
-                "type": "scalar",
-                "refs": [],
-                "value": -1.3768747779540718
-              },
-              {
-                "op": "v_negate",
-                "type": "vector",
-                "refs": [
-                  4
-                ],
-                "value": -2.4214359037578106
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  16,
-                  1
-                ],
-                "value": 0.4450731477700174
-              },
-              {
-                "op": "v_mul",
-                "type": "vector",
-                "refs": [
-                  19,
-                  1
-                ],
-                "value": 2.127640179824084
-              },
-              {
-                "op": "argmax",
-                "type": "angle",
-                "refs": [
-                  22
-                ],
-                "value": -1.0072989156469703
-              },
-              {
-                "op": "max",
-                "type": "scalar",
-                "refs": [
                   14,
-                  9
+                  16
                 ],
-                "value": 2.782973410561681
+                "value": 2.488761398009956
               },
               {
-                "op": "max",
-                "type": "scalar",
+                "op": "v_min",
+                "type": "vector",
                 "refs": [
-                  14,
+                  23,
+                  23
+                ],
+                "value": -2.8954423014074564
+              },
+              {
+                "op": "v_scale",
+                "type": "vector",
+                "refs": [
+                  24,
                   5
                 ],
-                "value": -2.39826392987743
+                "value": -1.8032146822661161
               },
               {
-                "op": "add",
+                "op": "min",
                 "type": "scalar",
                 "refs": [
-                  25,
+                  22,
                   8
                 ],
-                "value": -2.432421427220106
-              },
-              {
-                "op": "center",
-                "type": "scalar",
-                "refs": [
-                  0
-                ],
-                "value": -1.9910644702613354
+                "value": 1.7221990716643631
               },
               {
                 "op": "angle_add",
                 "type": "angle",
                 "refs": [
-                  15,
-                  15
+                  21,
+                  21
                 ],
-                "value": 1.543976423330605
+                "value": 0.2593500707298517
               }
             ],
-            "steering": 24,
-            "acceleration": 25,
+            "steering": 29,
+            "acceleration": 11,
             "macros": [],
-            "origin": "crossover"
+            "origin": "mutation"
           },
           "code": [
             "def drive(scan, state):",
-            "  v0 = add(state.goal_distance, state.pitch)",
-            "  v1 = v_sub(scan.goal_alignment, scan.roughness)",
-            "  v2 = v_mul(v1, scan.clearance)",
-            "  v3 = argmax(v2)",
-            "  v4 = max(v0, state.goal_distance)",
-            "  return clip(v3, -1, 1),",
-            "         clip(v4, -1, 1)"
+            "  v0 = v_add(scan.clearance, scan.goal_alignment)",
+            "  v1 = argmax(v0)",
+            "  v2 = angle_add(v1, v1)",
+            "  return clip(v2, -1, 1),",
+            "         clip(state.one, -1, 1)"
           ],
           "inventions": [
             {
@@ -3413,13 +3225,13 @@
                   "vector",
                   "vector"
                 ],
-                "inner": "v_sub",
-                "outer": "v_mul",
+                "inner": "v_add",
+                "outer": "v_add",
                 "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_mul(v_sub(a, b), c)"
+                "definition": "terrain_fn_1(a, b, c) = v_add(v_add(a, b), c)"
               },
-              "before": 34.46958398469964,
-              "after": 40.686388709339916,
+              "before": 23.174078377433418,
+              "after": 18.4440626272944,
               "used": 1,
               "accepted": false,
               "rollouts": 630
@@ -3434,34 +3246,13 @@
                   "vector",
                   "vector"
                 ],
-                "inner": "v_mul",
-                "outer": "v_mul",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_mul(v_mul(a, b), c)"
+                "inner": "v_add",
+                "outer": "v_add",
+                "slot": 1,
+                "definition": "terrain_fn_1(a, b, c) = v_add(c, v_add(a, b))"
               },
-              "before": 34.46958398469964,
-              "after": 24.438600031587022,
-              "used": 1,
-              "accepted": false,
-              "rollouts": 630
-            },
-            {
-              "generation": 40,
-              "macro": {
-                "name": "terrain_fn_1",
-                "output": "vector",
-                "args": [
-                  "vector",
-                  "vector",
-                  "vector"
-                ],
-                "inner": "v_sub",
-                "outer": "v_mul",
-                "slot": 0,
-                "definition": "terrain_fn_1(a, b, c) = v_mul(v_sub(a, b), c)"
-              },
-              "before": 65.25910338516718,
-              "after": 11.8537514051007,
+              "before": 23.174078377433418,
+              "after": 18.4440626272944,
               "used": 1,
               "accepted": false,
               "rollouts": 630

@@ -2,6 +2,14 @@
 
 A local research instrument asking whether **a learned programming language reduces search on unseen tasks after charging for discovery**. The default dashboard compares a fixed scalar DSL, a learned library, and task-conditioned neural search priors. The off-road simulator is a separate control baseline with an engineered DSL. Independent implementation; not Argos's code or a reproduction of an undisclosed algorithm.
 
+## Live 3D synthesis race
+
+Open [Unseen challenge](http://localhost:5180/#challenge), then **Generate unseen challenge**. Both trucks wait while independent workers synthesize programs for the freshly sealed terrain. Each successful controller immediately drives its truck. Use **Run 10 sealed challenges**, **Remove primitives & rerun**, or **Export audit** to inspect repeated outcomes.
+
+The DSL and neural prior are frozen before terrain generation. Both sides receive identical tasks, search seeds and evaluation caps. The current off-road library contains **zero accepted learned primitives**, so the race is expected to tie; it does not yet validate a language-learning advantage. The UI reports failures and ties without selecting favorable seeds. See [the protocol](OFFROAD_RESEARCH.md#live-unseen-synthesis-race).
+
+The hill stability model now checks sustained loss of wheel support rather than an immediate fixed angle cutoff. Old results are preserved under `output/offroad-v1/`; the current reference and benchmark use `offroad-support-v2`. V2 reaches 78/108 destinations for unguided evolution and 72/108 with the neural prior, with no accepted DSL edits in either arm.
+
 ## Run
 
 ```sh

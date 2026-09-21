@@ -22,13 +22,51 @@ import {
 } from "./types";
 export const DT = 0.2,
   MAX_STEER = 0.58;
+export const SIMULATOR_VERSION = "offroad-support-v2";
+// Generic model dimensions, not calibrated specifications of a real vehicle.
+export const SUPPORT = {
+  halfTrack: 1,
+  halfWheelbase: 1.65,
+  centerHeight: 1,
+  persistence: 0.4,
+};
+// Project gravity + outward turning inertia onto an orthonormal terrain frame.
+// The resultant intersects the support plane H * tangential / normal from the
+// center. A ratio >1 means that intersection is beyond the wheel footprint.
+// This is a quasi-static support test, not simulated wheel lift/body dynamics.
+export function supportLoad(
+  pitch: number,
+  roll: number,
+  lateralAcceleration: number,
+) {
+  const a = Math.tan(roll),
+    b = Math.tan(pitch),
+    norm = Math.hypot(a, 1, b);
+  const nx = -a / norm,
+    ny = 1 / norm,
+    nz = -b / norm;
+  const rx = Math.cos(roll),
+    ry = Math.sin(roll);
+  const fx = ry * nz,
+    fy = -rx * nz; // right × normal = forward
+  const down = Math.max(1e-6, lateralAcceleration * nx + 9.81 * ny);
+  return {
+    lateral:
+      (SUPPORT.centerHeight * Math.abs(-lateralAcceleration * rx - 9.81 * ry)) /
+      (down * SUPPORT.halfTrack),
+    longitudinal:
+      (SUPPORT.centerHeight * Math.abs(-lateralAcceleration * fx - 9.81 * fy)) /
+      (down * SUPPORT.halfWheelbase),
+  };
+}
 export function initialState(t: Terrain): Truck {
   const { x, z, heading } = t.start;
+  const pose = groundPose(t, x, z, heading);
   return {
     x,
     z,
     heading,
-    ...groundPose(t, x, z, heading),
+    ...pose,
     speed: 0,
     steer: 0,
     grip: gripAt(t, x, z),
@@ -37,6 +75,10 @@ export function initialState(t: Terrain): Truck {
     distance: 0,
     status: "driving",
     controls: { steering: 0, acceleration: 0 },
+    stability: {
+      ...supportLoad(pose.pitch, pose.roll, 0),
+      unsupportedSeconds: 0,
+    },
   };
 }
 export function observe(s: Truck, t: Terrain): Observation {
@@ -141,6 +183,14 @@ export function step(s: Truck, c: Controls, t: Terrain, dt = DT): Truck {
     n.z += Math.cos(n.heading) * n.speed * h;
     n.distance += n.speed * h;
     Object.assign(n, groundPose(t, n.x, n.z, n.heading));
+    const load = supportLoad(n.pitch, n.roll, n.speed * yaw);
+    n.stability = {
+      ...load,
+      unsupportedSeconds:
+        Math.max(load.lateral, load.longitudinal) > 1
+          ? (n.stability?.unsupportedSeconds ?? 0) + h
+          : 0,
+    };
     // Rectangular footprint against each rock; no obstacle avoidance mask.
     const sin = Math.sin(n.heading),
       cos = Math.cos(n.heading);
@@ -156,10 +206,7 @@ export function step(s: Truck, c: Controls, t: Terrain, dt = DT): Truck {
       })
     )
       n.status = "collision";
-    else if (
-      Math.abs(n.roll + Math.atan((n.speed * yaw) / 9.81)) > 0.66 ||
-      Math.abs(n.pitch) > 0.72
-    )
+    else if (n.stability.unsupportedSeconds >= SUPPORT.persistence - 1e-9)
       n.status = "rollover";
     else if (n.clearance < 0.09) n.status = "grounded";
     else if (Math.abs(n.x) > t.size / 2 - 2 || Math.abs(n.z) > t.size / 2 - 2)

@@ -14,7 +14,7 @@ import {
   type Truck,
 } from "./types";
 type Props = {
-  program: Program;
+  program: Program | null;
   terrain: Terrain;
   playing: boolean;
   speed: number;
@@ -289,7 +289,7 @@ export default function OffroadViewport(props: Props) {
     scene.add(trail);
     let state = initialState(terrain),
       previous = state,
-      policy = compile(props.program),
+      policy = props.program ? compile(props.program) : null,
       policyProgram = props.program,
       lastReset = props.reset,
       lastObstacle = props.obstacle,
@@ -367,7 +367,7 @@ export default function OffroadViewport(props: Props) {
         elapsed = last ? Math.min(0.08, (now - last) / 1000) : 0;
       last = now;
       if (p.program !== policyProgram) {
-        policy = compile(p.program);
+        policy = p.program ? compile(p.program) : null;
         policyProgram = p.program;
       }
       if (p.reset !== lastReset) {
@@ -387,7 +387,7 @@ export default function OffroadViewport(props: Props) {
         obstacles.add(mesh);
         injected.push(mesh);
       }
-      if (p.playing && state.status === "driving") {
+      if (p.playing && (policy || p.manual) && state.status === "driving") {
         acc += elapsed * p.speed;
         while (acc >= DT) {
           previous = state;
@@ -402,7 +402,7 @@ export default function OffroadViewport(props: Props) {
                   Number(keys.has("w") || keys.has("arrowup")) -
                   Number(keys.has("s") || keys.has("arrowdown")),
               }
-            : policy(scans);
+            : policy!(scans);
           state = step(state, c, terrain);
           state.scans = scans;
           acc -= DT;

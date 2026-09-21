@@ -41,6 +41,7 @@ import LanguageLab from "./components/LanguageLab";
 import DrivingLab from "./driving/DrivingLab";
 import OffroadLab from "./offroad/OffroadLab";
 import LibraryLab from "./dsl/LibraryLab";
+import ChallengeLab from "./challenge/ChallengeLab";
 import { exportPython, programLines, validateProgram } from "./engine/program";
 import {
   DEFAULT_CONFIG,
@@ -53,6 +54,7 @@ import {
 
 type Status = "reference" | "running" | "paused" | "complete" | "loaded";
 type Tab =
+  | "challenge"
   | "research"
   | "offroad"
   | "driving"
@@ -119,7 +121,9 @@ export default function App() {
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [status, setStatus] = useState<Status>("reference");
   const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
-  const [tab, setTab] = useState<Tab>("research");
+  const [tab, setTab] = useState<Tab>(() =>
+    window.location.hash === "#challenge" ? "challenge" : "research",
+  );
   const [family, setFamily] = useState<Family>("warehouse");
   const [sceneSeed, setSceneSeed] = useState(1_500_077_777);
   const [showConfig, setShowConfig] = useState(false),
@@ -341,7 +345,7 @@ export default function App() {
         </div>
       </header>
       <main>
-        {tab !== "research" && (
+        {tab !== "research" && tab !== "challenge" && (
           <section className="hero">
             <div className="hero-copy">
               <div className="eyebrow">
@@ -375,6 +379,17 @@ export default function App() {
               onClick={() => setTab("research")}
             >
               <BrainCircuit size={16} /> Language research
+            </button>
+            <button
+              role="tab"
+              aria-selected={tab === "challenge"}
+              className={
+                tab === "challenge" ? "workspace-tab active" : "workspace-tab"
+              }
+              onClick={() => setTab("challenge")}
+            >
+              <Mountain size={16} />
+              Unseen challenge
             </button>
             <button
               role="tab"
@@ -452,6 +467,9 @@ export default function App() {
         <div hidden={tab !== "research"}>
           <LibraryLab notify={notify} />
         </div>
+        <div hidden={tab !== "challenge"}>
+          <ChallengeLab active={tab === "challenge"} />
+        </div>
         <div hidden={tab !== "offroad"}>
           <OffroadLab active={tab === "offroad"} notify={notify} />
         </div>
@@ -462,6 +480,7 @@ export default function App() {
           <LanguageLab notify={notify} />
         </div>
         {tab !== "research" &&
+        tab !== "challenge" &&
         tab !== "language" &&
         tab !== "driving" &&
         tab !== "offroad" &&

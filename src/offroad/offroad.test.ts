@@ -5,7 +5,14 @@ import { Random } from "../engine/random";
 import { GraphPrior } from "./prior";
 import { activeGenes, compile, runOp, validate } from "./program";
 import { OffroadSearch } from "./search";
-import { evaluate, initialState, observe, simulate, step } from "./simulator";
+import {
+  evaluate,
+  initialState,
+  observe,
+  simulate,
+  step,
+  supportLoad,
+} from "./simulator";
 import {
   groundPose,
   heightAt,
@@ -79,10 +86,11 @@ test("terrain changes vehicle physics: gravity, traction, tilt, clearance and st
   );
   const steep = structuredClone(level);
   steep.heights = steep.heights.map(
-    (_, i) => ((i % steep.resolution) - 50) * 0.9,
+    (_, i) => ((i % steep.resolution) - 50) * 1.4,
   );
   assert.equal(
-    step(initialState(steep), { steering: 0, acceleration: 0 }, steep).status,
+    step(initialState(steep), { steering: 0, acceleration: 0 }, steep, 0.5)
+      .status,
     "rollover",
   );
   const hump = structuredClone(level);
@@ -226,4 +234,57 @@ test("reference metrics come from real rollouts and obstacle inputs affect the c
     live.scans = scans;
     assert.deepEqual(live, frame);
   }
+});
+
+test("support test permits traversable hills and distinguishes sustained tipping from a transient", () => {
+  const hill = flat();
+  hill.heights = hill.heights.map(
+    (_, i) => Math.floor(i / hill.resolution) - 50,
+  );
+  for (const direction of [1, -1]) {
+    const terrain = {
+      ...hill,
+      heights: hill.heights.map((y) => y * direction),
+    };
+    const state = step(
+      initialState(terrain),
+      { steering: 0, acceleration: 1 },
+      terrain,
+    );
+    assert.equal(state.status, "driving"); // ±45° pitch was killed by the old .72 cutoff.
+    assert.ok(state.stability!.longitudinal < 1);
+  }
+  const bank = flat();
+  bank.heights = bank.heights.map((_, i) => ((i % bank.resolution) - 50) * 1.4);
+  const transient = step(
+    initialState(bank),
+    { steering: 0, acceleration: 0 },
+    bank,
+  );
+  assert.equal(transient.status, "driving");
+  assert.ok(transient.stability!.lateral > 1);
+  const recovered = step(transient, { steering: 0, acceleration: 0 }, flat());
+  assert.equal(recovered.status, "driving");
+  assert.equal(recovered.stability!.unsupportedSeconds, 0);
+  assert.equal(
+    step(transient, { steering: 0, acceleration: 0 }, bank).status,
+    "rollover",
+  );
+  assert.deepEqual(supportLoad(0.2, 0.3, 2), supportLoad(0.2, -0.3, -2));
+  assert.ok(supportLoad(0, 0.3, 2).lateral > supportLoad(0, 0.3, -2).lateral);
+  assert.ok(Math.abs(supportLoad(0, Math.atan(1), 0).lateral - 1) < 1e-10);
+});
+
+test("old reference on ridge seed 42000 survives the reported false stability stop", () => {
+  const original: Snapshot = JSON.parse(
+    readFileSync("output/offroad-v1/reference.json", "utf8"),
+  );
+  const episode = simulate(
+    original.best.program,
+    makeTerrain(42000, "ridge"),
+    true,
+  );
+  assert.ok(
+    episode.frames!.some((s) => s.time >= 1.8 && s.status === "driving"),
+  );
 });

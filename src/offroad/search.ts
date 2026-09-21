@@ -1,5 +1,5 @@
 import { Random } from "../engine/random";
-import { GraphPrior, type Decision } from "./prior";
+import { GraphPrior, type Decision, type GraphPriorData } from "./prior";
 import {
   activeGenes,
   inputTypes,
@@ -7,7 +7,7 @@ import {
   operations,
   randomGene,
 } from "./program";
-import { evaluate } from "./simulator";
+import { evaluate, SIMULATOR_VERSION } from "./simulator";
 import { makeTerrain, trainingTerrains } from "./terrain";
 import {
   INPUTS,
@@ -35,11 +35,18 @@ export class OffroadSearch {
   checkpoints: Snapshot["checkpoints"] = [];
   inventions: Snapshot["inventions"] = [];
   initial: Candidate | null = null;
+  solution: Candidate | null = null;
+  private frozenPrior = false;
   private serial = 0;
   private archive: Program[] = [];
   constructor(
     config: Config,
-    options?: { terrains?: Terrain[]; macros?: Macro[]; parents?: Program[] },
+    options?: {
+      terrains?: Terrain[];
+      macros?: Macro[];
+      parents?: Program[];
+      frozenPrior?: GraphPriorData;
+    },
   ) {
     if (
       !Number.isInteger(config.seed) ||
@@ -59,6 +66,12 @@ export class OffroadSearch {
     this.config = { ...config };
     this.rng = new Random(config.seed);
     this.prior = new GraphPrior(this.rng);
+    if (options?.frozenPrior) {
+      this.prior.restore(options.frozenPrior);
+      this.frozenPrior = true;
+      if (config.evolveDSL)
+        throw Error("A frozen challenge cannot evolve its DSL");
+    }
     this.terrains =
       options?.terrains ?? trainingTerrains(config.seed, config.worlds);
     this.macros = structuredClone(options?.macros ?? []);
@@ -339,8 +352,20 @@ export class OffroadSearch {
     }
     return this.rng.pick(pool).program;
   }
-  step() {
-    if (this.generation >= this.config.generations) return this.snapshot();
+  step(options?: {
+    evaluations?: number;
+    stopOnSuccess?: boolean;
+    beyondGenerations?: boolean;
+  }) {
+    if (
+      !options?.beyondGenerations &&
+      this.generation >= this.config.generations
+    )
+      return this.snapshot();
+    const limit = options?.evaluations ?? Infinity;
+    if (!(limit > 0) || (Number.isFinite(limit) && !Number.isInteger(limit)))
+      throw Error("Positive evaluation limit required");
+    let evaluated = 0;
     const start = performance.now();
     const elites = this.population.slice(
         0,
@@ -351,7 +376,7 @@ export class OffroadSearch {
         Math.max(3, Math.floor(this.config.population * 0.1)),
       ),
       batch: { decisions: Decision[]; reward: number }[] = [];
-    while (next.length < this.config.population) {
+    while (next.length < this.config.population && evaluated < limit) {
       let program: Program,
         decisions: Decision[] = [];
       const mode = this.rng.next();
@@ -367,9 +392,12 @@ export class OffroadSearch {
       const c = evaluate(program, this.terrains);
       next.push(c);
       this.rollouts += this.terrains.length;
+      evaluated++;
+      if (!this.solution && c.success === 1) this.solution = structuredClone(c);
       if (decisions.length) batch.push({ decisions, reward: c.fitness });
+      if (options?.stopOnSuccess && c.success === 1) break;
     }
-    if (this.config.neural) this.prior.update(batch);
+    if (this.config.neural && !this.frozenPrior) this.prior.update(batch);
     this.population = next.sort((a, b) => b.fitness - a.fitness);
     this.generation++;
     const best = this.population[0];
@@ -407,6 +435,7 @@ export class OffroadSearch {
   }
   snapshot(): Snapshot {
     return {
+      simulatorVersion: SIMULATOR_VERSION,
       config: this.config,
       generation: this.generation,
       best: this.population[0],
