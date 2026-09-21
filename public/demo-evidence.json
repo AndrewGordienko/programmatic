@@ -1,0 +1,64 @@
+{
+  "version": "presentation-evidence-v1",
+  "simulatorVersion": "offroad-support-v2",
+  "reference": {
+    "seed": 42,
+    "arrivals": 26,
+    "count": 36
+  },
+  "terrain": {
+    "accepted": 0,
+    "guided": 72,
+    "unguided": 78,
+    "count": 108
+  },
+  "scalar": {
+    "runs": 20,
+    "acceptedRuns": 0,
+    "discovery": 64578627,
+    "developmentPositive": 59,
+    "confirmationPositive": 14,
+    "clearedUncertainty": 0
+  },
+  "rejections": [
+    {
+      "domain": "Off-road · seed 42",
+      "stage": "Generation 20",
+      "definition": "terrain_fn_1(a, b, c) = v_add(v_add(a, b), c)",
+      "observation": "Development fitness 23.17 → 18.44. Used in 1/2 winning programs.",
+      "reason": "Did not meet both the fitness-improvement and usage requirements."
+    },
+    {
+      "domain": "Scalar · seed 42",
+      "stage": "Round 1 · development",
+      "definition": "fn_1(a) = max(0, a)",
+      "observation": "Development utility change: -2.25 pp.",
+      "reason": "Failed to improve fresh-search utility after the language-size penalty."
+    },
+    {
+      "domain": "Scalar · seed 42",
+      "stage": "Round 2 · confirmation",
+      "definition": "fn_6(a, b) = max((-a), b)",
+      "observation": "Development +0.13 pp; confirmation -2.35 pp. Lower bound -7.51 pp.",
+      "reason": "The apparent development benefit did not survive fresh confirmation."
+    }
+  ],
+  "sources": [
+    {
+      "path": "/offroad-benchmark.json",
+      "sha256": "47e841f32b8edab78641f3675bce95bc8b0a3993cea7a902535e15e524968568"
+    },
+    {
+      "path": "/offroad-reference.json",
+      "sha256": "712198c3059806f98cc11a04bd14ba5177c81b945b1975562ae122bc1a64d84c"
+    },
+    {
+      "path": "/library-benchmark.json",
+      "sha256": "1796245bef2abead2b6ebc3889f2f84aace46ba8a6ec90cd36972f3d2f639701"
+    },
+    {
+      "path": "/library-reference.json",
+      "sha256": "425e6c95ce39c4a2f343f52b846c2f4ab9004b8617e8d5505e91c1c66bef4e39"
+    }
+  ]
+}

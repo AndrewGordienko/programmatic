@@ -2,6 +2,12 @@
 
 A local research instrument asking whether **a learned programming language reduces search on unseen tasks after charging for discovery**. The default dashboard compares a fixed scalar DSL, a learned library, and task-conditioned neural search priors. The off-road simulator is a separate control baseline with an engineered DSL. Independent implementation; not Argos's code or a reproduction of an undisclosed algorithm.
 
+## Presentation
+
+Open [the four-screen demo](http://localhost:5180/#demo): mechanism → live synthesis → measured failures → next experiment. Use the arrow keys or screen navigation. The full workbench remains behind **Research appendix**.
+
+**Synthesize controller** starts an empty search on a clearly labeled, previously tested quarry rehearsal. It supplies no saved controller. The actual returned graph then drives the 3D vehicle; a regression test verifies synthesis and arrival. This known course demonstrates execution, not unseen-language superiority. Runs and interruptions are retained separately from the sealed challenge ledger. The findings screen derives its numbers and three rejection examples from recorded artifacts; `npm run demo:evidence` regenerates the small presentation artifact with source hashes.
+
 ## Live 3D synthesis race
 
 Open [Unseen challenge](http://localhost:5180/#challenge), then **Generate unseen challenge**. Both trucks wait while independent workers synthesize programs for the freshly sealed terrain. Each successful controller immediately drives its truck. Use **Run 10 sealed challenges**, **Remove primitives & rerun**, or **Export audit** to inspect repeated outcomes.

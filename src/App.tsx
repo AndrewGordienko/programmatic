@@ -334,6 +334,9 @@ export default function App() {
           </a>
         </nav>
         <div className="header-right">
+          <a href="#demo" className="presentation-entry">
+            Tuesday demo <ArrowUpRight size={13} />
+          </a>
           <span className="local-compute">
             <span className="status-dot" />
             Local compute
