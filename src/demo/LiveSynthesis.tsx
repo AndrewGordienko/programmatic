@@ -322,8 +322,8 @@ export default function LiveSynthesis({ active }: { active: boolean }) {
           </div>
           <div className="presentation-code-bottom">
             <p>
-              This course demonstrates the mechanism. The held-out benchmark is
-              on the next screen.
+              This course demonstrates the mechanism. The held-out language
+              result is in the research brief.
             </p>
             {run && (
               <button onClick={() => exportRun({ artifact, run })}>

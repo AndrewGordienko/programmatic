@@ -1,10 +1,10 @@
 # Programmatic AI Lab
 
-A local research instrument asking whether **a learned programming language reduces search on unseen tasks after charging for discovery**. The default dashboard compares a fixed scalar DSL, a learned library, and task-conditioned neural search priors. The off-road simulator is a separate control baseline with an engineered DSL. Independent implementation; not Argos's code or a reproduction of an undisclosed algorithm.
+A local research instrument asking whether **a learned programming language reduces search on unseen tasks after charging for discovery**. The default localhost view is now a concise meeting brief of the latest result. The full workbench at `#research` compares a fixed scalar DSL, a learned library, and task-conditioned neural search priors. The off-road simulator is a separate control baseline with an engineered DSL. Independent implementation; not Argos's code or a reproduction of an undisclosed algorithm.
 
 ## Presentation
 
-Open [the four-screen demo](http://localhost:5180/#demo): mechanism → live synthesis → measured failures → next experiment. Use the arrow keys or screen navigation. The full workbench remains behind **Research appendix**.
+Open [the single-page meeting brief](http://localhost:5180/) and scroll from the latest eight-run language result through its limits to the live controller demonstration. The [full workbench](http://localhost:5180/#research) and [historical four-screen demo](http://localhost:5180/#demo) remain available for research review. The historical demo reports an older negative protocol; use the meeting brief for the current language finding.
 
 **Synthesize controller** starts an empty search on a clearly labeled, previously tested quarry rehearsal. It supplies no saved controller. The actual returned graph then drives the 3D vehicle; a regression test verifies synthesis and arrival. This known course demonstrates execution, not unseen-language superiority. Runs and interruptions are retained separately from the sealed challenge ledger. The findings screen derives its numbers and three rejection examples from recorded artifacts; `npm run demo:evidence` regenerates the small presentation artifact with source hashes.
 

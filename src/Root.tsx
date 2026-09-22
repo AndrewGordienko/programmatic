@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 const Workbench = lazy(() => import("./App"));
 const Demo = lazy(() => import("./demo/DemoApp"));
 const Joint = lazy(() => import("./joint/JointReport"));
+const Meeting = lazy(() => import("./meeting/MeetingBrief"));
 export function demoStep(hash: string): number | null {
   const match = /^#demo(?:\/([1-4]))?$/.exec(hash);
   return match ? Number(match[1] ?? 1) - 1 : null;
@@ -20,6 +21,8 @@ export default function Root() {
     >
       {hash === "#joint" ? (
         <Joint />
+      ) : hash === "" || hash === "#brief" || hash === "#live" ? (
+        <Meeting />
       ) : step === null ? (
         <Workbench />
       ) : (
