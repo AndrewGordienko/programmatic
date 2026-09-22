@@ -28,6 +28,8 @@ import type { SearchResult } from "./search";
 import { additiveJoin } from "./joins";
 import { sparseCompose } from "./sparse";
 import { latticeCompose } from "./lattice";
+import { gridSlopes, simpleSlopes, constrainedSlopes } from "./affine-slopes";
+import { affineVotes } from "./affine-votes";
 import { specificationFeatures } from "./specification";
 import {
   fullObservationContext,
@@ -211,6 +213,14 @@ export function inverseSearch(
     localAffineNeighbors?: number;
     memoAffine?: boolean;
     lattice?: boolean;
+    affineStrategy?: "l1" | "constraints";
+    affineHoleBudget?: number;
+    branchShare?: number;
+    uniqueChildren?: boolean;
+    affineVoting?: boolean;
+    affineVoteIndependent?: boolean;
+    affineVoteLimit?: number;
+    latticeOrder?: "after-unary" | "after-forward";
   } = {},
 ): InverseResult {
   if (!Number.isInteger(budget) || budget < 1)
@@ -304,7 +314,7 @@ export function inverseSearch(
     if (answer) break;
   }
   // Parameter estimation is a search heuristic, not a new executable primitive.
-  if (options.localAffineNeighbors && !answer) {
+  if (options.localAffineNeighbors && !options.affineVoting && !answer) {
     for (const point of task.examples) {
       if (!charge()) break;
       const neighbors = task.examples
@@ -328,7 +338,10 @@ export function inverseSearch(
   }
   for (
     let fit = 0;
-    !answer && fit < (options.affineFits ?? 128) && charge();
+    !answer &&
+    !options.affineVoting &&
+    fit < (options.affineFits ?? 128) &&
+    charge();
     fit++
   ) {
     linearFits++;
@@ -375,7 +388,34 @@ export function inverseSearch(
     }
     if (support >= 4) fittedPlanes.set(coeff.join(","), coeff);
   }
-  if (options.lattice && !answer) {
+  if (options.affineVoting && !answer && options.affineFits !== 0) {
+    const votes = affineVotes(
+      task.examples,
+      () => {
+        if (!charge()) return false;
+        linearFits++;
+        return true;
+      },
+      () => {
+        constraintPoints++;
+      },
+      4,
+      options.affineVoteIndependent,
+    );
+    for (const { coeff } of votes.slice(0, options.affineVoteLimit)) {
+      if (answer || evaluations >= budget) break;
+      const tree = plane(coeff);
+      const row = syntax.get(key(tree)) ?? evaluate(tree, false);
+      if (!row) continue;
+      fittedPlanes.set(coeff.join(","), coeff);
+      const signature = row.values.map((v) => v.toFixed(8)).join(",");
+      if (!behavior.has(signature)) {
+        bank.push(row);
+        behavior.add(signature);
+      }
+    }
+  }
+  const tryLattice = () => {
     latticeCompose(
       [...fittedPlanes.values()].flatMap((coeff) => {
         const row = syntax.get(key(plane(coeff)));
@@ -388,7 +428,8 @@ export function inverseSearch(
       },
       (tree) => evaluate(canonical(tree), false),
     );
-  }
+  };
+  if (options.lattice && !answer && !options.latticeOrder) tryLattice();
   if (options.envelopePlanes && !answer) {
     const grid = Array.from({ length: 17 }, (_, i) => i - 8),
       slopes = grid
@@ -508,6 +549,8 @@ export function inverseSearch(
       break;
     evaluate({ op, args: [row.tree] });
   }
+  if (options.lattice && !answer && options.latticeOrder === "after-unary")
+    tryLattice();
   if (options.macroForward && !answer) {
     const forwardRng = new Random(seed ^ 731291);
     const simple = [...seeds]
@@ -524,6 +567,8 @@ export function inverseSearch(
         evaluate({ op: m.name, args });
       }
   }
+  if (options.lattice && !answer && options.latticeOrder === "after-forward")
+    tryLattice();
   bank.sort((x, y) => x.error - y.error || x.size - y.size);
   const fragmentScores = new Map<Fragment, number>();
   const width = options.activeLimit ?? 64;
@@ -598,6 +643,14 @@ export function inverseSearch(
   };
   const inferAffine = (spec: Box): Expr | undefined => {
     if (options.affineFits === 0) return;
+    let localFits = 0;
+    const fitCharge = () => {
+      if (localFits >= (options.affineHoleBudget ?? Infinity) || !charge())
+        return false;
+      localFits++;
+      linearFits++;
+      return true;
+    };
     const exact = spec.low
       .map((v, i) =>
         Number.isFinite(v) && Math.abs(v - spec.high[i]) < 1e-8 ? i : -1,
@@ -625,8 +678,7 @@ export function inverseSearch(
             ey = r[1] - p[1],
             det = dx * ey - dy * ex;
           if (Math.abs(det) < 1e-9) continue;
-          if (!charge()) return;
-          linearFits++;
+          if (!fitCharge()) return;
           const dz = spec.low[exact[j]] - spec.low[i],
             ez = spec.low[exact[k]] - spec.low[i];
           const alpha = (dz * ey - dy * ez) / det,
@@ -646,54 +698,72 @@ export function inverseSearch(
     }
     // In interval-valued goals (e.g. a hole under min/max), propagate the
     // inequalities to the unknown intercept for each bounded slope pair.
-    const grid = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8];
-    for (const alpha of grid)
-      for (const beta of grid) {
-        if (!charge()) return;
-        linearFits++;
-        if (spec.ranges) {
-          let intercepts: Domain = [[-8, 8]];
-          for (let i = 0; i < task.examples.length && intercepts.length; i++) {
-            constraintPoints++;
-            const [x, y] = task.examples[i].input,
-              v = alpha * x + beta * y;
-            intercepts = intersect(
-              intercepts,
-              domainAt(spec, i).map(([l, h]) => [l - v - 1e-7, h - v + 1e-7]),
-            );
-          }
-          for (const [low, high] of intercepts) {
-            const l = Math.ceil(low),
-              h = Math.floor(high);
-            if (l > h) continue;
-            const gamma =
-                l <= 0 && h >= 0 ? 0 : Math.abs(l) < Math.abs(h) ? l : h,
-              tree = plane([alpha, beta, gamma]);
-            const row = syntax.get(key(tree)) ?? evaluate(tree, false);
-            if (row && accepts(row)) return tree;
-          }
-          continue;
-        }
-        let low = -8,
-          high = 8;
-        for (let i = 0; i < task.examples.length; i++) {
+    let slopes = options.affineStrategy
+      ? simpleSlopes
+      : gridSlopes;
+    if (options.affineStrategy === "constraints" && exact.length >= 2) {
+      const first = exact[0],
+        p = task.examples[first].input;
+      const next = exact.slice(1).find((i) => {
+        constraintPoints++;
+        const q = task.examples[i].input;
+        return Math.max(Math.abs(q[0] - p[0]), Math.abs(q[1] - p[1])) >= 1e-9;
+      });
+      if (next !== undefined) {
+        const q = task.examples[next].input;
+        slopes = constrainedSlopes(
+          q[0] - p[0],
+          q[1] - p[1],
+          spec.low[next] - spec.low[first],
+          fitCharge,
+        );
+      }
+    }
+    for (const { alpha, beta } of slopes) {
+      if (!fitCharge()) return;
+      if (spec.ranges) {
+        let intercepts: Domain = [[-8, 8]];
+        for (let i = 0; i < task.examples.length && intercepts.length; i++) {
           constraintPoints++;
           const [x, y] = task.examples[i].input,
             v = alpha * x + beta * y;
-          low = Math.max(low, spec.low[i] - v);
-          high = Math.min(high, spec.high[i] - v);
-          if (low > high + 1e-7) break;
+          intercepts = intersect(
+            intercepts,
+            domainAt(spec, i).map(([l, h]) => [l - v - 1e-7, h - v + 1e-7]),
+          );
         }
-        if (low > high + 1e-7) continue;
-        const l = Math.ceil(low - 1e-7),
-          h = Math.floor(high + 1e-7);
-        if (l > h) continue;
-        const gamma = l <= 0 && h >= 0 ? 0 : Math.abs(l) < Math.abs(h) ? l : h,
-          tree = plane([alpha, beta, gamma]);
-        const cached = syntax.get(key(tree)),
-          row = cached ?? evaluate(tree, false);
-        if (row && accepts(row)) return tree;
+        for (const [low, high] of intercepts) {
+          const l = Math.ceil(low),
+            h = Math.floor(high);
+          if (l > h) continue;
+          const gamma =
+              l <= 0 && h >= 0 ? 0 : Math.abs(l) < Math.abs(h) ? l : h,
+            tree = plane([alpha, beta, gamma]);
+          const row = syntax.get(key(tree)) ?? evaluate(tree, false);
+          if (row && accepts(row)) return tree;
+        }
+        continue;
       }
+      let low = -8,
+        high = 8;
+      for (let i = 0; i < task.examples.length; i++) {
+        constraintPoints++;
+        const [x, y] = task.examples[i].input,
+          v = alpha * x + beta * y;
+        low = Math.max(low, spec.low[i] - v);
+        high = Math.min(high, spec.high[i] - v);
+        if (low > high + 1e-7) break;
+      }
+      if (low > high + 1e-7) continue;
+      const l = Math.ceil(low - 1e-7),
+        h = Math.floor(high + 1e-7);
+      if (l > h) continue;
+      const gamma = l <= 0 && h >= 0 ? 0 : Math.abs(l) < Math.abs(h) ? l : h,
+        tree = plane([alpha, beta, gamma]);
+      const cached = syntax.get(key(tree)),
+        row = cached ?? evaluate(tree, false);
+      if (row && accepts(row)) return tree;
+    }
   };
   const affineCache = new Map<string, Expr | undefined>();
   const affine = (spec: Box): Expr | undefined => {
@@ -1154,6 +1224,30 @@ export function inverseSearch(
       if (joined) return joined;
     }
     candidates.sort((x, y) => x.cost - y.cost);
+    if (options.uniqueChildren) {
+      const specifications = new Set<string>();
+      for (let i = 0; i < candidates.length;) {
+        // Exact serialized interval endpoints, not rounded behavioral aliases.
+        const signature = JSON.stringify(
+          candidates[i].child.low.map((_, j) =>
+            domainAt(candidates[i].child, j).map(([l, h]) => [
+              String(l),
+              String(h),
+            ]),
+          ),
+        );
+        constraintPoints += candidates[i].child.low.length;
+        if (!charge()) {
+          candidates.splice(i);
+          break;
+        }
+        if (specifications.has(signature)) candidates.splice(i, 1);
+        else {
+          specifications.add(signature);
+          i++;
+        }
+      }
+    }
     const frontierWidth = options.holeValue
       ? (options.holeValueCandidates ?? 24)
       : (options.beam ?? 12);
@@ -1223,10 +1317,26 @@ export function inverseSearch(
         .sort((a, b) => a.cost - b.cost)
         .slice(0, options.beam ?? 12);
     }
-    for (const candidate of frontier) {
+    for (let index = 0; index < frontier.length; index++) {
+      const candidate = frontier[index];
       const next = replace(partial, path, candidate.tree),
         p = [...path, candidate.slot];
+      const oldLimit = localLimit;
+      if (
+        options.branchShare &&
+        path.length === 0 &&
+        index < frontier.length - 1
+      )
+        localLimit = Math.min(
+          oldLimit,
+          expansions +
+            Math.max(
+              1,
+              Math.floor((oldLimit - expansions) * options.branchShare),
+            ),
+        );
       const result = solve(candidate.child, depth - 1, next, p, history);
+      localLimit = oldLimit;
       if (result) {
         const completed = replace(candidate.tree, [candidate.slot], result);
         if (exprSize(replace(partial, path, completed)) <= maxNodes)

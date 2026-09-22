@@ -38,7 +38,168 @@ import { fragmentFeatures, predictFragmentValue } from "./fragment-value";
 import { fullObservationContext, specificationFeature } from "./full-context";
 import { predictHoleValue, predictHoleTree } from "./hole-value";
 import { latticeCompose } from "./lattice";
+import { affineGrid, simpleSlopes, constrainedSlopes } from "./affine-slopes";
+import { affineVotes } from "./affine-votes";
 import type { Expr } from "../dsl/types";
+
+test("affine voting matches an exhaustive bounded-plane support calculation", () => {
+  const examples = inputs(718291, 75, 5).map((input) => ({
+    input,
+    output: Math.max(2 * input[0] - input[1] + 1, -input[0] + 2),
+  }));
+  let charged = 0,
+    points = 0;
+  const rows = affineVotes(
+    examples,
+    () => {
+      charged++;
+      return true;
+    },
+    () => {
+      points++;
+    },
+  );
+  assert.equal(charged, 289);
+  assert.equal(points, 289 * examples.length);
+  const expected = [];
+  for (const alpha of affineGrid)
+    for (const beta of affineGrid)
+      for (const gamma of affineGrid) {
+        const support = examples.filter(
+          (e) =>
+            Math.abs(
+              alpha * e.input[0] + beta * e.input[1] + gamma - e.output,
+            ) <= 1e-7,
+        ).length;
+        if (support >= 4)
+          expected.push({ coeff: [alpha, beta, gamma], support });
+      }
+  const order = (a: { coeff: number[] }, b: { coeff: number[] }) =>
+    a.coeff.join(",").localeCompare(b.coeff.join(","));
+  assert.deepEqual(rows.sort(order), expected.sort(order));
+  assert.ok(rows.some((r) => r.coeff.join(",") === "2,-1,1"));
+  assert.ok(rows.some((r) => r.coeff.join(",") === "-1,0,2"));
+  const independent = affineVotes(
+    examples,
+    () => true,
+    () => {},
+    4,
+    true,
+  );
+  assert.ok(independent.some((r) => r.coeff.join(",") === "2,-1,1"));
+  const collinear = [-2, -1, 0, 1, 2].map((x) => ({
+    input: [x, 2 * x] as [number, number],
+    output: x,
+  }));
+  assert.ok(
+    affineVotes(
+      collinear,
+      () => true,
+      () => {},
+    ).length > 0,
+  );
+  assert.deepEqual(
+    affineVotes(
+      collinear,
+      () => true,
+      () => {},
+      4,
+      true,
+    ),
+    [],
+  );
+  let operations = 0;
+  affineVotes(
+    examples,
+    () => ++operations <= 7,
+    () => {},
+  );
+  assert.equal(operations, 8);
+});
+
+test("two-equality coefficient elimination agrees with exhaustive bounded slopes", () => {
+  assert.equal(simpleSlopes.length, 289);
+  assert.equal(
+    new Set(simpleSlopes.map(({ alpha, beta }) => `${alpha},${beta}`)).size,
+    289,
+  );
+  for (let i = 1; i < simpleSlopes.length; i++)
+    assert.ok(
+      Math.abs(simpleSlopes[i].alpha) + Math.abs(simpleSlopes[i].beta) >=
+        Math.abs(simpleSlopes[i - 1].alpha) +
+          Math.abs(simpleSlopes[i - 1].beta),
+    );
+  for (const [dx, dy] of [
+    [0, 2],
+    [3, 0],
+    [1, 1],
+    [-2, 4],
+    [1.25, -0.75],
+    [0.34127, 0.2819],
+  ])
+    for (const alpha of affineGrid)
+      for (const beta of [-8, -1, 0, 2, 8]) {
+        const dz = dx * alpha + dy * beta;
+        let charged = 0;
+        const actual = constrainedSlopes(dx, dy, dz, () => {
+          charged++;
+          return true;
+        });
+        assert.equal(charged, 17);
+        const expected = simpleSlopes.filter(
+          (p) => Math.abs(dx * p.alpha + dy * p.beta - dz) < 1e-8,
+        );
+        assert.deepEqual(actual, expected);
+      }
+  let attempts = 0;
+  assert.deepEqual(
+    constrainedSlopes(1, 2, 3, () => {
+      attempts++;
+      return false;
+    }),
+    [],
+  );
+  assert.equal(attempts, 1);
+});
+
+test("affine allocation preserves global budgets and never reads checks while searching", () => {
+  const examples = inputs(918273, 75, 5).map((input) => ({
+    input,
+    output: Math.max(0, Math.min(1, Math.abs(input[0] - input[1]) + input[1])),
+  }));
+  const options = {
+    affineFits: 64,
+    affineStrategy: "constraints" as const,
+    affineHoleBudget: 32,
+    localAffineNeighbors: 6,
+    lattice: true,
+    maxNodes: 96,
+    affineVoting: true,
+    affineVoteIndependent: true,
+    latticeOrder: "after-unary" as const,
+    branchShare: 0.5,
+  };
+  const one = inverseSearch(
+    { examples, checks: examples },
+    [],
+    undefined,
+    123,
+    128,
+    options,
+  );
+  const two = inverseSearch(
+    { examples, checks: examples.map((e) => ({ ...e, output: 999 })) },
+    [],
+    undefined,
+    123,
+    128,
+    options,
+  );
+  assert.deepEqual(one.tree, two.tree);
+  assert.equal(one.evaluations, two.evaluations);
+  assert.equal(one.expansions, two.expansions);
+  assert.ok(one.evaluations <= 128 && one.expansions <= 1024);
+});
 
 test("min/max cover executes its inferred expression and obeys construction limits", () => {
   const xs = inputs(913718, 75, 5);
