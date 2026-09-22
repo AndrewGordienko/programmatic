@@ -21,7 +21,7 @@ export default function Root() {
     >
       {hash === "#joint" ? (
         <Joint />
-      ) : hash === "" || hash === "#brief" || hash === "#live" ? (
+      ) : hash === "" || hash === "#brief" || hash === "#live" || hash === "#heldout" ? (
         <Meeting />
       ) : step === null ? (
         <Workbench />

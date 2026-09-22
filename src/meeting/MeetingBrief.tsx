@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { ArrowRight, ArrowUpRight, Braces, Check, CircleDot, GitBranch, Play } from "lucide-react";
 import LiveSynthesis from "../demo/LiveSynthesis";
+import HeldOutViewer from "./HeldOutViewer";
 import "../demo/demo.css";
 import "./meeting.css";
 
@@ -8,7 +9,9 @@ const source = "https://github.com/AndrewGordienko/programmatic/blob/main/";
 
 export default function MeetingBrief() {
   useEffect(() => {
-    if (window.location.hash === "#live") document.getElementById("live")?.scrollIntoView();
+    const section = window.location.hash.slice(1);
+    if (section === "live" || section === "heldout")
+      document.getElementById(section)?.scrollIntoView();
   }, []);
   return (
     <div className="meeting-root">
@@ -17,6 +20,7 @@ export default function MeetingBrief() {
         <nav aria-label="Research navigation">
           <a href="#brief">The finding</a>
           <a href="#live">Live controller</a>
+          <a href="#heldout">Held-out terrain</a>
           <a href="#research">Research appendix <ArrowUpRight size={14} /></a>
         </nav>
       </header>
@@ -98,6 +102,7 @@ export default function MeetingBrief() {
           <div><span className="meeting-eyebrow">03 / LIVE MECHANISM</span><h2>A generated program can drive the simulator.</h2><p>This quarry rehearsal is previously tested terrain. A fresh search creates the controller when you press the button. It illustrates program synthesis; the language-learning result above comes from separate scalar experiments.</p></div>
           <LiveSynthesis active />
         </section>
+        <HeldOutViewer />
         <footer className="meeting-footer"><span>Independent prototype; not Argos code or a reproduction of an undisclosed implementation.</span><a href="#research">Open full workbench <ArrowUpRight size={14} /></a></footer>
       </main>
     </div>
