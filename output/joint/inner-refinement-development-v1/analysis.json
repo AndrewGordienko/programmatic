@@ -1,0 +1,802 @@
+{
+  "protocolHash": "340a6a911bcfa1d64975e147ca97b9689f14384a20b4aa0b73dc81f00b3e0bbe",
+  "complete": true,
+  "completed": 18,
+  "expected": 18,
+  "note": "DEVELOPMENT comparison only. Task-cluster bootstrap retains optimizer/library correlation and stratifies by group. Selection over six variants makes winner intervals descriptive, not confirmation. Search work excludes separately reported critic inference; process CPU is reported separately from observational wall. Excluding all historical functions changes this finite generator's mixture, so old calibration rates are not directly comparable.",
+  "summaries": [
+    {
+      "name": "original",
+      "completedLanguages": 3,
+      "balancedAuc": 0.3368714232896089,
+      "solved": 1653,
+      "work": 7454923,
+      "cpuMicros": 36009675,
+      "wallMs": 32585.38219799997,
+      "constraintPoints": 81694345,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    },
+    {
+      "name": "visited-constraints",
+      "completedLanguages": 3,
+      "balancedAuc": 0.3477871013374485,
+      "solved": 1694,
+      "work": 7274852,
+      "cpuMicros": 37842408,
+      "wallMs": 34918.405093000154,
+      "constraintPoints": 83900531,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    },
+    {
+      "name": "visited-share25",
+      "completedLanguages": 3,
+      "balancedAuc": 0.3441620048868312,
+      "solved": 1640,
+      "work": 7360964,
+      "cpuMicros": 40237474,
+      "wallMs": 37792.49796099994,
+      "constraintPoints": 83183510,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    },
+    {
+      "name": "votes",
+      "completedLanguages": 3,
+      "balancedAuc": 0.40625393840020574,
+      "solved": 1800,
+      "work": 6481483,
+      "cpuMicros": 20036726,
+      "wallMs": 19004.066529000556,
+      "constraintPoints": 263039023,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    },
+    {
+      "name": "visited-votes",
+      "completedLanguages": 3,
+      "balancedAuc": 0.4136127588091563,
+      "solved": 1845,
+      "work": 6370728,
+      "cpuMicros": 22568274,
+      "wallMs": 21107.02733699989,
+      "constraintPoints": 263950318,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    },
+    {
+      "name": "visited-votes-unary",
+      "completedLanguages": 3,
+      "balancedAuc": 0.3751999742798353,
+      "solved": 1847,
+      "work": 7047113,
+      "cpuMicros": 27027639,
+      "wallMs": 25585.49477600053,
+      "constraintPoints": 260322893,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0
+    }
+  ],
+  "comparisons": [
+    {
+      "variant": "visited-constraints",
+      "balancedAucDelta": 0.010915678047839508,
+      "interval": [
+        0.0044084764017489715,
+        0.017777054398148147
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.020014105902777787,
+          "solveDelta": 0.012777777777777777
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.008037109374999999,
+          "solveDelta": 0.023333333333333327
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.004695818865740742,
+          "solveDelta": 0.006666666666666667
+        }
+      ]
+    },
+    {
+      "variant": "visited-share25",
+      "balancedAucDelta": 0.007290581597222221,
+      "interval": [
+        0.0011178224665637834,
+        0.013805418917181069
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.00910337094907407,
+          "solveDelta": -0.011666666666666665
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.01222186053240741,
+          "solveDelta": 0.005000000000000001
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.0005465133101851845,
+          "solveDelta": 0.008333333333333333
+        }
+      ]
+    },
+    {
+      "variant": "votes",
+      "balancedAucDelta": 0.06938251511059672,
+      "interval": [
+        0.04494634934413581,
+        0.09605774176954733
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.04908866222993826,
+          "solveDelta": 0.02944444444444444
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.08647822627314815,
+          "solveDelta": 0.07666666666666667
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.07258065682870372,
+          "solveDelta": 0.07999999999999999
+        }
+      ]
+    },
+    {
+      "variant": "visited-votes",
+      "balancedAucDelta": 0.07674133551954733,
+      "interval": [
+        0.051714289158950634,
+        0.10306640625
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.05953896604938273,
+          "solveDelta": 0.05277777777777779
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.09339735243055557,
+          "solveDelta": 0.075
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.07728768807870372,
+          "solveDelta": 0.08666666666666668
+        }
+      ]
+    },
+    {
+      "variant": "visited-votes-unary",
+      "balancedAucDelta": 0.038328550990226334,
+      "interval": [
+        0.01501265914351852,
+        0.06239093042695474
+      ],
+      "groups": [
+        {
+          "group": "Related compositions",
+          "tasks": 300,
+          "aucDelta": 0.015178795331790122,
+          "solveDelta": 0.0538888888888889
+        },
+        {
+          "group": "Nested compositions",
+          "tasks": 100,
+          "aucDelta": 0.047462745949074084,
+          "solveDelta": 0.075
+        },
+        {
+          "group": "Longer expressions",
+          "tasks": 100,
+          "aucDelta": 0.05234411168981481,
+          "solveDelta": 0.08666666666666668
+        }
+      ]
+    }
+  ],
+  "selectedForFreshConfirmation": "visited-votes",
+  "runs": [
+    {
+      "variant": "original",
+      "language": "base",
+      "solved": 418,
+      "work": 2759276,
+      "cpuMicros": 13578189,
+      "wallMs": 11952.90615300001,
+      "constraintPoints": 27238827,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 273,
+          "fitted": 288,
+          "auc": 0.35852358217592556
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 125,
+          "fitted": 135,
+          "auc": 0.4508376736111109
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 20,
+          "fitted": 30,
+          "auc": 0.07976562499999999
+        }
+      },
+      "balancedAuc": 0.29637562692901215
+    },
+    {
+      "variant": "original",
+      "language": "pilot-v4",
+      "solved": 597,
+      "work": 2468353,
+      "cpuMicros": 12190849,
+      "wallMs": 10909.397248000008,
+      "constraintPoints": 27186704,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 455,
+          "fitted": 471,
+          "auc": 0.5178942418981479
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 113,
+          "fitted": 128,
+          "auc": 0.39711154513888863
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 29,
+          "fitted": 41,
+          "auc": 0.09398328993055553
+        }
+      },
+      "balancedAuc": 0.3363296923225307
+    },
+    {
+      "variant": "original",
+      "language": "replication-7",
+      "solved": 638,
+      "work": 2227294,
+      "cpuMicros": 10240637,
+      "wallMs": 9723.078796999951,
+      "constraintPoints": 27268814,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 484,
+          "fitted": 497,
+          "auc": 0.5890599681712962
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 115,
+          "fitted": 132,
+          "auc": 0.42739583333333314
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 39,
+          "fitted": 51,
+          "auc": 0.1172710503472222
+        }
+      },
+      "balancedAuc": 0.3779089506172839
+    },
+    {
+      "variant": "visited-constraints",
+      "language": "base",
+      "solved": 412,
+      "work": 2764767,
+      "cpuMicros": 13666477,
+      "wallMs": 12866.210249000047,
+      "constraintPoints": 27137600,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 269,
+          "fitted": 281,
+          "auc": 0.3573621961805553
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 123,
+          "fitted": 133,
+          "auc": 0.4528114149305552
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 20,
+          "fitted": 30,
+          "auc": 0.0809375
+        }
+      },
+      "balancedAuc": 0.2970370370370368
+    },
+    {
+      "variant": "visited-constraints",
+      "language": "pilot-v4",
+      "solved": 625,
+      "work": 2331302,
+      "cpuMicros": 13034242,
+      "wallMs": 11775.274753000158,
+      "constraintPoints": 28048994,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 470,
+          "fitted": 485,
+          "auc": 0.5590335648148148
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 123,
+          "fitted": 140,
+          "auc": 0.42056098090277766
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 32,
+          "fitted": 42,
+          "auc": 0.1027690972222222
+        }
+      },
+      "balancedAuc": 0.36078788097993825
+    },
+    {
+      "variant": "visited-constraints",
+      "language": "replication-7",
+      "solved": 657,
+      "work": 2178783,
+      "cpuMicros": 11141689,
+      "wallMs": 10276.920090999949,
+      "constraintPoints": 28713937,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 496,
+          "fitted": 511,
+          "auc": 0.6091243489583335
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 121,
+          "fitted": 136,
+          "auc": 0.42608398437499984
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 40,
+          "fitted": 51,
+          "auc": 0.12140082465277778
+        }
+      },
+      "balancedAuc": 0.3855363859953704
+    },
+    {
+      "variant": "visited-share25",
+      "language": "base",
+      "solved": 407,
+      "work": 2759584,
+      "cpuMicros": 13854073,
+      "wallMs": 13263.518090000172,
+      "constraintPoints": 26965133,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 268,
+          "fitted": 279,
+          "auc": 0.35814055266203687
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 119,
+          "fitted": 129,
+          "auc": 0.4522471788194441
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 20,
+          "fitted": 30,
+          "auc": 0.0809375
+        }
+      },
+      "balancedAuc": 0.29710841049382697
+    },
+    {
+      "variant": "visited-share25",
+      "language": "pilot-v4",
+      "solved": 588,
+      "work": 2395101,
+      "cpuMicros": 13826409,
+      "wallMs": 12757.072342999716,
+      "constraintPoints": 27978082,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 446,
+          "fitted": 459,
+          "auc": 0.5395504195601852
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 114,
+          "fitted": 126,
+          "auc": 0.414331597222222
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 28,
+          "fitted": 38,
+          "auc": 0.09344943576388885
+        }
+      },
+      "balancedAuc": 0.34911048418209867
+    },
+    {
+      "variant": "visited-share25",
+      "language": "replication-7",
+      "solved": 645,
+      "work": 2206279,
+      "cpuMicros": 12556992,
+      "wallMs": 11771.907528000054,
+      "constraintPoints": 28240295,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 477,
+          "fitted": 486,
+          "auc": 0.5950969328703706
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 123,
+          "fitted": 138,
+          "auc": 0.44543185763888865
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 45,
+          "fitted": 55,
+          "auc": 0.11827256944444445
+        }
+      },
+      "balancedAuc": 0.3862671199845679
+    },
+    {
+      "variant": "votes",
+      "language": "base",
+      "solved": 534,
+      "work": 2267939,
+      "cpuMicros": 7520707,
+      "wallMs": 7028.957945999922,
+      "constraintPoints": 87647861,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 354,
+          "fitted": 374,
+          "auc": 0.47667173032407417
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 136,
+          "fitted": 152,
+          "auc": 0.5317740885416664
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 44,
+          "fitted": 68,
+          "auc": 0.16744574652777777
+        }
+      },
+      "balancedAuc": 0.39196385513117277
+    },
+    {
+      "variant": "votes",
+      "language": "pilot-v4",
+      "solved": 599,
+      "work": 2206821,
+      "cpuMicros": 6880472,
+      "wallMs": 6528.681598000185,
+      "constraintPoints": 87575659,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 431,
+          "fitted": 458,
+          "auc": 0.5371513310185189
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 126,
+          "fitted": 145,
+          "auc": 0.4822547743055552
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 42,
+          "fitted": 66,
+          "auc": 0.16580078125
+        }
+      },
+      "balancedAuc": 0.39506896219135795
+    },
+    {
+      "variant": "votes",
+      "language": "replication-7",
+      "solved": 667,
+      "work": 2006723,
+      "cpuMicros": 5635547,
+      "wallMs": 5446.426985000449,
+      "constraintPoints": 87815503,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 480,
+          "fitted": 504,
+          "auc": 0.5989207175925934
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 137,
+          "fitted": 156,
+          "auc": 0.5207508680555553
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 50,
+          "fitted": 74,
+          "auc": 0.17551540798611115
+        }
+      },
+      "balancedAuc": 0.43172899787808655
+    },
+    {
+      "variant": "visited-votes",
+      "language": "base",
+      "solved": 537,
+      "work": 2261795,
+      "cpuMicros": 8032469,
+      "wallMs": 7527.817698000552,
+      "constraintPoints": 87554118,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 359,
+          "fitted": 379,
+          "auc": 0.48056061921296306
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 134,
+          "fitted": 146,
+          "auc": 0.5323697916666661
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 44,
+          "fitted": 68,
+          "auc": 0.17018446180555558
+        }
+      },
+      "balancedAuc": 0.39437162422839495
+    },
+    {
+      "variant": "visited-votes",
+      "language": "pilot-v4",
+      "solved": 620,
+      "work": 2144936,
+      "cpuMicros": 8038725,
+      "wallMs": 7437.801985999162,
+      "constraintPoints": 88067007,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 451,
+          "fitted": 475,
+          "auc": 0.5510217737268521
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 125,
+          "fitted": 150,
+          "auc": 0.49639539930555515
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 44,
+          "fitted": 68,
+          "auc": 0.1692914496527778
+        }
+      },
+      "balancedAuc": 0.4055695408950617
+    },
+    {
+      "variant": "visited-votes",
+      "language": "replication-7",
+      "solved": 688,
+      "work": 1963997,
+      "cpuMicros": 6497080,
+      "wallMs": 6141.407653000177,
+      "constraintPoints": 88329193,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 497,
+          "fitted": 519,
+          "auc": 0.612512297453704
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 139,
+          "fitted": 156,
+          "auc": 0.5267719184027775
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 52,
+          "fitted": 76,
+          "auc": 0.18340711805555554
+        }
+      },
+      "balancedAuc": 0.4408971113040123
+    },
+    {
+      "variant": "visited-votes-unary",
+      "language": "base",
+      "solved": 537,
+      "work": 2440835,
+      "cpuMicros": 8777301,
+      "wallMs": 8425.602572000265,
+      "constraintPoints": 86345268,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 359,
+          "fitted": 379,
+          "auc": 0.4456792534722221
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 134,
+          "fitted": 146,
+          "auc": 0.4952408854166663
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 44,
+          "fitted": 66,
+          "auc": 0.14907769097222226
+        }
+      },
+      "balancedAuc": 0.36333260995370353
+    },
+    {
+      "variant": "visited-votes-unary",
+      "language": "pilot-v4",
+      "solved": 620,
+      "work": 2382344,
+      "cpuMicros": 9875173,
+      "wallMs": 9169.574484999583,
+      "constraintPoints": 86858157,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 451,
+          "fitted": 475,
+          "auc": 0.5041655815972219
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 125,
+          "fitted": 150,
+          "auc": 0.4480425347222222
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 44,
+          "fitted": 66,
+          "auc": 0.14312825520833333
+        }
+      },
+      "balancedAuc": 0.3651121238425925
+    },
+    {
+      "variant": "visited-votes-unary",
+      "language": "replication-7",
+      "solved": 690,
+      "work": 2223934,
+      "cpuMicros": 8375165,
+      "wallMs": 7990.317719000683,
+      "constraintPoints": 87119468,
+      "criticPredictions": 0,
+      "criticTreeComparisons": 0,
+      "byGroup": {
+        "Related compositions": {
+          "trials": 600,
+          "solved": 499,
+          "fitted": 521,
+          "auc": 0.5611693431712963
+        },
+        "Nested compositions": {
+          "trials": 200,
+          "solved": 139,
+          "fitted": 156,
+          "auc": 0.4744498697916668
+        },
+        "Longer expressions": {
+          "trials": 200,
+          "solved": 52,
+          "fitted": 74,
+          "auc": 0.15584635416666665
+        }
+      },
+      "balancedAuc": 0.3971551890432099
+    }
+  ]
+}

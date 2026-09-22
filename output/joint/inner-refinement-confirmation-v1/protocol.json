@@ -1,0 +1,575 @@
+{
+  "version": "inner-refinement-confirmation-v1",
+  "seed": 73492731,
+  "tasks": 500,
+  "reps": [
+    0,
+    7
+  ],
+  "budget": 512,
+  "observations": 75,
+  "settings": {
+    "diverseBeam": true,
+    "affineDifferences": 32,
+    "maxNodes": 96,
+    "semanticRank": 2,
+    "affineFits": 512,
+    "fitDedup": true,
+    "primitiveDifferences": true,
+    "macroForward": 48,
+    "macroBindings": 8
+  },
+  "variants": [
+    {
+      "name": "original",
+      "policyKind": "original",
+      "options": {
+        "localAffineNeighbors": 6,
+        "lattice": true
+      }
+    },
+    {
+      "name": "visited-votes",
+      "policyKind": "visited",
+      "options": {
+        "localAffineNeighbors": 6,
+        "lattice": true,
+        "affineStrategy": "constraints",
+        "affineHoleBudget": 64,
+        "relational": true,
+        "compiledRelations": true,
+        "affineVoting": true,
+        "affineVoteIndependent": true
+      }
+    }
+  ],
+  "developmentReportHash": "82a56c37d1dad1278255ab2ef0147aa208b7b80cdbcf834c61f454cc5c079b4e",
+  "developmentTasksHash": "b7bac630595cfa080292c888b61609a46686bd51ef6175458d095aef1546fa3c",
+  "visitedPolicyHash": "2b131a8091356568a1af57ce2cda0801b1a18d5aae99ec90f93cb7908cfaf060",
+  "languages": [
+    {
+      "name": "base",
+      "macros": []
+    },
+    {
+      "name": "pilot-v4",
+      "macros": [
+        {
+          "name": "fn_2352281741",
+          "body": {
+            "op": "max",
+            "args": [
+              {
+                "op": "arg",
+                "value": 0,
+                "args": []
+              },
+              {
+                "op": "neg",
+                "args": [
+                  {
+                    "op": "arg",
+                    "value": 0,
+                    "args": []
+                  }
+                ]
+              }
+            ]
+          },
+          "arity": 1,
+          "support": 51,
+          "sourceTasks": [
+            "semantic-calibration-003",
+            "semantic-calibration-006",
+            "semantic-calibration-010",
+            "semantic-calibration-016",
+            "semantic-calibration-021",
+            "semantic-calibration-023",
+            "semantic-calibration-031",
+            "semantic-calibration-032",
+            "semantic-calibration-034",
+            "semantic-calibration-037",
+            "semantic-calibration-040",
+            "semantic-calibration-041",
+            "semantic-calibration-043",
+            "semantic-calibration-045",
+            "semantic-calibration-046",
+            "semantic-calibration-049",
+            "semantic-calibration-051",
+            "semantic-calibration-058",
+            "semantic-calibration-059",
+            "semantic-calibration-063",
+            "semantic-calibration-064",
+            "semantic-calibration-065",
+            "semantic-calibration-066",
+            "semantic-calibration-070",
+            "semantic-calibration-072",
+            "semantic-calibration-073",
+            "semantic-calibration-075",
+            "semantic-calibration-078",
+            "semantic-calibration-079",
+            "semantic-calibration-081",
+            "semantic-calibration-083",
+            "semantic-calibration-085",
+            "semantic-calibration-088",
+            "semantic-calibration-090",
+            "semantic-calibration-091",
+            "semantic-calibration-095",
+            "semantic-calibration-103",
+            "semantic-calibration-110",
+            "semantic-calibration-113",
+            "semantic-calibration-114",
+            "semantic-calibration-115",
+            "semantic-calibration-119",
+            "semantic-calibration-120",
+            "semantic-calibration-121",
+            "semantic-calibration-122",
+            "semantic-calibration-130",
+            "semantic-calibration-135",
+            "semantic-calibration-141",
+            "semantic-calibration-142",
+            "semantic-calibration-155",
+            "semantic-calibration-160"
+          ],
+          "size": 4,
+          "definition": "fn_2352281741(a) = max(a, (-a))"
+        },
+        {
+          "name": "fn_56758583",
+          "body": {
+            "op": "max",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "arg",
+                    "value": 0,
+                    "args": []
+                  },
+                  {
+                    "op": "min",
+                    "args": [
+                      {
+                        "op": "arg",
+                        "value": 1,
+                        "args": []
+                      },
+                      {
+                        "op": "const",
+                        "value": 1,
+                        "args": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "arg",
+                "value": 0,
+                "args": []
+              }
+            ]
+          },
+          "arity": 2,
+          "support": 4,
+          "sourceTasks": [
+            "semantic-calibration-042",
+            "semantic-calibration-088",
+            "semantic-calibration-103",
+            "semantic-calibration-130"
+          ],
+          "size": 7,
+          "definition": "fn_56758583(a, b) = max((a + min(b, 1)), a)"
+        },
+        {
+          "name": "fn_715306984",
+          "body": {
+            "op": "max",
+            "args": [
+              {
+                "op": "arg",
+                "value": 0,
+                "args": []
+              },
+              {
+                "op": "const",
+                "value": 0,
+                "args": []
+              }
+            ]
+          },
+          "arity": 1,
+          "support": 98,
+          "sourceTasks": [
+            "semantic-calibration-001",
+            "semantic-calibration-002",
+            "semantic-calibration-005",
+            "semantic-calibration-007",
+            "semantic-calibration-008",
+            "semantic-calibration-009",
+            "semantic-calibration-012",
+            "semantic-calibration-013",
+            "semantic-calibration-014",
+            "semantic-calibration-015",
+            "semantic-calibration-017",
+            "semantic-calibration-018",
+            "semantic-calibration-020",
+            "semantic-calibration-021",
+            "semantic-calibration-022",
+            "semantic-calibration-024",
+            "semantic-calibration-025",
+            "semantic-calibration-026",
+            "semantic-calibration-027",
+            "semantic-calibration-028",
+            "semantic-calibration-029",
+            "semantic-calibration-030",
+            "semantic-calibration-032",
+            "semantic-calibration-034",
+            "semantic-calibration-035",
+            "semantic-calibration-038",
+            "semantic-calibration-039",
+            "semantic-calibration-042",
+            "semantic-calibration-043",
+            "semantic-calibration-044",
+            "semantic-calibration-047",
+            "semantic-calibration-054",
+            "semantic-calibration-056",
+            "semantic-calibration-057",
+            "semantic-calibration-058",
+            "semantic-calibration-059",
+            "semantic-calibration-060",
+            "semantic-calibration-062",
+            "semantic-calibration-063",
+            "semantic-calibration-064",
+            "semantic-calibration-067",
+            "semantic-calibration-068",
+            "semantic-calibration-069",
+            "semantic-calibration-070",
+            "semantic-calibration-071",
+            "semantic-calibration-074",
+            "semantic-calibration-075",
+            "semantic-calibration-077",
+            "semantic-calibration-079",
+            "semantic-calibration-080",
+            "semantic-calibration-082",
+            "semantic-calibration-084",
+            "semantic-calibration-086",
+            "semantic-calibration-089",
+            "semantic-calibration-090",
+            "semantic-calibration-093",
+            "semantic-calibration-094",
+            "semantic-calibration-095",
+            "semantic-calibration-096",
+            "semantic-calibration-098",
+            "semantic-calibration-100",
+            "semantic-calibration-101",
+            "semantic-calibration-102",
+            "semantic-calibration-104",
+            "semantic-calibration-105",
+            "semantic-calibration-107",
+            "semantic-calibration-109",
+            "semantic-calibration-112",
+            "semantic-calibration-113",
+            "semantic-calibration-115",
+            "semantic-calibration-116",
+            "semantic-calibration-117",
+            "semantic-calibration-124",
+            "semantic-calibration-126",
+            "semantic-calibration-127",
+            "semantic-calibration-128",
+            "semantic-calibration-129",
+            "semantic-calibration-133",
+            "semantic-calibration-134",
+            "semantic-calibration-135",
+            "semantic-calibration-136",
+            "semantic-calibration-137",
+            "semantic-calibration-138",
+            "semantic-calibration-140",
+            "semantic-calibration-141",
+            "semantic-calibration-144",
+            "semantic-calibration-145",
+            "semantic-calibration-146",
+            "semantic-calibration-148",
+            "semantic-calibration-150",
+            "semantic-calibration-151",
+            "semantic-calibration-152",
+            "semantic-calibration-153",
+            "semantic-calibration-154",
+            "semantic-calibration-155",
+            "semantic-calibration-156",
+            "semantic-calibration-157",
+            "semantic-calibration-159"
+          ],
+          "size": 3,
+          "definition": "fn_715306984(a) = max(a, 0)"
+        }
+      ]
+    },
+    {
+      "name": "replication-7",
+      "macros": [
+        {
+          "name": "fn_2352281741",
+          "body": {
+            "op": "max",
+            "args": [
+              {
+                "op": "arg",
+                "value": 0,
+                "args": []
+              },
+              {
+                "op": "neg",
+                "args": [
+                  {
+                    "op": "arg",
+                    "value": 0,
+                    "args": []
+                  }
+                ]
+              }
+            ]
+          },
+          "arity": 1,
+          "support": 55,
+          "sourceTasks": [
+            "meta-7-train-001",
+            "meta-7-train-003",
+            "meta-7-train-006",
+            "meta-7-train-010",
+            "meta-7-train-011",
+            "meta-7-train-012",
+            "meta-7-train-026",
+            "meta-7-train-027",
+            "meta-7-train-032",
+            "meta-7-train-038",
+            "meta-7-train-039",
+            "meta-7-train-042",
+            "meta-7-train-046",
+            "meta-7-train-047",
+            "meta-7-train-050",
+            "meta-7-train-058",
+            "meta-7-train-061",
+            "meta-7-train-065",
+            "meta-7-train-066",
+            "meta-7-train-068",
+            "meta-7-train-071",
+            "meta-7-train-073",
+            "meta-7-train-074",
+            "meta-7-train-077",
+            "meta-7-train-078",
+            "meta-7-train-084",
+            "meta-7-train-085",
+            "meta-7-train-100",
+            "meta-7-train-104",
+            "meta-7-train-108",
+            "meta-7-train-121",
+            "meta-7-train-124",
+            "meta-7-train-130",
+            "meta-7-train-134",
+            "meta-7-train-143",
+            "meta-7-train-148",
+            "meta-7-train-159",
+            "meta-7-train-115",
+            "meta-7-train-125",
+            "meta-7-train-147",
+            "meta-7-train-023",
+            "meta-7-train-031",
+            "meta-7-train-043",
+            "meta-7-train-045",
+            "meta-7-train-062",
+            "meta-7-train-086",
+            "meta-7-train-098",
+            "meta-7-train-099",
+            "meta-7-train-101",
+            "meta-7-train-103",
+            "meta-7-train-107",
+            "meta-7-train-111",
+            "meta-7-train-117",
+            "meta-7-train-150",
+            "meta-7-train-154"
+          ],
+          "size": 4,
+          "definition": "fn_2352281741(a) = max(a, (-a))"
+        },
+        {
+          "name": "fn_3518208291",
+          "body": {
+            "op": "max",
+            "args": [
+              {
+                "op": "const",
+                "value": 0,
+                "args": []
+              },
+              {
+                "op": "min",
+                "args": [
+                  {
+                    "op": "arg",
+                    "value": 0,
+                    "args": []
+                  },
+                  {
+                    "op": "const",
+                    "value": 1,
+                    "args": []
+                  }
+                ]
+              }
+            ]
+          },
+          "arity": 1,
+          "support": 37,
+          "sourceTasks": [
+            "meta-7-train-005",
+            "meta-7-train-007",
+            "meta-7-train-014",
+            "meta-7-train-018",
+            "meta-7-train-020",
+            "meta-7-train-024",
+            "meta-7-train-030",
+            "meta-7-train-035",
+            "meta-7-train-040",
+            "meta-7-train-049",
+            "meta-7-train-054",
+            "meta-7-train-057",
+            "meta-7-train-060",
+            "meta-7-train-063",
+            "meta-7-train-070",
+            "meta-7-train-075",
+            "meta-7-train-080",
+            "meta-7-train-090",
+            "meta-7-train-094",
+            "meta-7-train-097",
+            "meta-7-train-106",
+            "meta-7-train-114",
+            "meta-7-train-123",
+            "meta-7-train-126",
+            "meta-7-train-129",
+            "meta-7-train-135",
+            "meta-7-train-140",
+            "meta-7-train-141",
+            "meta-7-train-142",
+            "meta-7-train-149",
+            "meta-7-train-151",
+            "meta-7-train-153",
+            "meta-7-train-158",
+            "meta-7-train-055",
+            "meta-7-train-067",
+            "meta-7-train-125",
+            "meta-7-train-117"
+          ],
+          "size": 5,
+          "definition": "fn_3518208291(a) = max(0, min(a, 1))"
+        },
+        {
+          "name": "fn_3549247544",
+          "body": {
+            "op": "max",
+            "args": [
+              {
+                "op": "const",
+                "value": 0,
+                "args": []
+              },
+              {
+                "op": "neg",
+                "args": [
+                  {
+                    "op": "arg",
+                    "value": 0,
+                    "args": []
+                  }
+                ]
+              }
+            ]
+          },
+          "arity": 1,
+          "support": 42,
+          "sourceTasks": [
+            "meta-7-train-002",
+            "meta-7-train-004",
+            "meta-7-train-008",
+            "meta-7-train-013",
+            "meta-7-train-016",
+            "meta-7-train-017",
+            "meta-7-train-022",
+            "meta-7-train-028",
+            "meta-7-train-051",
+            "meta-7-train-054",
+            "meta-7-train-056",
+            "meta-7-train-061",
+            "meta-7-train-063",
+            "meta-7-train-073",
+            "meta-7-train-076",
+            "meta-7-train-077",
+            "meta-7-train-081",
+            "meta-7-train-088",
+            "meta-7-train-089",
+            "meta-7-train-091",
+            "meta-7-train-092",
+            "meta-7-train-093",
+            "meta-7-train-095",
+            "meta-7-train-118",
+            "meta-7-train-119",
+            "meta-7-train-127",
+            "meta-7-train-129",
+            "meta-7-train-131",
+            "meta-7-train-133",
+            "meta-7-train-145",
+            "meta-7-train-155",
+            "meta-7-train-048",
+            "meta-7-train-055",
+            "meta-7-train-067",
+            "meta-7-train-109",
+            "meta-7-train-120",
+            "meta-7-train-144",
+            "meta-7-train-147",
+            "meta-7-train-156",
+            "meta-7-train-069",
+            "meta-7-train-098",
+            "meta-7-train-101"
+          ],
+          "size": 4,
+          "definition": "fn_3549247544(a) = max(0, (-a))"
+        }
+      ]
+    }
+  ],
+  "policyHash": "132fe4ad4c1ef8f68b42046181910278ce70b2cc881fba0a288c96d81c28ce87",
+  "sourceHashes": {
+    "scripts/inner-refinement-confirmation.ts": "f0b32823848e64da4a78baabed008d1684f709bcd12ae36095993aedf82eb906",
+    "src/joint/affine-slopes.ts": "81dfb8b53a901ee4292638c1ca52dc2073a387602df768b8ccce134b9d9b964e",
+    "src/joint/affine-votes.ts": "b7b5aa95e60334a7cfdfaf8e5efed8c759c9a5a0bad82949e576929f51d0e1ea",
+    "src/joint/canonical.ts": "247c02c4b7979fb02ad325cf215cc67c5d1733be1db60ce21314661d276a04b0",
+    "src/joint/domains.ts": "9b17844fa7554c3563817407f5590443bf2ceb742fbef20567dbaf44116677fa",
+    "src/joint/dreams.ts": "740709475d2f1e0e7f5308e1d61bedc187e913013df8f6cb0ae57a5bc1b17d6a",
+    "src/joint/experiment.ts": "f287d514ef5e5054ff8a478fed4ee0215a85559f8d54de3ab523a733d87f573a",
+    "src/joint/fragment-value.ts": "f2f95ef7f58dc8ec27f1b30b74e60b680ae6a2cca5481d320f33302c7a60b316",
+    "src/joint/full-context.ts": "27925cc69f57f3cccf0008b7b1883acd1dd53d3f99776f976731d79325263176",
+    "src/joint/genome.ts": "34fba25bc1621ae4017ad49b19087d4f6425d40bbcdc8be8fd9091a2841d1927",
+    "src/joint/hole-value.ts": "59470aaae2ff8ef56451b68fd8736b6ae48c54707c8d0272c47f3f6bdc108996",
+    "src/joint/inventions.ts": "1296e00cd47566359728821ed929af602b2f3cc57f7a21562d7ddf39179a02be",
+    "src/joint/inverse.ts": "a1b095893a8da8a6bdfd2b5cd663509b9bbc660893a0bc4c65e243ce7be1c785",
+    "src/joint/joins.ts": "f3e3642f3d77bd8f7be702bb5f825506b2de1a41a8e2b0d636da38f9af261d66",
+    "src/joint/language-value.ts": "ad2107cbee9ce79d8637eefe7563fc01661fb37a64e779dda370588ffc3fcf88",
+    "src/joint/lattice.ts": "41c196e29753a12ca0d66025cd9005d71043e210e8c237a565ea3f7914e7892d",
+    "src/joint/parametric-search.ts": "9b240c95b99941aba4284d09df1a6f630dd16ab0d2b355ba364aa70151dae0b5",
+    "src/joint/parametric.ts": "72551437a90276b7d570c3d5023cd105f9977883e62c46dfc70155cee7c354c0",
+    "src/joint/policy.ts": "6ee7d8c2ada415437ce5b0bf46e693d06a66e6f9d6f9dab2f44a3087d0bbcc1a",
+    "src/joint/population.ts": "8295396f9cc8f9c4cd8ee4d5e22ee9c11af0d5505387b7985575c5266b196fee",
+    "src/joint/search.ts": "24ffe0157dbc837de579e24aa7468e23843c5098434bfe22cae3ddc734dec78b",
+    "src/joint/semantics.ts": "1a58306384ebd7ff44ed15af593382df6a0faea944edb3d1eab7c78729887094",
+    "src/joint/sparse.ts": "a8aba9c60a498d40a261acbb6477d8bb0fb63cd170fa5f40e8a67c9bed20ca76",
+    "src/joint/specification.ts": "92ccaf8a17aa30d4cc57950b8a3dae6439f95710d18085f4d4e940ed1dfdfe6a",
+    "src/dsl/tasks.ts": "19b7a3a90e0a82afa05e48eba7bba371768ac5604ae26e6c15ddf32d1337a25c",
+    "src/dsl/expressions.ts": "c447d71a8c7f0d01808ac2d86ce1d1fbf035ae99206c08820701eb312260ec6b",
+    "src/dsl/types.ts": "9d54d343d09dbdf551c913668b6309c7380731f9973aa26d02a0c9008bdca30c",
+    "src/engine/random.ts": "3eff3b1c6ff5cd3ed0aa413ed2bd2f7d1b4e9dc3d4c0c244daaccb12317f475d",
+    "src/engine/language.ts": "9b527053bacc4b9b46371b4f918de1a81ef2209151248cce75b18e757dc1888d"
+  },
+  "note": "Fresh confirmation of one solver selected on inner-refinement-development-v1. Five hundred new functions and two paired optimizer seeds, across the same three frozen languages. No new selection or tuning from these outcomes. Require task-cluster 95% lower bound above zero for balanced work-AUC gain, positive mean for every structural group and every library. This tests synthesis, not newly evolved languages. Process CPU, point operations and model training are separate from heterogeneous work. Historical families were inspected, final functions are fresh. Shared policy-training costs are not amortized by this comparison.",
+  "protocolHash": "1fce4d3e7a46180fb2441a440bf2dae881af9e00612e70c4db1cf51f93991fe8"
+}
