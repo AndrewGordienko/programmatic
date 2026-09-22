@@ -24,7 +24,7 @@ export default function MeetingBrief() {
         <section className="meeting-hero" id="brief">
           <span className="meeting-eyebrow">INDEPENDENT RESEARCH · SEPTEMBER 2026</span>
           <h1>Can a system <em>learn the language</em> that makes future programs easier to find?</h1>
-          <p>We built a bounded version of that loop: synthesize programs from examples, mine reusable functions, search over candidate languages, then freeze and test the winner on fresh tasks.</p>
+          <p>Here “language” means the building blocks available to a program, not English text. We synthesize programs from examples, mine reusable functions, search over candidate languages, then test the winner on fresh tasks.</p>
           <div className="meeting-hero-actions">
             <a className="meeting-primary" href="#live"><Play size={16} /> See live synthesis <ArrowRight size={16} /></a>
             <a className="meeting-secondary" href={`${source}LATTICE_PROTOCOL.md`} target="_blank" rel="noreferrer">Read the frozen protocol <ArrowUpRight size={15} /></a>
@@ -44,8 +44,58 @@ export default function MeetingBrief() {
           <article className="meeting-card"><GitBranch size={22} /><span>WHAT ADVANCED</span><h3>Searching for a useful language became cheaper.</h3><p>A learned selector used 2.68× less incremental discovery work than full population screening in a separate four-seed study, with 1,245 vs 1,200 final solves out of 2,400. Equal quality is not established, and its prior training investment remains unpaid. <a href={`${source}output/joint/selective-evolution-v1/analysis.json`} target="_blank" rel="noreferrer">Cost study ↗</a></p></article>
           <article className="meeting-card boundary"><CircleDot size={22} /><span>THE OPEN BOUNDARY</span><h3>General language invention is still open.</h3><p>These are small scalar expression libraries over fixed arithmetic primitives. Longer compositions improved; nested gain is uncertain. The off-road controller uses an engineered language, with no demonstrated transfer from scalar learning.</p></article>
         </section>
+        <section className="meeting-how" aria-label="How the two searches work">
+          <span className="meeting-eyebrow">02 / WHAT THE TWO LOOPS GENERATE</span>
+          <h2>Two searches, two different claims.</h2>
+          <p className="meeting-how-intro">The truck demonstration searches for a <b>program inside a supplied language</b>. The measured scalar experiment searches for a <b>language that improves later program searches</b>.</p>
+          <div className="meeting-code-grid">
+            <article>
+              <div className="meeting-code-head"><span>WHEN YOU PRESS “SYNTHESIZE CONTROLLER”</span><b>Fixed language → new code</b></div>
+              <pre>{[
+                "language = hand-designed typed operations",
+                "prior = frozen learned proposal model",
+                "terrain = previously tested quarry course",
+                "population = empty",
+                "",
+                "while evaluations < 5,000:",
+                "  propose a typed controller graph",
+                "    via prior / random / mutation / crossover",
+                "  choose inputs, connections and constants",
+                "  drive it in the simulator; score the result",
+                "  keep stronger programs as parents",
+                "  if it reaches the goal: return that graph",
+                "",
+                "execute the returned graph to steer the truck",
+              ].join("\n")}</pre>
+              <p>The screen shows the actual returned program. The click does not invent operators, types, sensors, or a new DSL.</p>
+            </article>
+            <article>
+              <div className="meeting-code-head"><span>THE MEASURED LANGUAGE EXPERIMENT</span><b>New language → easier search?</b></div>
+              <pre>{[
+                "library = empty",
+                "for each of 3 language generations:",
+                "  synthesize programs on training functions",
+                "  mine reusable expression fragments",
+                "  propose 256 candidate whole languages",
+                "  race them on fresh development tasks",
+                "  keep the strongest candidates",
+                "",
+                "freeze the chosen language and prior",
+                "confirm on 80 new functions",
+                "compare learned vs base language on 200",
+                "  new functions × 3 search seeds each",
+              ].join("\n")}</pre>
+              <p>Both final arms get the same task examples, frozen prior and search caps. The learned language adds bounded compositions of existing scalar operations.</p>
+            </article>
+          </div>
+          <div className="meeting-answers">
+            <p><b>Does the truck invent the language?</b> No. It generates the controller graph, including operation choices, connections and numeric constants, inside a fixed DSL.</p>
+            <p><b>Did we address the hard search over DSLs?</b> Partly. We found useful scalar libraries across eight fresh runs and a promising cheaper way to select them. We have not shown open-ended DSL invention or transfer to the truck.</p>
+            <p><b>What should the manager take away?</b> The restricted thesis now has a measured positive result. The general problem remains the search over representations, primitives and task families that matter to their work.</p>
+          </div>
+        </section>
         <section className="meeting-demo" id="live" aria-label="Live controller demonstration">
-          <div><span className="meeting-eyebrow">02 / LIVE MECHANISM</span><h2>A generated program can drive the simulator.</h2><p>This quarry rehearsal is previously tested terrain. A fresh search creates the controller when you press the button. It illustrates program synthesis; the language-learning result above comes from separate scalar experiments.</p></div>
+          <div><span className="meeting-eyebrow">03 / LIVE MECHANISM</span><h2>A generated program can drive the simulator.</h2><p>This quarry rehearsal is previously tested terrain. A fresh search creates the controller when you press the button. It illustrates program synthesis; the language-learning result above comes from separate scalar experiments.</p></div>
           <LiveSynthesis active />
         </section>
         <footer className="meeting-footer"><span>Independent prototype; not Argos code or a reproduction of an undisclosed implementation.</span><a href="#research">Open full workbench <ArrowUpRight size={14} /></a></footer>
